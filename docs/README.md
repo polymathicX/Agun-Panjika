@@ -26,4 +26,4 @@ These remain useful design/history records. Their proposed features, earlier sco
 - [Upgrade baseline](UPGRADE_BASELINE.md), [preview](UPGRADE_PREVIEW.md), [progress](UPGRADE_PROGRESS.md), [regression](UPGRADE_REGRESSION.md) and [serial integration review](SERIAL_MERGE_REVIEW.md)
 - [Individual upgrade notes](upgrade-progress/)
 
-The eight interface upgrade areas are now merged in the reviewed main source. The textured Three.js Soft Earth remains a separate feature preview. Older screenshot/figure collections are retained; the current package uses [review/](review/README.md) for accurate provenance and captions.
+The eight interface upgrade areas and the textured Three.js Soft Earth design are integrated in the reviewed main source. The separate Soft Earth branch is retained as the restoration reference. Older screenshot/figure collections remain historical; the current package uses [review/](review/README.md) for production captures and accurate captions.

@@ -1,7 +1,6 @@
 {
   "review_date": "2026-10-29",
   "timezone": "Asia/Dhaka",
-  "application_commit": "1fe2c481eb6fe5f71e7168db46fbe75710453acc",
   "scope": "Existing application and committed data; no scientific retraining or export regeneration",
   "environment": {
     "python": "3.14.6",
@@ -34,6 +33,10 @@
       },
       {
         "name": "globe",
+        "exitCode": 0
+      },
+      {
+        "name": "earth3d",
         "exitCode": 0
       },
       {
@@ -530,7 +533,7 @@
       }
     ],
     "summary": {
-      "groups_passed": 10,
+      "groups_passed": 11,
       "views": 42,
       "page_errors": 0,
       "console_errors": 0,
@@ -550,5 +553,22 @@
     "No field user study",
     "No model retraining or prospective forecast evaluation",
     "No public deployment success established"
-  ]
+  ],
+  "application_base_commit": "2406bbf35950d3773ac00927435d76e92c9271af",
+  "restored_design_commit": "62c129dd7af139b7242a9fa10840770df09b6629",
+  "review_phase": "Soft Earth UI restoration",
+  "soft_earth": {
+    "texturedWebGL": true,
+    "demandRendering": true,
+    "keyboardZoom": true,
+    "modes": true,
+    "actualDetectionCounts": true,
+    "searchPeriodSync": true,
+    "responsiveResize": true,
+    "contextLossFallback": true,
+    "textureFailureFallback": true,
+    "lazyOtherRoutes": true,
+    "pageErrors": [],
+    "desktop_capture_matches_saved_reference": true
+  }
 }

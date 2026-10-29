@@ -1,6 +1,6 @@
 # Verification and reproduction
 
-Recorded **29 October 2026 (Asia/Dhaka)** against application/pipeline commit `1fe2c481eb6fe5f71e7168db46fbe75710453acc`. Documentation and review-figure changes are published after that tested application commit. Scientific models were not retrained and data exports were not regenerated for this documentation refresh.
+Recorded **29 October 2026 (Asia/Dhaka)**. The Soft Earth UI restoration was tested on documentation baseline `2406bbf` using the saved design delta through `62c129d`. The pipeline and scientific exports remain unchanged. Scientific models were not retrained and data exports were not regenerated.
 
 [Project brief](PROJECT_BRIEF.md) · [Scientific review](SCIENTIFIC_REVIEW.md) · [Machine-readable verification](review/verification-2026-10-29.json)
 
@@ -12,7 +12,7 @@ Recorded **29 October 2026 (Asia/Dhaka)** against application/pipeline commit `1
 | `npm ci` | Completed | Locked frontend dependencies installed; manifests/lockfile unchanged |
 | `npm run typecheck` | Passed | Current TypeScript source checks |
 | `npm run build` | Passed | Production static bundle builds |
-| Production browser regression, offline enabled | 10 groups passed | Navigation, interactions, exports, failure recovery and cached offline behavior |
+| Production browser regression, offline enabled | 11 groups passed | Navigation, interactions, exports, failure recovery and cached offline behavior |
 | Route matrix | 42 views; no recorded page/console errors, overflow or axe findings | The specified viewport/theme/language combinations in Chromium |
 | `npm audit` | Five advisory groups: two moderate, two high, one critical | Dependency review remains release work; no exploitability assessment made |
 
@@ -29,6 +29,7 @@ The suite covered all seven routes: Home, Calendar, Sensors, Map, Outlook, Borde
 | Smoke | Route rendering, page width, browser errors and axe rules |
 | Navigation | Shared selection state, URL/history and persistence |
 | Globe | Geographic controls, selection and fallback behavior |
+| Textured Earth | WebGL rendering, demand drawing, keyboard/zoom, search/time sync, responsive resizing, texture/context-loss fallback and lazy loading |
 | Charts | Calendar/chart interactions and alternatives |
 | Map | District/point controls and recovery |
 | Reliability | Request failures, malformed data, retries and race handling |
@@ -94,3 +95,7 @@ The [latest hosted run inspected during the review](https://github.com/polymathi
 No working public app URL was verified. Publishing this documentation makes the project reviewable on GitHub; it does not establish that the application has been deployed successfully or the data refreshed.
 
 Further work includes the current dependency advisories, explicit software licensing, stale-product handling and in-app methodology copy. Some Method text still says 50/50 ensemble and 2012–2024; the model/export and current documentation specify 30/70 and 2012–2025. The documentation refresh does not change scientific algorithms or application behavior.
+
+## Soft Earth restoration evidence
+
+The original blue/cream layout, coral controls and textured Three.js globe were restored from the saved feature delta after the documentation gallery had shown the older main interface. A new production desktop capture matches `docs/readme-assets/soft-earth-desktop.png` byte-for-byte. The mobile capture was visually reviewed. All eleven production browser groups passed, including the added Earth3D checks and the original scientific/export/offline flows. See the [current gallery](review/README.md) and [verification record](review/verification-2026-10-29.json).

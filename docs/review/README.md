@@ -1,19 +1,19 @@
 # Current application captures and scientific figures
 
-Prepared 29 October 2026 from application/pipeline commit `1fe2c481eb6fe5f71e7168db46fbe75710453acc`. The screenshots show the current merged application, not the pending textured Soft Earth preview.
+Prepared 29 October 2026 from the restored Soft Earth production build. The original design delta through `62c129d` was integrated onto the current main baseline; the pipeline and scientific exports were unchanged. The screenshots show the actual restored interface, including the textured Three.js Earth.
 
 ## Application gallery
 
 | View | Full-size capture | What to inspect |
 | --- | --- | --- |
-| Overview | [Desktop](screenshots/home-desktop.png), [mobile Bangla](screenshots/home-mobile-bn.png) | Area/year/week selection, geographic sphere, cumulative activity and normal range |
+| Overview | [Desktop](screenshots/home-desktop.png), [mobile](screenshots/home-mobile.png), [mobile Bangla](screenshots/home-mobile-bn.png) | Area/year/week selection, geographic sphere, cumulative activity and normal range |
 | Calendar | [Desktop](screenshots/calendar-desktop.png) | Year/week comparison, selected week and estimated-year marks |
 | Sensors | [Desktop](screenshots/sensors-desktop.png) | Raw/factor/harmonized comparison, uncertainty and reported internal results |
 | Map | [Desktop](screenshots/map-desktop.png) | Archived detections, districts and spatial controls |
 | Outlook | [Desktop](screenshots/outlook-desktop.png) | Experimental activity/weather products using the saved snapshot |
 | Borders | [Desktop](screenshots/borders-desktop.png) | Neighbouring-area and aerosol timing comparisons, without causal attribution |
 
-Captures are copied byte-for-byte from the successful production browser suite. Desktop views use width 1440, light theme and English; the mobile view uses width 360, dark theme and Bangla. Route selections use Bangladesh, 2024, week 14 where supported. The underlying export timestamps remain October 2026; the screenshots are not evidence of live feeds or current forecasts. [Verification matrix](verification-2026-10-29.json)
+Captures are copied byte-for-byte from the successful production browser checks and showcase capture script. The desktop Soft Earth showcase uses 1440 x 1080, light theme and English; the mobile showcase uses 390 x 1100. The Bangla/dark capture uses width 360. Other desktop views use width 1440, light theme and English. The restored desktop showcase matches the saved original Soft Earth reference byte-for-byte. Route selections use Bangladesh, 2024, week 14 where supported. The underlying export timestamps remain October 2026; the screenshots are not evidence of live feeds or current forecasts. [Verification matrix](verification-2026-10-29.json)
 
 ## Internal reconstruction benchmark
 

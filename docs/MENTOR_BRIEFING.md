@@ -19,7 +19,7 @@ This package explains the working project, its evidence and the next research qu
 
 MODIS and VIIRS have different observation characteristics. A raw joined history can therefore make a sensor change look like a change in burning. Agun Panjika reconstructs a comparable weekly detection history, shows uncertainty and connects it to a bilingual fire calendar. The intended user question is: **?Is this fire season normal for this area??**
 
-Bangladesh is the present case study. The application includes five analysis regions, 64 districts and CHT calendars for 25 upazilas and 124 unions. Current merged features include charts, map/sphere controls, local calendars, reports, shared navigation state, a guided demo, recovery behavior and cached offline access.
+Bangladesh is the present case study. The application includes five analysis regions, 64 districts and CHT calendars for 25 upazilas and 124 unions. Current merged features include charts, map/sphere controls, local calendars, reports, shared navigation state, a guided demo, recovery behavior and cached offline access. The original Soft Earth layout and textured Three.js globe are restored.
 
 ## Current evidence at a glance
 
@@ -27,7 +27,7 @@ Bangladesh is the present case study. The application includes five analysis reg
 | --- | --- |
 | Internal weekly national MAE 36.964 versus 49.450 for a fitted factor, over 2012?2025 | Promising reconstruction result; stronger independent evaluation is still needed |
 | ESA continuity and NOAA successor comparisons | Aggregate plausibility/continuity checks, not ground-truth wildfire validation |
-| 59 Python tests, production typecheck/build and 10 browser groups passed | Working behavior under the recorded local setup, not field or operational performance |
+| 59 Python tests, production typecheck/build and 11 browser groups passed | Working behavior under the recorded local setup, not field or operational performance |
 | No completed field-user study; committed observations end 9 October | Usability, impact and freshness are open work |
 
 ## Questions for academic guidance

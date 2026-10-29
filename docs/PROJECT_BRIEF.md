@@ -133,7 +133,7 @@ flowchart TB
     W --> U["Calendars, comparisons, maps, Bangla/English reports"]
 ```
 
-There is no application backend or database. Python prepares static exports, and React consumes them through validated asynchronous requests. D3 powers charts and the Canvas geographic sphere; MapLibre powers the interactive map. The textured Three.js Soft Earth is a separate preview, not the current main implementation.
+There is no application backend or database. Python prepares static exports, and React consumes them through validated asynchronous requests. D3 powers charts and the interactive Canvas fallback; MapLibre powers the map. The restored Soft Earth homepage uses a lazy Three.js globe with licensed static Earth/cloud textures, linked geographic controls and an interactive 2D fallback when WebGL or textures are unavailable. The blue/cream layout and coral accents preserve the saved Soft Earth design.
 
 The current seven routes are Overview, Calendar, Sensors, Map, Outlook, Borders and Method. Implemented interface work includes shared URL/filter/history state, a bilingual guided demo, keyboard/table alternatives, mobile layouts, loading/error/retry handling, export feedback and cached offline resources. Offline access requires prior same-origin caching; external tiles/fonts are outside that guarantee. [Current screenshots and provenance](review/README.md)
 
@@ -141,7 +141,7 @@ The current seven routes are Overview, Calendar, Sensors, Map, Outlook, Borders 
 
 Start with [the README's local commands](../README.md#getting-started). Existing exports are sufficient for interface review. For scientific regeneration, install the Python package, obtain any needed FIRMS API key, and use `python -m pipeline.run_all --help` before running downloads/model fitting. The key belongs only in the gitignored pipeline environment.
 
-The 29 October check passed all 59 Python tests, TypeScript checking, the production build, and ten production browser test groups. The 42-view matrix recorded zero page errors, console errors, overflow or axe findings in those runs. This establishes behavior under the tested setup, not a physical-device accessibility certification, a new model-training result or field effectiveness. [Verification report](VERIFICATION.md) · [machine-readable evidence](review/verification-2026-10-29.json)
+The 29 October check passed all 59 Python tests, TypeScript checking, the production build, and eleven production browser test groups. The 42-view matrix recorded zero page errors, console errors, overflow or axe findings in those runs. This establishes behavior under the tested setup, not a physical-device accessibility certification, a new model-training result or field effectiveness. [Verification report](VERIFICATION.md) · [machine-readable evidence](review/verification-2026-10-29.json)
 
 Review charts can be reproduced solely from committed JSON with `python notebooks/review_figures.py` after installing matplotlib. PNG, editable SVG and vector PDF exports are included. The generator does not download data or retrain models.
 

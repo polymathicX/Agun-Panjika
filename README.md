@@ -11,7 +11,7 @@ NASA Space Apps Challenge 2026 · *Harmonization of MODIS and VIIRS Hot Spots*
 
 [Download project brief (PDF)](docs/pdf/PROJECT_BRIEF.pdf) · [Download global extension plan (PDF)](docs/pdf/GLOBAL_EXTENSION_PLAN.pdf)
 
-<img src="docs/review/screenshots/home-desktop.png" alt="Current Agun Panjika overview: geographic sphere, area and season controls, and fire activity compared with historical normals" width="100%"/>
+<img src="docs/review/screenshots/home-desktop.png" alt="Restored Soft Earth design: textured globe, soft blue and cream surfaces, coral accents and linked fire-season controls" width="100%"/>
 
 </div>
 
@@ -19,7 +19,7 @@ Agun Panjika (Fire Almanac) helps a user investigate **“Is this fire season no
 
 MODIS and VIIRS observe fire at different resolutions and sensitivities. Simply joining their counts can make a change of sensor look like a change in burning. We reconstruct earlier observations on a common weekly VIIRS scale, show uncertainty, and connect that history to calendars, maps and seasonal comparisons.
 
-> **Current snapshot · 29 October 2026:** the eight interface upgrades are merged on `main`. The screenshots here are real captures of that implementation. Committed observations end on **9 October 2026**; the saved outlooks are archived examples. A working public deployment has not been verified. The textured Three.js “Soft Earth” belongs to a separate preview and is not the interface shown here.
+> **Current snapshot · 29 October 2026:** the **Soft Earth design is restored on `main`**, alongside the eight interface upgrades. The screenshots below show the actual production build: a textured Earth, soft blue/cream surfaces and coral accents. Committed observations end on **9 October 2026**; the saved outlooks are archived examples. Earth/cloud textures provide static geographic context, not live satellite imagery. A working public deployment has not been verified.
 
 ## Start here
 
@@ -41,7 +41,7 @@ MODIS and VIIRS observe fire at different resolutions and sensitivities. Simply 
 | Seasonal context | Cumulative activity against historical normals for Bangladesh, five analysis regions and 64 districts |
 | Fire calendar | Interactive year/week heatmap, keyboard inspection, table alternative and local CHT calendars |
 | Sensor comparison | Raw observations, a scaling baseline, harmonized history, monthly ratios, validation and sonification |
-| Geographic exploration | Archived FIRMS coordinates, district choropleth, clusters, static-source controls and an interactive Canvas sphere with 2D mode |
+| Geographic exploration | Archived FIRMS coordinates, district choropleth, clusters, static-source controls and a textured Three.js Earth with an interactive 2D fallback |
 | Local calendars | 25 upazilas and 124 unions across Rangamati, Khagrachhari and Bandarban; historical values include apportioned estimates |
 | Experimental outlooks | Two-week national/regional activity outlooks, fire-weather views and district anomaly feeds; operational performance remains unverified |
 | Cross-border context | CHT and neighbouring areas; upwind burning beside Dhaka aerosol timing, without causal smoke attribution |
@@ -65,11 +65,11 @@ These production-build captures were made on 29 October 2026 from the current ap
 </table>
 
 <details>
-<summary><b>Mobile Bangla and dark-theme overview</b></summary>
+<summary><b>Mobile Soft Earth preview</b></summary>
 
-<p align="center"><img src="docs/review/screenshots/home-mobile-bn.png" alt="Current mobile Bangla overview in dark theme" width="330"/></p>
+<p align="center"><img src="docs/review/screenshots/home-mobile.png" alt="Restored mobile Soft Earth layout with textured globe, blue and cream surfaces and coral controls" width="330"/></p>
 
-The UI is bilingual; union place names are not yet fully localized. Offline use requires previously cached same-origin resources, and external fonts/map tiles may be unavailable.
+The UI is bilingual; [Bangla/dark-theme capture](docs/review/screenshots/home-mobile-bn.png). Union place names are not yet fully localized. Offline use requires previously cached same-origin resources, and external fonts/map tiles may be unavailable.
 
 </details>
 
@@ -183,7 +183,7 @@ Other-country outputs are isolated in country-specific `data/` and `build/` fold
 
 ## Verification and release status
 
-On **29 October 2026**, the current code passed **59 Python tests**, TypeScript checking, the production build and **10 production browser test groups**. The 42-view matrix recorded no page/console errors, page overflow or axe findings. Those checks do not replace physical-device, assistive-technology, field-user or prospective scientific evaluation. [Recorded evidence](docs/review/verification-2026-10-29.json)
+On **29 October 2026**, the current code passed **59 Python tests**, TypeScript checking, the production build and **11 production browser test groups**. The 42-view matrix recorded no page/console errors, page overflow or axe findings. Those checks do not replace physical-device, assistive-technology, field-user or prospective scientific evaluation. [Recorded evidence](docs/review/verification-2026-10-29.json)
 
 The existing daily workflow is configured to refresh and deploy through GitHub Pages, but recent hosted refreshes failed at the pipeline step. A local pass does not establish a successful hosted deployment. Check [Actions](https://github.com/polymathicX/Agun-Panjika/actions) for subsequent runs. Dependency advisories, source licensing and in-app method-copy drift are also tracked as follow-up work. [Verification and known limits](docs/VERIFICATION.md)
 

@@ -34,7 +34,7 @@ Static-source inspection examples retain **Esri, Maxar and Earthstar Geographics
 
 The current review screenshots are unchanged browser captures from the application, not generated mockups. New review figures are generated from committed result JSON by [review_figures.py](../notebooks/review_figures.py). Captions, snapshot dates and export links are in [review/README.md](review/README.md).
 
-The older textured Soft Earth screenshots use [Solar System Scope textures](https://www.solarsystemscope.com/textures/) under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). They remain historical feature-preview assets; they do not show the current main app or live satellite/cloud imagery.
+The restored Soft Earth globe uses [Solar System Scope textures](https://www.solarsystemscope.com/textures/) under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). These static Earth/cloud textures are geographic context, not live satellite or weather imagery. Asset credits are also included in [web/public/earth/README.md](../web/public/earth/README.md). Current production captures appear in [review/](review/README.md).
 
 ## Supplied 2026 guidance and access limits
 
