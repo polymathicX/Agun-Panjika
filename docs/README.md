@@ -14,6 +14,7 @@ Reviewed 29 October 2026. Start with the current package when assessing implemen
 | [Screenshots and figures](review/README.md) | Actual current-interface captures, data figures and vector exports |
 | [Sources and submission](SOURCES_AND_SUBMISSION.md) | Data/imagery credits and the status of supplied competition guidance |
 | [Short mentor message](MENTOR_REPLY.md) | Concise text accompanying the public materials |
+| [LaTeX report sources](latex/README.md) | Dedicated typesetting, vector figures and reproducible builds for the mentor PDFs |
 
 ## Original plans and historical evidence
 

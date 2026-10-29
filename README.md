@@ -9,7 +9,7 @@ NASA Space Apps Challenge 2026 · *Harmonization of MODIS and VIIRS Hot Spots*
 
 [Project video](https://youtu.be/9FMIzcXhqB4) · [Project brief](docs/PROJECT_BRIEF.md) · [Global extension proposal](docs/GLOBAL_EXTENSION_PLAN.md) · [Academic review guide](docs/MENTOR_BRIEFING.md)
 
-[Download project brief (PDF)](docs/pdf/PROJECT_BRIEF.pdf) · [Download global extension plan (PDF)](docs/pdf/GLOBAL_EXTENSION_PLAN.pdf)
+[Download project brief (LaTeX PDF)](docs/pdf/PROJECT_BRIEF.pdf) · [Download global extension plan (LaTeX PDF)](docs/pdf/GLOBAL_EXTENSION_PLAN.pdf) · [Report sources](docs/latex/README.md)
 
 <img src="docs/review/screenshots/home-desktop.png" alt="Restored Soft Earth design: textured globe, soft blue and cream surfaces, coral accents and linked fire-season controls" width="100%"/>
 

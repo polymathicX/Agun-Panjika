@@ -32,6 +32,9 @@ data/*/
 # Local browser QA artifacts
 web/test-results/
 
+# Intermediate LaTeX output (sources, report figures and final PDFs are versioned)
+docs/latex/build/
+
 # Machine-local Graphify state (shareable graph/report/HTML stay versioned)
 graphify-out/cache/
 graphify-out/wiki/
