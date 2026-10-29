@@ -1,0 +1,554 @@
+{
+  "review_date": "2026-10-29",
+  "timezone": "Asia/Dhaka",
+  "application_commit": "1fe2c481eb6fe5f71e7168db46fbe75710453acc",
+  "scope": "Existing application and committed data; no scientific retraining or export regeneration",
+  "environment": {
+    "python": "3.14.6",
+    "node": "26.6.0",
+    "npm": "11.18.0",
+    "playwright": "1.64.0"
+  },
+  "python": {
+    "command": "python -m pytest -q",
+    "passed": 59,
+    "failed": 0,
+    "skipped": 0
+  },
+  "frontend": {
+    "typecheck": "passed",
+    "build": "passed",
+    "lockfile_changed": false
+  },
+  "browser": {
+    "mode": "production preview",
+    "offline_group_enabled": true,
+    "groups": [
+      {
+        "name": "smoke",
+        "exitCode": 0
+      },
+      {
+        "name": "navigation",
+        "exitCode": 0
+      },
+      {
+        "name": "globe",
+        "exitCode": 0
+      },
+      {
+        "name": "charts",
+        "exitCode": 0
+      },
+      {
+        "name": "map",
+        "exitCode": 0
+      },
+      {
+        "name": "reliability",
+        "exitCode": 0
+      },
+      {
+        "name": "demo",
+        "exitCode": 0
+      },
+      {
+        "name": "exports",
+        "exitCode": 0
+      },
+      {
+        "name": "scientific",
+        "exitCode": 0
+      },
+      {
+        "name": "offline",
+        "exitCode": 0
+      }
+    ],
+    "views": [
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "home",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "panjika",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "sensors",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "map",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "outlook",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "borders",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "method",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "home",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "panjika",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "sensors",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "map",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "outlook",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "borders",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "method",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "home",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "panjika",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "sensors",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "map",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "outlook",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "borders",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "method",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "home",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "panjika",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "sensors",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "map",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "outlook",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "borders",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "method",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "home",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "panjika",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "sensors",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "map",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "outlook",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "borders",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "method",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "home",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "panjika",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "sensors",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "map",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "outlook",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "borders",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "method",
+        "overflow": false,
+        "alerts": [],
+        "errors": [],
+        "consoleErrors": [],
+        "axe": []
+      }
+    ],
+    "summary": {
+      "groups_passed": 10,
+      "views": 42,
+      "page_errors": 0,
+      "console_errors": 0,
+      "overflow_views": 0,
+      "axe_findings": 0
+    }
+  },
+  "npm_audit": {
+    "advisory_groups": 5,
+    "moderate": 2,
+    "high": 2,
+    "critical": 1,
+    "dependency_changes_made": false
+  },
+  "limitations": [
+    "No physical-device or assistive-technology certification",
+    "No field user study",
+    "No model retraining or prospective forecast evaluation",
+    "No public deployment success established"
+  ]
+}

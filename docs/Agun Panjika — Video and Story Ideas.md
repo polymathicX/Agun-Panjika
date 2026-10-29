@@ -1,3 +1,5 @@
+> **Historical planning document.** For the current implementation, results and known limits, read the [project brief](PROJECT_BRIEF.md). Proposed global-round work is in [GLOBAL_EXTENSION_PLAN.md](GLOBAL_EXTENSION_PLAN.md). Earlier feature statuses, evaluation years and presentation claims below are retained as planning history.
+
 # Agun Panjika: video and story ideas
 
 Brainstorm for the three videos (prescreen, local demo, 30-second global). Every number below comes from the pipeline as of 10 Oct 2026. Re-run `python notebooks/figures.py` before recording so the charts and numbers match the live app.

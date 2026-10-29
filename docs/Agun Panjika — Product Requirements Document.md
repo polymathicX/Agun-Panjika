@@ -1,3 +1,5 @@
+> **Historical planning document.** For the current implementation, results and known limits, read the [project brief](PROJECT_BRIEF.md). Proposed global-round work is in [GLOBAL_EXTENSION_PLAN.md](GLOBAL_EXTENSION_PLAN.md). Earlier feature statuses, evaluation years and presentation claims below are retained as planning history.
+
 # Agun Panjika — Product Requirements Document
 
 Oct 9, 2026 · @Sarwad Hasan
