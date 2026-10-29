@@ -6,9 +6,9 @@ Reviewed 29 October 2026. Start with the current package when assessing implemen
 
 | Document | Purpose |
 | --- | --- |
-| [Project brief](PROJECT_BRIEF.md) | Complete project explanation: problem, contribution, data, method, results, architecture, limits and academic review questions |
+| [Project brief](PROJECT_BRIEF.md) · [PDF](pdf/PROJECT_BRIEF.pdf) | Complete project explanation: problem, contribution, data, method, results, architecture, limits and academic review questions |
 | [Academic review guide](MENTOR_BRIEFING.md) | Suggested reading order and specific requests for mentorship |
-| [Global extension proposal](GLOBAL_EXTENSION_PLAN.md) | Proposed features, research questions, milestones and acceptance criteria |
+| [Global extension proposal](GLOBAL_EXTENSION_PLAN.md) · [PDF](pdf/GLOBAL_EXTENSION_PLAN.pdf) | Proposed features, research questions, milestones and acceptance criteria |
 | [Scientific review](SCIENTIFIC_REVIEW.md) | Source-level audit of the pipeline, exported evidence and evaluation concerns |
 | [Verification](VERIFICATION.md) | Executed checks, reproducibility, hosted status and known release limits |
 | [Screenshots and figures](review/README.md) | Actual current-interface captures, data figures and vector exports |

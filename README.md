@@ -9,6 +9,8 @@ NASA Space Apps Challenge 2026 · *Harmonization of MODIS and VIIRS Hot Spots*
 
 [Project video](https://youtu.be/9FMIzcXhqB4) · [Project brief](docs/PROJECT_BRIEF.md) · [Global extension proposal](docs/GLOBAL_EXTENSION_PLAN.md) · [Academic review guide](docs/MENTOR_BRIEFING.md)
 
+[Download project brief (PDF)](docs/pdf/PROJECT_BRIEF.pdf) · [Download global extension plan (PDF)](docs/pdf/GLOBAL_EXTENSION_PLAN.pdf)
+
 <img src="docs/review/screenshots/home-desktop.png" alt="Current Agun Panjika overview: geographic sphere, area and season controls, and fire activity compared with historical normals" width="100%"/>
 
 </div>
