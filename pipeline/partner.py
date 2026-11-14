@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import json
 from concurrent.futures import ThreadPoolExecutor
+from threading import Lock
 
 import geopandas as gpd
 import numpy as np
@@ -35,6 +36,7 @@ PRODUCTS = {
                   "path": "Sentinel3_SYN/grid/v1.1/{y}/{y}{m:02d}01-ESACCI-L4_FIRE-BA-SYN-fv1.1.nc"},
 }
 CACHE = RAW / "partner"
+NETCDF_LOCK = Lock()  # netCDF4/HDF5 access is not thread safe; downloads can still overlap.
 
 
 def _cell_weights() -> pd.DataFrame:
@@ -68,7 +70,7 @@ def _fetch_month(product: str, y: int, m: int, weights: pd.DataFrame) -> pd.Data
     tmp = CACHE / f"_{product}_{y}{m:02d}.nc"
     tmp.write_bytes(r.content)
     try:
-        with xr.open_dataset(tmp) as ds:
+        with NETCDF_LOCK, xr.open_dataset(tmp) as ds:
             w, s, e, n = COUNTRY["bbox"]
             sub = ds["burned_area"].isel(time=0).sel(lat=slice(n, s), lon=slice(w, e))
             if sub.sizes["lat"] == 0:  # ascending latitude

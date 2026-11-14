@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import json
 
+import numpy as np
 import pandas as pd
 
 from pipeline.config import BRIDGE_YEARS, PROCESSED, WEB_DATA
@@ -24,6 +25,29 @@ from pipeline.harmonise import week_month
 
 SNPP_END_UTC = "2026-11-02T13:00:00Z"
 TAU = 300.0
+
+
+def successor_counts(t: pd.DataFrame, bridge: dict) -> pd.Series:
+    """Average available successors on the S-NPP scale; zero is an observation."""
+    month = week_month(t["iso_year"], t["iso_week"])
+    values = []
+    for col, sensor in (("J", "noaa20"), ("K", "noaa21")):
+        factors = {int(m): v for m, v in bridge.get(f"{sensor}_to_snpp_monthly", {}).items()}
+        if col in t:
+            values.append(t[col] * pd.Series(month, index=t.index).map(factors).fillna(1.0))
+    return pd.concat(values, axis=1).mean(axis=1) if values else pd.Series(np.nan, index=t.index)
+
+
+def reference_series(t: pd.DataFrame, estimate: pd.Series, bridge: dict) -> tuple[pd.Series, pd.Series]:
+    """One handover/outage rule for all geographies, at ISO-week resolution."""
+    end = pd.Timestamp(bridge["snpp_end_utc"]).isocalendar()
+    after = t["iso_year"] * 100 + t["iso_week"] >= end.year * 100 + end.week
+    observed = t.get("V", pd.Series(np.nan, index=t.index)).where(~after)
+    successor = successor_counts(t, bridge)
+    value = observed.combine_first(successor).combine_first(estimate)
+    source = pd.Series(np.select([observed.notna(), successor.notna(), estimate.notna()],
+                                 ["observed", "bridged", "estimated"], "none"), index=t.index)
+    return value, source
 
 
 def factors_for(form: str, d: pd.DataFrame, src: str) -> dict[int, float]:
@@ -60,8 +84,7 @@ def evaluate(ov: pd.DataFrame, src: str) -> tuple[str, dict, pd.DataFrame]:
     return best, score.round(2).to_dict(orient="index"), v
 
 
-def main() -> None:
-    dw = pd.read_parquet(PROCESSED / "district_week.parquet")
+def bridge_document(dw: pd.DataFrame) -> dict:
     nat = national_weeks(dw)
     out: dict = {"snpp_end_utc": SNPP_END_UTC, "tau": TAU}
     for sat, src, years in (("noaa20", "J", BRIDGE_YEARS), ("noaa21", "K", None)):
@@ -87,6 +110,11 @@ def main() -> None:
     out["noaa20_to_snpp_monthly"] = out["noaa20"].get("monthly", dict.fromkeys(range(1, 13), 1.0))
     out["noaa21_to_snpp_monthly"] = out["noaa21"].get("monthly", out["noaa20_to_snpp_monthly"])
     out["national_totals"] = out["noaa20"].get("totals", {"snpp": 0, "noaa20": 0})
+    return out
+
+
+def main() -> None:
+    out = bridge_document(pd.read_parquet(PROCESSED / "district_week.parquet"))
     (PROCESSED / "bridge_factors.json").write_text(json.dumps(out, indent=1))
     (WEB_DATA / "bridge.json").write_text(json.dumps(out, separators=(",", ":")))
     for sat in ("noaa20", "noaa21"):

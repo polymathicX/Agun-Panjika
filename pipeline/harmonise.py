@@ -1,6 +1,6 @@
 """MODIS -> VIIRS S-NPP harmonisation, challengers and leave-one-year-out validation.
 
-Models are fit on region-weeks from the overlap years (2012 to 2024), where V is the
+Models are fit on region-weeks from the overlap years (2012 to 2025), where V is the
 S-NPP count and M the MODIS count:
 
 * negbin   V ~ NegBin(mu, alpha),  log mu = a[region, month] + b log(M+1) + g log(F+1)
@@ -16,7 +16,8 @@ view geometry (pixel size), all of which exist for the MODIS-only years too.
 
 Intervals are conformal: 80% bounds come from the spread of held-out (leave-one-year-out)
 errors, by activity level and season, so they are calibrated on years the model never
-saw. Their coverage is itself checked with a nested leave-one-year-out.
+saw in each fit. Coverage uses residual exclusion, not a fully nested refit;
+the separate global-case temporal audit uses disjoint fit/calibration/test periods.
 
 The national series is the sum of regions. District values share the region value by
 the district's MODIS detections that week (or its long-run S-NPP share for that month
