@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 
 from pipeline.config import ROOT
-from pipeline.global_cases import SPLITS, national, partition
+from pipeline.global_cases import SPLITS, load_features, national, partition
 
 
 def test_temporal_splits_are_disjoint_and_exact():
@@ -32,3 +32,17 @@ def test_published_case_reproduces_its_test_metrics(area):
     assert len(doc["snapshot_sha256"]) == 64
     assert all("fixed" in r and r["lo"] <= r["model"] <= r["hi"] for r in rows)
     assert doc["splits"] == SPLITS
+
+
+@pytest.mark.parametrize("area", ["bangladesh", "nepal", "chin", "punjab_haryana"])
+def test_public_features_are_complete_and_checksum_verified(area):
+    output = ROOT / "web/public/data/global"
+    doc = json.loads((output / f"{area}.json").read_text(encoding="utf-8"))
+    feat = load_features(output, doc)
+    assert len(feat) == doc["features"]["rows"]
+    assert not {"cloud", "precip", "rh", "fwi", "dc"}.intersection(feat)
+    paired = feat[feat.M.notna() & feat.V.notna()]
+    for split in SPLITS:
+        assert len(partition(national(paired), split)) >= 156
+    with pytest.raises(ValueError, match="checksum mismatch"):
+        load_features(output, {**doc, "features": {**doc["features"], "sha256": "0" * 64}})

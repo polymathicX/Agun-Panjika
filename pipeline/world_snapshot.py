@@ -77,6 +77,8 @@ def main() -> None:
     output.mkdir(parents=True, exist_ok=True)
     built = datetime.now(UTC).replace(microsecond=0).isoformat()
     summary = {"built_utc": built, "boundary_source": COUNTRIES_URL, "boundary_version": "Natural Earth 1:50m",
+               "assistance": "LLM-assisted implementation. NASA source observations are not synthetic; "
+               "country assignment and statistics are computed by project code.",
                "note": "Raw detections, per sensor; never add sensors to count unique fires. Nominal/high VIIRS "
                "and MODIS confidence >=30 kept. Static heat can remain. Country assignment uses generalized "
                "boundaries; unmatched coastal/offshore points are reported separately. Coverage and fire absence "

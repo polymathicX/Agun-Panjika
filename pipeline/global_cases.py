@@ -1,11 +1,12 @@
 """Reproducible detector-only temporal audits and portable area packages.
 
-Run after the country pipelines and neighbour ingestion. No downloads or credentials
-are needed: inputs are the local FIRMS snapshots. These are retrospective replays,
-not untouched final holdouts or evidence of operational forecast skill.
+Run after the country pipelines and neighbour ingestion, or use --from-packages
+to refit from public checksum-verified feature CSVs without raw inputs or a key.
+These are retrospective replays, not untouched final holdouts or forecast skill.
 """
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 from datetime import UTC, datetime
@@ -75,8 +76,19 @@ def metrics(frame: pd.DataFrame, column: str) -> dict:
             "weeks": len(frame)}
 
 
-def evaluate_case(spec: dict, det: pd.DataFrame, source_hash: str) -> dict:
-    feat = portable_features(det)
+def load_features(output: Path, doc: dict) -> pd.DataFrame:
+    path = output / "features" / f"{doc['id']}.csv.gz"
+    if hashlib.sha256(path.read_bytes()).hexdigest() != doc["features"]["sha256"]:
+        raise ValueError(f"{doc['id']}: public feature checksum mismatch")
+    feat = pd.read_csv(path, float_precision="round_trip")
+    required = {"region_id", "iso_year", "iso_week", "M", "V", "F", "lM", "lF", "month", "rm"}
+    if not required.issubset(feat) or feat.duplicated(["region_id", "iso_year", "iso_week"]).any():
+        raise ValueError(f"{doc['id']}: invalid public feature schema")
+    return feat
+
+
+def evaluate_case(spec: dict, feat: pd.DataFrame, source_hash: str, dates: dict) -> dict:
+    feat = feat.copy()
     paired = feat[feat.M.notna() & feat.V.notna()]
     train, cal, test = (partition(paired, split) for split in ("fit", "calibration", "test"))
     if min(len(train), len(cal), len(test)) < 104 or train.V.sum() < 100:
@@ -108,9 +120,10 @@ def evaluate_case(spec: dict, det: pd.DataFrame, source_hash: str) -> dict:
                 row[key] = round(float(value), 2)
         rows.append(row)
     improve = 100 * (1 - scores["ensemble"]["mae_week"] / scores["naive"]["mae_week"])
-    dates = det.groupby("sensor").acq_datetime_utc.max().dt.strftime("%Y-%m-%d").to_dict()
     return {**{k: v for k, v in spec.items() if k not in ("input", "unit")},
             "version": VERSION, "snapshot_sha256": source_hash, "data_through": dates,
+            "assistance": "LLM-assisted implementation. NB/LightGBM values are model estimates; "
+            "reference observations come from NASA FIRMS, not synthetic data.",
             "splits": SPLITS, "filter": "Confidence >=30% MODIS, nominal/high VIIRS; FIRMS types 2/3 excluded. "
             "No learned static-source filter; residual industrial heat may remain.",
             "evaluation": {"models": scores, "per_region": by_region, "coverage80": round(coverage, 3),
@@ -121,8 +134,13 @@ def evaluate_case(spec: dict, det: pd.DataFrame, source_hash: str) -> dict:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--from-packages", action="store_true",
+                        help="Refit from checksum-verified public feature CSVs; no raw data or key required")
+    args = parser.parse_args()
     output = WEB_DATA / "global"
     output.mkdir(parents=True, exist_ok=True)
+    (output / "features").mkdir(exist_ok=True)
     built = datetime.now(UTC).replace(microsecond=0).isoformat()
     catalog = {"built_utc": built, "version": VERSION, "areas": [],
                "protocol": "Fixed 30% NB / 70% five-seed LightGBM; detector-only features. Fit 2013–2018, "
@@ -135,13 +153,28 @@ def main() -> None:
                            "reminder-new-suomi-npp-observations-cease-november-2-2026"]}
     loaded: dict[Path, pd.DataFrame] = {}
     for spec in CASES:
-        path = ROOT / spec["input"]
-        if path not in loaded:
-            loaded[path] = pd.read_parquet(path)
-        det = loaded[path]
-        if "unit" in spec:
-            det = det[det.unit_id == spec["unit"]]
-        doc = evaluate_case(spec, det, hashlib.sha256(path.read_bytes()).hexdigest())
+        if args.from_packages:
+            original = json.loads((output / f"{spec['id']}.json").read_text(encoding="utf-8"))
+            feat = load_features(output, original)
+            source_hash, dates = original["snapshot_sha256"], original["data_through"]
+            features = original["features"]
+        else:
+            path = ROOT / spec["input"]
+            if path not in loaded:
+                loaded[path] = pd.read_parquet(path)
+            det = loaded[path]
+            if "unit" in spec:
+                det = det[det.unit_id == spec["unit"]]
+            feat = portable_features(det)
+            source_hash = hashlib.sha256(path.read_bytes()).hexdigest()
+            dates = det.groupby("sensor").acq_datetime_utc.max().dt.strftime("%Y-%m-%d").to_dict()
+            fixture = output / "features" / f"{spec['id']}.csv.gz"
+            feat.to_csv(fixture, index=False, float_format="%.17g", compression={"method": "gzip", "mtime": 0})
+            features = {"path": f"features/{spec['id']}.csv.gz", "rows": len(feat),
+                        "sha256": hashlib.sha256(fixture.read_bytes()).hexdigest(),
+                        "description": "Detector-only region-week features, including VIIRS reference labels"}
+        doc = evaluate_case(spec, feat, source_hash, dates)
+        doc["features"] = features
         doc["built_utc"] = built
         (output / f"{spec['id']}.json").write_text(json.dumps(doc, ensure_ascii=False, allow_nan=False,
                                                            separators=(",", ":")), encoding="utf-8")

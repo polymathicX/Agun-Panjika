@@ -4,23 +4,24 @@
 
 This folder is the Git repository and working root; run project commands here unless a command explicitly targets `web/`.
 
-Agun Panjika is a bilingual (English/Bangla) Bangladesh fire-history application for NASA Space Apps. The Python pipeline harmonizes MODIS and VIIRS observations onto a common weekly VIIRS scale, with uncertainty, seasonal context and two-week outlooks. The frontend consumes static exports; there is no application backend or database.
+Agun Panjika is an English/Bangla NASA Space Apps application with worldwide recent observations and evaluated historical fire calendars. The Python pipeline harmonizes MODIS/VIIRS, with uncertainty and experimental outlooks. Recent country observations and historical reconstruction have different scopes. The frontend consumes static exports; there is no application backend or database.
 
 ## Navigation
 
 - `pipeline/run_all.py`: pipeline orchestration. `pipeline/config.py`: paths, country selection and environment loading.
 - `pipeline/`: ingestion, geography/static-source filtering, aggregation, weather, harmonization, sensor continuity, climatology, forecasts and exports.
+- `pipeline/world_snapshot.py`: recent global country packages. `pipeline/global_cases.py`: four portable temporal experiments; `--from-packages` refits from public feature fixtures without a key.
 - `pipeline/schema/region.schema.json`: region export contract; `web/src/lib/types.ts` and `web/src/lib/data.ts`: frontend contracts and loading.
 - `web/src/screens/` and `web/src/components/`: React/TypeScript interface, D3 charts and MapLibre map. `web/src/lib/router.ts`: shared navigation/filter state.
 - `web/src/i18n/en.json` and `bn.json`: paired translation resources.
 - `web/public/data/`: committed scientific exports consumed by the frontend. Raw/intermediate inputs live under gitignored `data/` directories.
 - `tests/`: Python scientific, forecast, schema and contrast checks. `web/scripts/upgrade-regression.mjs`: browser regression runner.
 
-Read `README.md` and `docs/PROJECT_BRIEF.md` for current product/methodology details. Consult `docs/VERIFICATION.md` for reproduction and dated checks, `docs/SCIENTIFIC_REVIEW.md` for source-level evaluation concerns, and `docs/GLOBAL_EXTENSION_PLAN.md` for proposed work. The original product requirements and upgrade/preview/serial-merge documents are historical plans and evidence; verify current source and Git history before treating their claims as current.
+Read `README.md` and `docs/PROJECT_BRIEF.md` for current product details. For scientific claims, read `docs/GLOBAL_EVALUATION.md`; for checks, use `docs/VERIFICATION.md`. `docs/IMPLEMENTATION_STATUS.md` and `docs/GLOBAL_EXTENSION_PLAN.md` separate delivered features from uncollected research evidence. The October scientific audit, original plans and upgrade notes are historical; verify dates before treating their claims as current.
 
 ## Development and verification
 
-Frontend (Node.js 20+, commands from `web/`):
+Frontend (Node.js 22.12+, commands from `web/`):
 
 ```powershell
 npm ci
@@ -49,6 +50,7 @@ Use targeted Python checks for pipeline changes and frontend typecheck/build for
 - For another country, set `AP_COUNTRY` before running the pipeline; `pipeline/config.py` routes outputs into country-specific directories. In PowerShell, use `$env:AP_COUNTRY = "pipeline/countries/npl.json"` and remove it when returning to the default Bangladesh run.
 - Preserve scientific units, provenance, uncertainty and the distinction between raw detections and harmonized totals. Archived point coordinates are not live fires or measured fire intensity; display only metadata the exports actually provide.
 - Keep English and Bangla copy aligned. Preserve shared URL filters, loading/error/retry behavior, mobile layouts, keyboard access and reduced-motion behavior when changing interface components.
+- Preserve Soft Earth styling. Global country discovery uses spinning, zooming and tapping the globe; do not add a visible country search. Retain keyboard/flat-map alternatives and distinguish observation counts from rendering samples.
 - Keep asset/data URLs compatible with Vite's base path for GitHub Pages. The daily refresh/build/deploy workflow is `.github/workflows/daily.yml`; pushes to `main` trigger it.
 
 ## graphify

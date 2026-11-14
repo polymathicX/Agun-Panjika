@@ -3,7 +3,7 @@ import { useFmt } from "../i18n";
 import type { Route } from "../lib/router";
 
 const PRIMARY: {route: Route; en: string; bn: string; icon: string}[] = [
-  {route:"world",en:"World",bn:"সারসংক্ষেপ",icon:"M3 10 10 3l7 7M5 9v8h10V9"},
+  {route:"world",en:"World",bn:"পৃথিবী",icon:"M3 10 10 3l7 7M5 9v8h10V9"},
   {route:"map",en:"Explore",bn:"অনুসন্ধান",icon:"M3 5l4-2 6 2 4-2v12l-4 2-6-2-4 2zM7 3v12M13 5v12"},
   {route:"sensors",en:"Compare",bn:"তুলনা",icon:"M3 16 7 9l3 4 4-8 3 5M3 18h14"},
   {route:"outlook",en:"Outlook",bn:"পূর্বাভাস",icon:"M10 2 2 17h16zM10 8v4M10 14.5v.5"},

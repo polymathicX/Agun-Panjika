@@ -1,0 +1,460 @@
+{
+  "reviewed": "2026-11-14",
+  "timezone": "Asia/Dhaka",
+  "python": {
+    "passed": 76,
+    "skipped": 0,
+    "ruff": "passed"
+  },
+  "frontend": {
+    "typecheck": "passed",
+    "production_build": "passed",
+    "evidence_tests_passed": 3,
+    "npm_audit_vulnerabilities": 0
+  },
+  "browser": {
+    "groups": [
+      {
+        "name": "smoke",
+        "exitCode": 0
+      },
+      {
+        "name": "navigation",
+        "exitCode": 0
+      },
+      {
+        "name": "globe",
+        "exitCode": 0
+      },
+      {
+        "name": "earth3d",
+        "exitCode": 0
+      },
+      {
+        "name": "charts",
+        "exitCode": 0
+      },
+      {
+        "name": "map",
+        "exitCode": 0
+      },
+      {
+        "name": "reliability",
+        "exitCode": 0
+      },
+      {
+        "name": "demo",
+        "exitCode": 0
+      },
+      {
+        "name": "exports",
+        "exitCode": 0
+      },
+      {
+        "name": "scientific",
+        "exitCode": 0
+      },
+      {
+        "name": "global",
+        "exitCode": 0
+      },
+      {
+        "name": "world",
+        "exitCode": 0
+      },
+      {
+        "name": "offline",
+        "exitCode": 0
+      }
+    ],
+    "views": 54,
+    "overflow_findings": 0,
+    "page_errors": 0,
+    "console_errors": 0,
+    "axe_findings": 0,
+    "matrix": [
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "home"
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "panjika"
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "sensors"
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "map"
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "outlook"
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "borders"
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "method"
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "global"
+      },
+      {
+        "width": 1440,
+        "theme": "light",
+        "lang": "en",
+        "route": "world"
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "home"
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "panjika"
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "sensors"
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "map"
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "outlook"
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "borders"
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "method"
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "global"
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "lang": "en",
+        "route": "world"
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "home"
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "panjika"
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "sensors"
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "map"
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "outlook"
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "borders"
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "method"
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "global"
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "lang": "en",
+        "route": "world"
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "home"
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "panjika"
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "sensors"
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "map"
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "outlook"
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "borders"
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "method"
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "global"
+      },
+      {
+        "width": 360,
+        "theme": "dark",
+        "lang": "bn",
+        "route": "world"
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "home"
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "panjika"
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "sensors"
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "map"
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "outlook"
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "borders"
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "method"
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "global"
+      },
+      {
+        "width": 768,
+        "theme": "light",
+        "lang": "bn",
+        "route": "world"
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "home"
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "panjika"
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "sensors"
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "map"
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "outlook"
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "borders"
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "method"
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "global"
+      },
+      {
+        "width": 1280,
+        "theme": "dark",
+        "lang": "en",
+        "route": "world"
+      }
+    ],
+    "world": {
+      "countries": 242,
+      "globePicking": true,
+      "keyboardSelection": true,
+      "sensors": 3,
+      "timeline": true,
+      "watchlist": true,
+      "installability": {
+        "installabilityErrors": []
+      },
+      "offlineShellAndCases": true,
+      "errors": []
+    },
+    "global": {
+      "areas": 4,
+      "transitions": true,
+      "abstention": true,
+      "exports": true,
+      "staleOutlooks": true,
+      "mobileBangla": true,
+      "errors": []
+    },
+    "final_regression": "World/offline route flow rerun after Vary: Origin cache-match fix; responsive matrix unchanged"
+  },
+  "reproduction": {
+    "public_feature_refit": "All four published evaluations exactly reproduced in release environment; not a raw-to-feature audit"
+  },
+  "presentation": {
+    "brief_pages": 6,
+    "roadmap_pages": 5,
+    "slide_pages": 7,
+    "video_seconds": 29,
+    "audio": "none; English captions",
+    "tex_overflow": 0,
+    "missing_glyphs": 0,
+    "visual_review": "all report and slide pages; representative video frames",
+    "browser": {
+      "videoSeconds": 29,
+      "slidesAvailable": true,
+      "viewports": [
+        1440,
+        390
+      ],
+      "overflow": 0,
+      "axeViolations": 0,
+      "pageErrors": []
+    }
+  },
+  "hosted_refresh": {
+    "status": "success",
+    "run": "https://github.com/polymathicX/Agun-Panjika/actions/runs/43594804856",
+    "full_science": "skipped; not verified in this hosted run"
+  },
+  "limits": [
+    "Chromium and emulated phones, not physical iPhone/Android",
+    "No completed practitioner pilot or prospective forecast validation",
+    "Known-period temporal replay, not untouched final holdout",
+    "Worldwide recent observations, four locally fitted historical cases"
+  ]
+}

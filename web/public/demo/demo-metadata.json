@@ -1,0 +1,14 @@
+{
+  "duration_seconds": 29,
+  "slides": 7,
+  "team": "KUETaguns",
+  "narration": "None; English captions",
+  "visuals": "Actual app captures and data plots; real interaction footage",
+  "assistance": "AI-assisted coding, plotting, editorial work and assembly; no synthetic fire observations",
+  "format": "1920x1080, H.264, 30 fps",
+  "sources": [
+    "NASA FIRMS / LANCE / ESDIS",
+    "Natural Earth",
+    "Solar System Scope Earth/cloud textures, CC BY 4.0"
+  ]
+}

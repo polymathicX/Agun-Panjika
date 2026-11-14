@@ -1,38 +1,26 @@
-# Current application captures and scientific figures
+# Visual evidence
 
-Prepared 29 October 2026 from the restored Soft Earth production build. The original design delta through `62c129d` was integrated onto the current main baseline; the pipeline and scientific exports were unchanged. The screenshots show the actual restored interface, including the textured Three.js Earth.
+Current captures: **14 November 2026**, actual production application. These are browser captures, not generated mockups. Earth/cloud textures provide static geographic context. Snapshot dates belong to the data, not the screenshot creation time.
 
-## Application gallery
-
-| View | Full-size capture | What to inspect |
+| View | Capture | What it shows |
 | --- | --- | --- |
-| Overview | [Desktop](screenshots/home-desktop.png), [mobile](screenshots/home-mobile.png), [mobile Bangla](screenshots/home-mobile-bn.png) | Area/year/week selection, geographic sphere, cumulative activity and normal range |
-| Calendar | [Desktop](screenshots/calendar-desktop.png) | Year/week comparison, selected week and estimated-year marks |
-| Sensors | [Desktop](screenshots/sensors-desktop.png) | Raw/factor/harmonized comparison, uncertainty and reported internal results |
-| Map | [Desktop](screenshots/map-desktop.png) | Archived detections, districts and spatial controls |
-| Outlook | [Desktop](screenshots/outlook-desktop.png) | Experimental activity/weather products using the saved snapshot |
-| Borders | [Desktop](screenshots/borders-desktop.png) | Neighbouring-area and aerosol timing comparisons, without causal attribution |
+| Worldwide entry | [Desktop](screenshots/world-hero.png) | Textured interactive Earth, satellite-specific recent counts and source windows |
+| Country selection | [Desktop](screenshots/world-country.png) | Brazil selection, country counts and dated reporting controls |
+| Historical experiment | [Focused](screenshots/global-experiment.png), [full workbench](screenshots/global-cases.png) | A frozen test-year reconstruction and revealable observed reference |
+| Phone | [Globe](screenshots/world-phone.png), [country report](screenshots/world-phone-report.png) | Actual responsive interface and evidence report |
 
-Captures are copied byte-for-byte from the successful production browser checks and showcase capture script. The desktop Soft Earth showcase uses 1440 x 1080, light theme and English; the mobile showcase uses 390 x 1100. The Bangla/dark capture uses width 360. Other desktop views use width 1440, light theme and English. The restored desktop showcase matches the saved original Soft Earth reference byte-for-byte. Route selections use Bangladesh, 2024, week 14 where supported. The underlying export timestamps remain October 2026; the screenshots are not evidence of live feeds or current forecasts. [Verification matrix](verification-2026-10-29.json)
+## Publication figures
 
-## Internal reconstruction benchmark
+![Four-case weekly error comparison](../latex/figures/global-transfer.png)
 
-![Internal national weekly error comparison](figures/model-comparison.png)
+**Weekly error relative to a training-fitted factor, test 2022–2024.** Bangladesh: 25.34% lower; Nepal: 28.49% lower; Chin: 35.02% higher; Punjab–Haryana: 15.43% higher. Each area has its own fit and 156 test weeks. These are known-period temporal replays, not an untouched holdout or unseen-country transfer. No uncertainty bars are inferred from aggregate scores. [Vector PDF](../latex/figures/global-transfer.pdf) · [Model card](../GLOBAL_EVALUATION.md).
 
-**Caption:** National weekly mean absolute error, averaged across internal leave-one-year-out folds over 2012–2025. The ensemble reports 36.964 detections versus 49.450 for a single factor fitted within each fold, a 25.25% reduction. No error bars are shown because this chart summarizes the committed aggregate values, not a newly estimated confidence interval. The comparison is not an untouched final evaluation or operational forecasting result.
+![Raw sensor join and harmonized annual record](../latex/figures/sensor-story.png)
 
-Source: [validation.json](../../web/public/data/validation.json). [PNG](figures/model-comparison.png) · [editable SVG](figures/model-comparison.svg) · [vector PDF](figures/model-comparison.pdf)
+**Bangladesh annual detections, 2003–2025.** The raw join uses MODIS before 2012 and VIIRS thereafter. The harmonized record is on the VIIRS detection scale. The change also contains real annual variation; the illustration does not identify the sensor as the sole cause. Detections are not unique fires. [Vector PDF](../latex/figures/sensor-story.pdf).
 
-## Annual continuity cross-check
+Run `python docs/submission/build.py` with a local production preview to regenerate captures, these figures, the slides and video. AI assisted plotting/assembly; values come from project exports. [Build instructions](../submission/README.md).
 
-![Annual normalized ESA burned area and active-fire detection series](figures/continuity-crosscheck.png)
+## Verification and older assets
 
-**Caption:** Annual ESA burned area, harmonized detections and raw stitched detections for 2003–2024, each divided by its own 2012–2024 mean. Markers indicate the 2012 VIIRS transition and the 2019 ESA product change. ESA uses MRBA v6.0 through 2018 and Sentinel-3 SYN v1.1 from 2019. The lines measure different observables; agreement in broad variability supports plausibility rather than ground-truth fire-count accuracy or proof of a bias-free record.
-
-Source: [partner.json](../../web/public/data/partner.json). [PNG](figures/continuity-crosscheck.png) · [editable SVG](figures/continuity-crosscheck.svg) · [vector PDF](figures/continuity-crosscheck.pdf)
-
-## Reproduction and historical assets
-
-Run `python notebooks/review_figures.py` from the repository root with matplotlib installed. The script produces the files above from committed JSON without downloading or retraining. [Full verification/reproduction instructions](../VERIFICATION.md)
-
-Older assets in `docs/figures/`, `docs/screenshots/` and `docs/readme-assets/` are retained as historical records. Some have old evaluation-year or preview captions; use this directory's figures and current project brief for the 29 October review package.
+[Current verification](../VERIFICATION.md) and its machine-readable record describe the checks behind this release. Earlier screenshots and `figures/` retain the 29 October Bangladesh benchmark and ESA cross-check. They remain historical records; their old captions are not the current portable experiment. [29 October machine record](verification-2026-10-29.json).

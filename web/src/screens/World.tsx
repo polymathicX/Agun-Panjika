@@ -1,11 +1,13 @@
 import { geoEquirectangular, geoPath } from 'd3-geo';
-import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { RequestStatus } from '../components/RequestStatus';
 import { useFmt } from '../i18n';
 import { loadWorldGeo, loadWorldPoints, loadWorldSummary, useAsync } from '../lib/data';
 import { containsPoint, type Hotspot } from '../lib/spatial';
 import type { Route } from '../lib/router';
 import { InstallApp } from '../components/InstallApp';
+import { ShareButton } from '../components/ShareButton';
+import { downloadEvidence } from '../lib/evidence';
 import '../components/Globe.css';
 import './World.css';
 const Earth3D = lazy(() => import('../components/Earth3D'));
@@ -13,18 +15,12 @@ const SENSORS = { noaa20: 'VIIRS NOAA-20', noaa21: 'VIIRS NOAA-21', modis: 'MODI
 
 function AnimatedNumber({ value }: { value: number }) {
   const { num } = useFmt();
-  const [shown, setShown] = useState(value);
-  useEffect(() => {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { setShown(value); return; }
-    const begin = performance.now(), from = shown; let frame = 0;
-    const tick = (now: number) => { const t = Math.min(1, (now - begin) / 650); setShown(Math.round(from + (value - from) * (1 - (1 - t) ** 3))); if (t < 1) frame = requestAnimationFrame(tick); };
-    frame = requestAnimationFrame(tick); return () => cancelAnimationFrame(frame);
-  }, [value]);
-  return <><span aria-hidden="true">{num(shown)}</span><span className="sr-only">{num(value)}</span></>;
+  return <span key={value} className="animated-stat">{num(value)}</span>;
 }
 
 export function World({ params, setParams, go }: { params: URLSearchParams; setParams: (p: Record<string, string | number | undefined>, replace?: boolean) => void; go: (r: Route, p?: Record<string, string | number | undefined>) => void }) {
   const { lang, num } = useFmt(); const bn = lang === 'bn';
+  const reportRef = useRef<HTMLDivElement>(null);
   const { data: world, error, loading, retry } = useAsync(loadWorldSummary, []);
   const { data: geo, error: geoError, loading: geoLoading, retry: retryGeo } = useAsync(loadWorldGeo, []);
   const selected = world?.countries.find(c => c.id === params.get('country'));
@@ -46,7 +42,7 @@ export function World({ params, setParams, go }: { params: URLSearchParams; setP
   const focus = view?.focus ?? selected?.focus ?? [30,15] as [number,number];
   const choose = (country?: string, fly=true) => { const next=world?.countries.find(c=>c.id===country); if(fly)setView({focus:next?.focus ?? [30,15],distance:next ? 1.85 : 3.15}); setParams({country,day:undefined});setPlaying(false); };
   useEffect(()=>{if(world && !view)setView({focus:selected?.focus ?? [30,15],distance:selected ? 1.85 : 3.15});},[!!world]);
-  const pick = (lon: number, lat: number) => choose(geo?.features.find(f => containsPoint(f, lon, lat))?.properties?.id);
+  const pick = (lon: number, lat: number) => {const country=geo?.features.find(f=>containsPoint(f,lon,lat));if(country)choose(country.properties?.id);};
   useEffect(() => {
     if (!playing || !days.length) return;
     const timer = setInterval(() => setParams({ day: (validDay + 1) % days.length },true), 1200);
@@ -60,12 +56,24 @@ export function World({ params, setParams, go }: { params: URLSearchParams; setP
   const title = selected?.name ?? (bn ? 'পৃথিবী' : 'Planet Earth');
   const last24 = stats?.last24h ?? world.countries.reduce((s, c) => s + c.sensors[sensor].last24h, 0);
   const total = stats?.total ?? feed.total;
+  const displayedTotal = validDay < 0 ? total : daily[validDay] ?? 0;
+  const exportReport = (csv: boolean) => {
+    const report = {project:'Agun Panjika',country:selected?.name ?? 'Earth',country_id:id,sensor:SENSORS[sensor],
+      source_url:feed.url,source_sha256:feed.sha256,from_utc:feed.from_utc,through_utc:feed.through_utc,
+      exported_utc:new Date().toISOString(),url:location.href,counts:stats ?? {total,daily,last24h:last24},
+      dates:feed.dates,boundaries:world.boundary_version,limitations:world.note,unassigned_global_detections: selected ? undefined : feed.unassigned,daily_counts_are_country_assigned:true,
+      assistance:'AI-assisted implementation. Source observations are NASA measurements, not synthetic fires.'};
+    const cells=(row:unknown[])=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',');
+    const content=csv ? [cells(['country','sensor','date_utc','country_assigned_detections','source_through_utc','source_sha256']),
+      ...daily.map((count,i)=>cells([report.country,report.sensor,feed.dates[i],count,feed.through_utc,feed.sha256]))].join('\r\n') : JSON.stringify(report,null,2);
+    downloadEvidence(content,`agun-panjika-${id}-${sensor}-${feed.through_utc.slice(0,10)}.${csv?'csv':'json'}`,csv?'text/csv':'application/json');
+  };
   const stale = Date.now() - new Date(feed.through_utc).getTime() > 48 * 3600000;
   const caseId = ({ bgd:'bangladesh', npl:'nepal', mmr:'chin', ind:'punjab_haryana' } as Record<string,string>)[selected?.id ?? ''];
   return <div className="world-experience">
     <section className="world-hero">
       <div className="world-story"><p className="eyebrow">NASA FIRMS / {bn ? 'বিশ্বের আগুনের পর্যবেক্ষণ' : 'A shared view of our planet'}</p><h1>{bn ? <>পৃথিবী দেখুন।<br /><span>আগুনের গল্প বুঝুন।</span></> : <>See Earth.<br /><span>Read its fire story.</span></>}</h1><p className="hero-description">{bn ? 'যেকোনো দেশ বেছে নিন। উপগ্রহের সাম্প্রতিক শনাক্তকরণ দেখুন, দিনের পরিবর্তন অনুসরণ করুন, আর যেখানে যাচাই করা আছে সেখানে ইতিহাস বুঝুন।' : 'Choose any country. Explore recent satellite detections, follow the days, and open evaluated histories where they are available.'}</p>
-        <div className="world-highlight"><span className="eyebrow">{bn ? 'নির্বাচিত এলাকা' : 'Your place on Earth'}</span><h2 aria-live="polite">{title}</h2><strong className="world-big-number"><AnimatedNumber value={total} /></strong><span className="text-sm text-muted">{bn ? '৭ দিনের ফাইলে শনাক্তকরণ' : 'detections in the seven-day feed'}</span><p className="text-xs text-muted mt-2">{SENSORS[sensor]} · {feed.from_utc.slice(0,10)} – {feed.through_utc.slice(0,10)}</p></div>
+        <div ref={reportRef} className="world-highlight"><span className="eyebrow">{bn ? 'নির্বাচিত এলাকা' : 'Your place on Earth'}</span><h2 aria-live="polite">{title}</h2><strong className="world-big-number"><AnimatedNumber value={displayedTotal} /></strong><span className="text-sm text-muted">{validDay < 0 ? (bn ? '৭ দিনের ফাইলে শনাক্তকরণ' : 'detections in the seven-day feed') : `${days[validDay]} UTC ${bn ? 'এ শনাক্তকরণ' : 'country-assigned detections'}`}</span><p className="text-xs text-muted mt-2">{SENSORS[sensor]} · {feed.from_utc.slice(0,10)} – {feed.through_utc.slice(0,10)}</p><p className="text-xs text-muted mt-2">NASA FIRMS / LANCE / ESDIS. Raw detections, not unique fires or an emergency warning. Clouds and coverage gaps can hide activity.</p></div>
         <button type="button" className="btn btn-primary hero-cta mt-4" onClick={() => go('global', { area: caseId ?? 'bangladesh' })}>{bn ? 'ইতিহাসের সমন্বয় পরীক্ষা করুন' : 'Can the history be trusted?'} ↗</button>
       </div>
       <div className="world-globe"><div className="globe-topline"><span>{bn ? 'টেনে ঘোরান · দেশ বেছে নিন' : 'DRAG TO EXPLORE · SELECT A COUNTRY'}</span><button type="button" onClick={() => setFlat(v => !v)}>{flat ? (bn ? 'থ্রিডি পৃথিবী' : '3D globe') : (bn ? 'সমতল মানচিত্র' : 'Flat map')}</button></div>
@@ -84,11 +92,12 @@ export function World({ params, setParams, go }: { params: URLSearchParams; setP
     </section>
     <div className="world-snapshot-note" role="status"><span className={`snapshot-dot ${stale ? 'snapshot-old' : ''}`} /><strong>{stale ? (bn ? 'পুরোনো তথ্য' : 'Older snapshot') : (bn ? 'সাম্প্রতিক প্রকাশিত তথ্য' : 'Latest published snapshot')}</strong><span>{bn ? 'পর্যবেক্ষণ শেষ' : 'Observations through'} {feed.through_utc.replace('T',' ').slice(0,16)} UTC · {bn ? 'সরাসরি জরুরি সতর্কতা নয়' : 'not a live emergency alert'}</span><button type="button" className="btn" onClick={() => location.reload()}>{bn ? 'নতুন করে দেখুন' : 'Check for update'}</button></div>
     {watched.length > 0 && <section className="world-watchlist"><h2 className="eyebrow">{bn ? 'আপনার সংরক্ষিত দেশ' : 'Your watchlist'}</h2><div className="flex flex-wrap gap-2 mt-2">{watched.map(w => world.countries.find(c => c.id === w)).filter(Boolean).map(c => <button key={c!.id} className="chip" type="button" onClick={() => choose(c!.id)}>{c!.name} <strong>{num(c!.sensors[sensor].total)}</strong></button>)}</div></section>}
+    <div className="flex flex-wrap gap-2 no-print mt-4"><ShareButton target={reportRef} filename={`agun-panjika-${id}-${sensor}.png`} title={`${title} NASA observation brief`} /><button type="button" className="btn" onClick={()=>exportReport(false)}>{bn ? 'দেশের তথ্য JSON' : 'Download country evidence'}</button><button type="button" className="btn" onClick={()=>exportReport(true)}>{bn ? 'দৈনিক তথ্য CSV' : 'Download daily CSV'}</button></div>
     <InstallApp />
     <section className="world-results" key={`${id}-${sensor}`}><div className="card p-5"><p className="eyebrow">{title} / {bn ? 'সাম্প্রতিক পর্যবেক্ষণ' : 'Recent observations'}</p><h2 className="text-xl font-bold mt-2">{bn ? 'কোন দিনে কত শনাক্তকরণ?' : 'How does activity vary by day?'}</h2><DailyBars daily={daily} dates={feed.dates} /><p className="text-xs text-muted">{bn ? 'প্রথম ও শেষ দিন অসম্পূর্ণ হতে পারে। দেশভিত্তিক যোগফলে উপকূলের বাইরের বিন্দু নেই।' : 'First and last dates may be partial. Country-assigned totals exclude unassigned coastal/offshore points.'}</p></div>
       <div className="card p-5"><p className="eyebrow">{bn ? 'সংখ্যার অর্থ' : 'What the numbers mean'}</p><div className="world-small-number"><AnimatedNumber value={last24} /></div><p>{bn ? 'এই ফিডের শেষ পর্যবেক্ষণ পর্যন্ত গত ২৪ ঘণ্টায় দেশে শনাক্তকরণ।' : 'country-assigned detections in the 24 hours ending at this feed’s latest observation.'}</p><p className="text-sm text-muted mt-4">{total === 0 ? (bn ? 'কোনো শনাক্তকরণ রেকর্ড হয়নি। এতে আগুন নেই বা এলাকা নিরাপদ—এমন প্রমাণ হয় না।' : 'No retained detections were recorded. This does not establish absence of fire or safety.') : (bn ? 'এগুলো অনন্য আগুন বা পোড়া জমি নয়। মেঘ, সেন্সর ও উপগ্রহের সময় ফল বদলাতে পারে; শিল্পের তাপও থাকতে পারে।' : 'These are not unique fires or burned area. Clouds, sensor sensitivity and overpass timing affect detection; industrial heat may remain.')}</p><a className="btn mt-4" href="https://firms.modaps.eosdis.nasa.gov/map/" target="_blank" rel="noreferrer">{bn ? 'NASA FIRMS খুলুন' : 'Inspect in NASA FIRMS'} ↗</a></div>
     </section>
-    <section className="global-launch"><div><p className="eyebrow">{bn ? 'আজকের বাইরে' : 'Beyond the latest observations'}</p><strong>{caseId ? (bn ? 'এই অঞ্চলের পরীক্ষিত ইতিহাস আছে।' : 'An evaluated historical case is available in this region.') : (bn ? 'এই দেশের সমন্বিত ইতিহাস এখনো যাচাই করা হয়নি।' : 'This country does not yet have an evaluated harmonized history.')}</strong><p className="text-sm text-muted mt-1">{bn ? 'সাম্প্রতিক বিন্দু ইতিহাসের তুলনাযোগ্যতা প্রমাণ করে না। চারটি কেসে পদ্ধতি ও ব্যর্থতা দেখুন।' : 'Recent points do not establish comparable history. Inspect four cases, their uncertainty and their failures.'}</p></div><button className="btn btn-primary" type="button" onClick={() => go('global',{area:caseId ?? 'bangladesh'})}>{bn ? 'ঐতিহাসিক কেস' : 'Explore historical cases'} ↗</button></section>
+    <section className="global-launch"><div><p className="eyebrow">{bn ? 'আজকের বাইরে' : 'Beyond the latest observations'}</p><strong>{!selected ? (bn ? 'চারটি এলাকায় ইতিহাস যাচাই করুন।' : 'Inspect evaluated histories in four areas.') : caseId ? (bn ? 'এই অঞ্চলের পরীক্ষিত ইতিহাস আছে।' : 'An evaluated historical case is available in this region.') : (bn ? 'এই দেশের সমন্বিত ইতিহাস এখনো যাচাই করা হয়নি।' : 'This country does not yet have an evaluated harmonized history.')}</strong><p className="text-sm text-muted mt-1">{bn ? 'সাম্প্রতিক বিন্দু ইতিহাসের তুলনাযোগ্যতা প্রমাণ করে না। চারটি কেসে পদ্ধতি ও ব্যর্থতা দেখুন।' : 'Recent points do not establish comparable history. Inspect four cases, their uncertainty and their failures.'}</p></div><button className="btn btn-primary" type="button" onClick={() => go('global',{area:caseId ?? 'bangladesh'})}>{bn ? 'ঐতিহাসিক কেস' : 'Explore historical cases'} ↗</button></section>
     <section className="world-impact"><div><span>01</span><h2>{bn ? 'নিজের এলাকা বুঝুন' : 'Understand your place'}</h2><p>{bn ? 'শিক্ষার্থী ও স্থানীয় সংগঠন পর্যবেক্ষণ দেখে প্রশ্ন তুলতে পারে।' : 'Students and local groups can inspect observations and ask better questions about their landscape.'}</p></div><div><span>02</span><h2>{bn ? 'পর্যবেক্ষণের প্রস্তুতি নিন' : 'Plan monitoring'}</h2><p>{bn ? 'পরীক্ষিত মৌসুমি ক্যালেন্ডার গবেষক ও ভূমি ব্যবস্থাপকদের নজরদারির সময় ভাবতে সাহায্য করতে পারে।' : 'Evaluated seasonal calendars can help researchers and land managers identify periods worth monitoring.'}</p></div><div><span>03</span><h2>{bn ? 'প্রমাণসহ শেয়ার করুন' : 'Share with context'}</h2><p>{bn ? 'তারিখ, উৎস ও অনিশ্চয়তা সঙ্গে রেখে তথ্য দিন; মানুষের ওপর প্রভাব এখনো মাঠে যাচাই করা হয়নি।' : 'Share dates, sources and uncertainty together. Benefits to real decisions still need practitioner evaluation.'}</p></div></section>
     <details className="mt-4"><summary>{bn ? 'বিশ্বব্যাপী তথ্যের উৎস ও সীমা' : 'Worldwide sources and coverage limits'}</summary><p className="text-sm text-muted my-2">{world.note}</p><p className="text-xs text-muted">{world.boundary_version} · {num(world.countries.length)} countries/territories · <a href="https://www.naturalearthdata.com/about/terms-of-use/">Natural Earth credits</a> · NASA FIRMS / LANCE / ESDIS. {num(feed.unassigned)} unassigned detections.</p><div className="flex flex-wrap gap-3 mt-2 text-sm">{Object.entries(world.sensors).map(([s,f]) => <a key={s} href={f.url}>{SENSORS[s as keyof typeof SENSORS]} CSV ↗</a>)}</div></details>
   </div>;

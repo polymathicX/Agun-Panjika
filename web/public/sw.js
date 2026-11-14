@@ -30,7 +30,8 @@ self.addEventListener("fetch", (e) => {
 
   e.respondWith(
     caches.open(CACHE).then((cache) =>
-      cache.match(req).then((hit) => {
+      // Public static modules can vary on Origin, which differs from the precache request.
+      cache.match(req, { ignoreVary: true }).then((hit) => {
         const net = fetch(req)
           .then((res) => {
             if (res.ok) cache.put(req, res.clone());
