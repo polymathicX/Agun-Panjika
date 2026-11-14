@@ -1,10 +1,11 @@
-# Documents to share
+# Files to share
 
-LaTeX report editions prepared on 29 October 2026 from the project documentation:
+Current editions: **14 November 2026**.
 
-- [Project brief](PROJECT_BRIEF.pdf): eight A4 pages. [Markdown source](../PROJECT_BRIEF.md)
-- [Global extension plan](GLOBAL_EXTENSION_PLAN.pdf): seven A4 pages. [Markdown source](../GLOBAL_EXTENSION_PLAN.md)
+1. [PROJECT_BRIEF.pdf](PROJECT_BRIEF.pdf): complete six-page project overview for our mentor.
+2. [GLOBAL_EXTENSION_PLAN.pdf](GLOBAL_EXTENSION_PLAN.pdf): five-page delivery record and next research plan.
+3. [GLOBAL_DEMO_SLIDES.pdf](GLOBAL_DEMO_SLIDES.pdf): seven-slide visual introduction; also a global-demo alternative.
 
-These replace the earlier browser-print PDFs. They use dedicated cover pages, serif body text, readable booktabs tables, native mathematical notation, vector charts, numbered figures, deliberate page breaks and running headers. Links remain clickable; text is selectable and the PDF outline supports navigation.
+Send the first two directly, with the [live app](https://polymathicx.github.io/Agun-Panjika/) and [repository](https://github.com/polymathicX/Agun-Panjika). Add the deck if a quick visual overview would help. The [29-second captioned video](https://polymathicx.github.io/Agun-Panjika/demo/) is the other demo option.
 
-The reports organize the material for a mentor's reading; the full Markdown documents retain the detailed source discussion. Reproducible [LaTeX sources and build instructions](../latex/README.md) are included. Regenerate and visually inspect the PDFs when their substantive content changes. The snapshot and scientific limitations remain explicit; typesetting adds no new validation or proposed features.
+Editable sources and build instructions: [A4 reports](../latex/README.md), [slides/video](../submission/README.md). The reports separate working software from independent evidence still needed. The team must review the package and perform the official submission.

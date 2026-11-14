@@ -1,172 +1,56 @@
-# Proposed global extension and evidence plan
+# Global extension: delivered work and next research
 
-Prepared 29 October 2026 (Asia/Dhaka). This proposal builds on the reviewed prototype. Extensions below are future work, with evidence required before claiming them as delivered. The purpose is a stronger, useful and defensible submission; an award cannot be guaranteed.
+**14 November 2026 · Team KUETaguns**
 
-## Product direction
+[Typeset PDF](pdf/GLOBAL_EXTENSION_PLAN.pdf) · [Project brief](PROJECT_BRIEF.md) · [Item-by-item delivery status](IMPLEMENTATION_STATUS.md) · [Original 29 October proposal](archive/GLOBAL_EXTENSION_PLAN-2026-10-29.md)
 
-Make Agun Panjika a fire calendar whose users can inspect whether a change in apparent activity survives a change in satellite sensor. Prove the method in several contrasting settings, rather than calling the Bangladesh model globally valid because the interface displays a globe.
+The original proposal asked us to make sensor comparability inspectable and evaluate it beyond Bangladesh. That work now has a public implementation: worldwide recent observations, four historical cases, a sensor-switch experiment, source-rich exports and a phone-friendly PWA. This document records what those additions establish and what still needs research. Winning an award remains a judging decision.
 
-The central journey is: choose a supported area and period, compare activity with its historical normal, inspect sensor/coverage effects and uncertainty, then share a dated report. A useful result can include an explicit statement that there is insufficient evidence to compare a period reliably.
+## Delivered in this build
 
-This extends the current scientific contribution and the actual challenge. It is more defensible than adding unrelated prediction, smoke-arrival, chatbot or visual effects without supporting evidence. The app already contains a geographic sphere, maps, seven screens, sonification, bilingual views, alerts and a guided tour; another presentation feature alone does little to establish new scientific or practical value.
-
-## Proposed user and evidence workflow
-
-```mermaid
-flowchart LR
-    A["Select an evaluated area package"] --> B{"Enough data and suitable scale?"}
-    B -->|Yes| C["Comparable calendar and season status"]
-    B -->|No| N["Explain limits or suggest a supported area"]
-    C --> D["Inspect raw / factor / harmonized transition"]
-    D --> E["Export dated evidence and uncertainty"]
-    V["Independent case evaluation"] -.-> A
-    U["Practitioner and comprehension study"] -.-> E
-```
-
-The proposed differentiator is inspectable comparability across evaluated areas, including an honest insufficient-evidence state. A global map alone does not supply that evidence.
-
-## Present foundation
-
-- Bangladesh record from 2001 through the checked-in observations of 9 October 2026.
-- Five regions, 64 districts, and CHT local calendars for 25 upazilas and 124 unions.
-- MODIS reconstruction using a 30% negative-binomial / 70% bagged LightGBM ensemble; internal leave-one-year-out comparisons over 2012–2025.
-- Current reported national weekly MAE: 36.964 versus 49.450 for the fitted single-factor baseline. This is an internal result, with independence concerns to resolve before stronger claims.
-- Uncertainty, successor-sensor comparisons, static-source filtering, ESA cross-checks, downloadable scientific exports and a static React frontend.
-- Country configuration and a Nepal example. This establishes a starting point for transfer, not proven performance worldwide.
-
-Sources: [scientific review](SCIENTIFIC_REVIEW.md), [product review](PROJECT_BRIEF.md), [validation export](../web/public/data/validation.json), [configuration](../pipeline/config.py).
-
-## Priority and scope
-
-| Priority | Proposed work | Why it matters | Evidence required before describing it as delivered |
-| --- | --- | --- | --- |
-| P0 | Independent scientific evaluation and consistent claims | Makes the central harmonization claim defensible | Versioned splits, fold-local learned preprocessing/calibration, locked final holdout, reproducible baseline comparison |
-| P0 | Reliable dated public demo | Lets mentors and judges inspect the actual product | Verified public URL, fresh/dated exports, successful refresh/build/deploy, stale-data handling |
-| P1 | Independently evaluated additional regions | Demonstrates a bounded global extension | Bangladesh plus Nepal and one contrasting setting chosen with a domain reviewer; per-case results and failure analysis |
-| P1 | Sensor-transition comparison view | Makes the correction inspectable and understandable | Same-area raw/factor/model curves, coverage/source labels, held-out transition experiment and uncertainty |
-| P1 | Small stakeholder/comprehension study | Connects scientific output to an actual user decision | Completed protocol, measured comprehension, documented misunderstandings and resulting revisions |
-| P2 | Supported-area selection and custom polygon workflow | Makes the calendar adaptable to users' areas | Geometry/provenance contract, coverage checks, area-specific evaluation and clear unsupported-area behavior |
-| P2 | Shareable dated evidence report | Helps users communicate results without losing caveats | Area, dates, data/model version, observed/estimated source, uncertainty, baseline and a reproducible link/export |
-| Later | Wider deployment and operational warning integration | Could create longer-term value | Domain partnership, prospective forecast evaluation, actual delivery testing and monitoring |
-
-The order is deliberate: fix the evidence and access, deliver one distinctive comparison workflow, and validate its usefulness. Wider geography and new alerts should not outrun those foundations.
-
-## Scientific work before global claims
-
-### Separate reconstruction and issue-time prediction
-
-The harmonization model uses neighbouring MODIS weeks, including next-week counts. That can be appropriate for retrospective reconstruction. It is not an issue-time forecasting feature. Document the data availability cutoffs and keep the reconstruction evaluation separate from the two-week outlook evaluation.
-
-For prospective testing, refit learned preprocessing and reconstruction within each temporal split, or use a clearly restricted observed-only history. Archive actual weather forecasts at issue time. The current perfect-future-FWI experiment is an optimistic sensitivity test; it does not establish operational forecast accuracy.
-
-### Use independent evaluation and calibration
-
-Lock feature/model/weight choices before evaluating the final holdout. Fit static-source decisions, model calibration and uncertainty calibration using permitted training data only. For strict nested uncertainty evaluation, the evaluation year must be absent from all model fits that generated calibration residuals, not merely removed from the residual list.
-
-Report national and regional weekly MAE, off-season MAE, annual-total error, coverage and interval width. Include weak years and region failures. Report the fixed 4.4x factor, within-fold fitted factor and monthly-factor baselines alongside the ensemble. A genuine outcome may be that a simpler method is adequate in a particular setting.
-
-### Validate sensor handover consistently
-
-Exercise main, district/local, neighbour and point exports around simulated handover and missing-sensor weeks. Include real zeros, missing coverage, one or both successor satellites, month boundaries and a nonidentity fitted correction. The current identity choice can hide divergent implementations. Confirm that uncertainty and provenance survive all the way into exported documents and UI labels.
-
-### Treat static-source removal as an evaluated heuristic
-
-Use a new blind sample after locking the filter. Record positives, negatives and uncertain cases; report sample size, uncertainty and a check on wrongly removed vegetation fires. The existing final 16/20 positive image sample follows tuning and is too small to support a general industrial-source accuracy claim.
-
-Sources and code locations for these findings are in [SCIENTIFIC_REVIEW.md](SCIENTIFIC_REVIEW.md).
-
-## Global extension that can be demonstrated honestly
-
-Start with two or three explicit cases, not an unrestricted worldwide accuracy claim. Bangladesh remains the reference case; reproduce the Nepal example; select a third geography with a domain reviewer because its seasonality, land cover or static-source mix challenges the method.
-
-For each case, publish:
-
-1. Boundary, selected area, dataset versions, coverage and sensor overlap.
-2. Training/validation cutoffs, sample size and baseline methods.
-3. The same metric definitions, uncertainty checks and transition diagnostics.
-4. A short discussion of what transferred and what required recalibration.
-5. Any independent burned-area or local evidence available, described as a cross-check of a different observable.
-
-The current Nepal configuration is an entry point. Fresh reproducible results are needed before using it as evidence in a new submission. If an area lacks enough overlap or stable evaluation, show that limitation and avoid unsupported harmonized precision.
-
-### Supported areas first; arbitrary polygons second
-
-The current model is trained on region-week aggregates, not on arbitrary pixel selections. A drawing tool cannot make its estimates valid at every polygon scale. The first global demonstration can use prebuilt, evaluated area packages served by the existing static app.
-
-Introduce a small area specification containing geometry/boundary version, time window, source sensors, coverage thresholds and output/model version. A pipeline build generates one evaluated package per supported area. The UI can select those packages and show their source and validation metadata.
-
-A later custom-polygon workflow needs server-side or asynchronous computation, or a validated spatial aggregation method over precomputed units. Choose the architecture after measuring data size, compute cost and scientific validity. Keep FIRMS credentials on the pipeline/server side. Do not present a global map of archived points as a global calibrated reconstruction.
-
-Acceptance criterion: an added area can be reproduced from its specification, retains clear observed/estimated labels, and either passes its declared evaluation requirements or visibly abstains. Thresholds for overlap, scale and acceptable error should be set with a domain reviewer before running the final cases.
-
-## Distinctive sensor-transition comparison
-
-Build on the existing Sensors screen rather than creating a disconnected new product. Let a user select one evaluated area, a transition date and a period. Show raw sensor observations, a naive joined series, the fitted-factor result and the harmonized result on comparable axes. Explain whether the apparent jump persists after correction.
-
-Use held-out overlap periods to simulate a handover: hide the reference sensor for the selected period, reconstruct it from the other sensor, then reveal the withheld observations for evaluation. Make training/evaluation periods explicit. For periods without reference observations, label the reconstructed result and its uncertainty rather than implying it is directly measured.
-
-Add a compact evidence panel: selected area, source sensor, completeness, model version, test error, uncertainty and data-through date. Reuse this in the dated report and CSV metadata. This turns provenance into something a user can inspect rather than a list of citations they must trust.
-
-Acceptance criterion: a first-time user can distinguish a raw sensor artifact from a supported change in the comparable record, identify which points are estimated, and find the source/date without assistance. Evaluate the transition metric on withheld data, not only a visually attractive chart.
-
-## User study and practical impact
-
-Use the existing blank five-person protocol as a pilot, not a claim of population-wide usability. Include at least one domain practitioner if feasible and review Bangla/place-name terminology with an appropriate speaker or community reviewer.
-
-Ask users to choose an area, judge whether a selected season is unusual, identify uncertainty/estimated years, and share a report that preserves those caveats. Record accuracy, time, errors and user explanations. The repository's proposed targets are at least four of five correct interpretations and median response below ten seconds; retain them as proposed pilot criteria, not achieved outcomes. Add an explicit uncertainty/provenance comprehension question.
-
-Record the practical decision the user would make and what existing information they compare against. A useful pilot can establish interpretation and workflow fit; it cannot establish fires prevented or lives saved. Revise the product from observed misunderstandings before scaling the study.
-
-Source: [existing user-test protocol](Agun%20Panjika%20%E2%80%94%20User%20Test%20Protocol.md).
-
-## Release and documentation work
-
-- Repair the failed refresh pipeline after diagnosing its actual logs; a local build pass does not establish hosted refresh success.
-- Publish and independently check a public demo URL, loading/error recovery and visible freshness. Explain stale observations and suppress or clearly expire old forecast products.
-- Reconcile current code, exported metrics, Method copy, translations, README branch statuses and citation dates. Current Method prose says 50/50 and 2012–2024 while the model/export says 30/70 and 2012–2025.
-- Review the five current npm advisory groups, including the critical MapLibre advisory, through a separate dependency update and regression pass. This review did not change dependencies or establish exploitability in this app.
-- Decide on a project license and keep source/imagery/data credits. A public repository alone does not establish a project-wide open-source license.
-- Prepare a concise technical brief, a reproducibility recipe, a limitations/model note, user-test findings and a claim-to-evidence table. The [project brief](PROJECT_BRIEF.md), [scientific review](SCIENTIFIC_REVIEW.md) and [verification report](VERIFICATION.md) provide that starting inventory; they do not replace new experiments.
-
-## Suggested milestones
-
-These are dependency-based milestones, not competition deadlines or team commitments.
-
-| Milestone | Deliverable | Exit condition |
+| Original priority | Implementation | Acceptance evidence |
 | --- | --- | --- |
-| A: establish a reliable baseline | Aligned method/results note, frozen input snapshot, functioning demo | Public link works; freshness/version visible; local tests/build/browser suite and hosted refresh pass |
-| B: audit scientific independence | Evaluation protocol and reproducible benchmark | Domain review of splits/calibration; independent final results reported with failures |
-| C: one global extension | An additional evaluated area plus transition comparison | Reproducible area package, baseline/error/coverage evidence, supported-area limits shown |
-| D: test practical use | Completed small user pilot and revised workflow | Recorded task results and uncertainty comprehension; improvements linked to observed issues |
-| E: package the submission | Short demo/slides, project description, evidence links and credits | Current rules confirmed, public links checked, every numerical claim traced to an artifact |
+| A reliable dated public product | GitHub Pages, separate static publishing and six-hour global refresh, feed dates and stale notices | Hosted global refresh/deploy succeeds; software verification is recorded separately from model validity |
+| Evaluation with separated calibration | Fixed detector-only model; fit 2013–18, calibration 2019–21, test 2022–24 | Four complete area packages, all baselines, regional failures and nominal-80% coverage |
+| Contrasting additional areas | Nepal, Chin and Punjab–Haryana alongside Bangladesh | Two gains and two losses versus a fitted factor; no worldwide extrapolation of these scores |
+| A visible sensor-switch experiment | Test-year/week controls, raw/factor/model curves and revealable VIIRS | Frozen test predictions; reference hidden only by the interaction, not retraining |
+| Continuity and missing-source integrity | Shared national/local/neighbour handover, per-week map source, bridge bounds | Nonidentity-factor, zero, missing-sensor, outage and boundary-week tests |
+| Portable evidence briefs | Historical PNG/JSON/CSV/print; recent-country PNG/JSON/daily CSV | Dates, sources, hashes, uncertainty and limitations accompany outputs |
+| Accessible global discovery | Spin/tap/zoom globe, keyboard/flat-map alternatives, daily playback | Responsive browser checks, reduced motion and explicit rendering-sample notice |
+| Useful repeat mobile visits | Local watchlist, installable PWA, offline reference packages | Chromium installability criteria and real service-worker offline checks |
+| Reproducible public methods | Compact checksum-verified feature CSVs and a no-key refit command | All four published evaluations reproduced in the release environment |
+| A compliant presentation package | Seven English slides, 29-second captioned demo, project-page draft and credits | Page-count, duration, public-link and visual checks; team submission still required |
 
-## Submission materials and rules
+## What the new evaluation tells us
 
-The supplied [2026 Bangladesh Participants Guide](https://docs.google.com/document/d/1mSOxplyht5kii8GcCnFaGA-vMHIAVypjl4N6PobnaYQ/edit?usp=sharing) distinguishes a local 240-second presentation from a global under-30-second video or seven-slide alternative. It asks for accessible public materials, English presentation/subtitles, NASA-data attribution and AI/third-party disclosures. Its deadline text conflicts in places, and it is not independently established as the final global NASA judging policy. Confirm the applicable global format, cutoff and permitted edits with the organizers and final official judging/submission guidance.
+The ensemble lowers weekly MAE by 25.34% in Bangladesh and 28.49% in Nepal against the training-fitted factor. It raises error by 35.02% in Chin and 15.43% in Punjab–Haryana. Nominal-80% coverage ranges from 73.7% to 81.4%. These differences are material; the app withholds reconstructed pre-VIIRS rows for the unsuccessful cases. Nepal's factor is also better on annual totals. [Model card and complete baselines](GLOBAL_EVALUATION.md).
 
-The supplied [project video](https://youtu.be/9FMIzcXhqB4) is 2:42 according to public player metadata. Keep it as project background and create a separate short global demonstration if the applicable rule requires one. Its actual spoken content was not accessible for transcript review. The repository's four-minute script is also a separate artifact.
+Each model has local training data. These are separately fitted cases, not a model transferred to an unseen country. Test years were already known in development. The temporal separation improves the design, but an untouched final evaluation has not been created retroactively.
 
-Suggested short-demo sequence: show the sensor discontinuity; show the comparable calendar and uncertainty; show one evaluated transfer case; close with the user question it helps answer. Include only metrics that can be explained and reproduced. Check the final official duration before production rather than assuming that the supplied guide's limits are final.
+## Next research gates
 
-The linked NotebookLM requires login and the Claude build artifact's content was inaccessible during this review. Neither was treated as verified rules. See [sources and submission notes](SOURCES_AND_SUBMISSION.md) for access details and sources.
-
-## How the plan strengthens a submission
-
-| Review lens | Proposed evidence | Artifact to show |
+| Work package | Method and deliverable | Evidence needed before the claim |
 | --- | --- | --- |
-| Scientific validity | Independent temporal/geographic evaluation and explicit calibration limits | Benchmark protocol, split manifest and complete result table |
-| Challenge relevance | Comparable histories and calendars through sensor transitions | One supported-area comparison using actual observations |
-| Practical impact | Correct interpretation and a documented practitioner need | Completed task study and workflow feedback |
-| Creativity | An inspectable transition experiment and low-data abstention | Raw-versus-corrected reveal and a failure example |
-| Presentation | Working public materials and a focused explanation | Short demo/slides, dated brief, sources and reproducible links |
+| Locked final evaluation | Freeze preprocessing, model choices and primary metrics; pre-register new temporal/geographic evaluation; refit calibration inside each permitted training partition | Report every baseline and area, seasonal/regional errors, bootstrap uncertainty where justified, and failures. A reviewer agrees the lock precedes access to the final labels. |
+| Industrial-source labels | Collect fresh blind positive/negative/uncertain labels independently of the filter; include likely vegetation fires | Precision/recall and retained-fire sensitivity with uncertainty; do not infer accuracy from a small hand-picked imagery sample. |
+| Coverage and observation quality | Track retrieval success, source availability and relevant cloud/quality context at the intended scale | Distinguish real zero, no retrieval and obscured observation; measure interval coverage across activity/season/sensor regimes. |
+| Scale and geographic transport | Test additional independently chosen fire regimes; compare fixed/simple baselines and region-specific fits | Evidence before extending historical reconstruction to arbitrary polygons or more countries. Worldwide recent observations can remain available meanwhile. |
+| Human comprehension pilot | Run the existing task protocol with real students/practitioners: identify source, date, observed vs estimated, interval meaning and next action | Anonymized task outcomes, observed interpretation errors, consent and documented revisions. No invented participant rows or adoption claims. |
+| Prospective outlooks | Archive actual issue-time weather and model outputs; use rolling-origin fits and independently calibrated intervals | Forecast error/coverage against honest baselines, alert usefulness and delivery monitoring before operational warning claims. |
+| Field/mobile resilience | Test physical low-end Android/iPhone, limited connectivity and assistive technologies | Recorded device/browser results, memory/interaction performance and accessible task completion; emulation is only preliminary. |
 
-These are planning lenses, not a confirmed global scoring formula. The mentor can help decide which missing artifact matters most before the team allocates implementation effort.
+## Practical product priorities after review
 
-## Decisions to take to the mentor
+Keep the country watchlist and dated brief as the main repeat-use journey. Add notifications or agency integrations only if a practitioner identifies a decision they improve and the source quality supports it. Broad multilingual support should follow reviewed translations; automatically generated scientific language is not evidence of accessibility.
 
-1. What independent evaluation is necessary for the harmonization claim?
-2. Should the next deliverable be a deeper Bangladesh pilot or a validated second-country case?
-3. Which user decision and domain reviewer should guide the prototype?
-4. How should the contribution be distinguished from existing sensor-fusion work?
+Arbitrary-polygon input is optional in the challenge and is deliberately withheld for historical inference until the model is validated at that scale. The current globe provides global recent-data discovery, and four explicit packages provide historical evidence. No extra visual control should imply unsupported local precision.
 
-Use those decisions to narrow the implementation scope. The proposal is designed to improve the submission's evidence and usefulness; awards remain a judging outcome.
+## Suggested academic review
+
+We would value a decision on one primary research question, the final evaluation design and one stakeholder task. A mentor could help recruit a remote-sensing reviewer, identify an appropriate practitioner and review the distinction between reconstruction and forecasting. A paper should follow the missing independent evidence rather than assume it from a polished interface.
+
+## Submission and claims
+
+Use the [current official research note](GLOBAL_JUDGING_RESEARCH.md), [project-page draft](submission/PROJECT_PAGE_DRAFT.md), [sources](SOURCES_AND_SUBMISSION.md) and [assistance disclosure](DATA_AND_AI_DISCLOSURE.md). The demo alternatives satisfy the file-format limits, but the team still needs to review names, public links, originality/credits and the official Submit for Judging confirmation. The older local video exceeds the global short-demo limit.
+
+The original full proposal is preserved in the archive. [Implementation status](IMPLEMENTATION_STATUS.md) maps each item to the current delivery or the evidence that remains uncollected.

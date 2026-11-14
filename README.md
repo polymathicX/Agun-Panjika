@@ -2,214 +2,139 @@
 
 # Agun Panjika · আগুন পঞ্জিকা
 
-**A comparable fire history. A clearer view of the season.**
+**A fire history you can inspect.**
 
-Team **KUETaguns** · KUET, Khulna, Bangladesh<br/>
-NASA Space Apps Challenge 2026 · *Harmonization of MODIS and VIIRS Hot Spots*
+Team **KUETaguns** · NASA Space Apps Challenge 2026<br>
+*Harmonization of MODIS and VIIRS Hot Spots*
 
-[Project video](https://youtu.be/9FMIzcXhqB4) · [Project brief](docs/PROJECT_BRIEF.md) · [Global extension proposal](docs/GLOBAL_EXTENSION_PLAN.md) · [Academic review guide](docs/MENTOR_BRIEFING.md)
+[Open the app](https://polymathicx.github.io/Agun-Panjika/) · [29-second demo](https://polymathicx.github.io/Agun-Panjika/demo/) · [Seven slides](docs/pdf/GLOBAL_DEMO_SLIDES.pdf)
 
-[Download project brief (LaTeX PDF)](docs/pdf/PROJECT_BRIEF.pdf) · [Download global extension plan (LaTeX PDF)](docs/pdf/GLOBAL_EXTENSION_PLAN.pdf) · [Report sources](docs/latex/README.md)
+[Project brief PDF](docs/pdf/PROJECT_BRIEF.pdf) · [Global roadmap PDF](docs/pdf/GLOBAL_EXTENSION_PLAN.pdf) · [Model card](docs/GLOBAL_EVALUATION.md) · [Mentor reading guide](docs/MENTOR_BRIEFING.md)
 
-<img src="docs/review/screenshots/home-desktop.png" alt="Restored Soft Earth design: textured globe, soft blue and cream surfaces, coral accents and linked fire-season controls" width="100%"/>
+<img src="docs/review/screenshots/world-hero.png" alt="Actual Soft Earth interface with textured interactive globe, recent NASA observations and satellite-specific counts" width="100%">
 
 </div>
 
-Agun Panjika (Fire Almanac) helps a user investigate **“Is this fire season normal for this area?”** It combines a Python scientific pipeline with an English/Bangla web application, starting with Bangladesh and the Chittagong Hill Tracts.
+Agun Panjika brings two questions together: **What are satellites observing in my country now?** And **how can we compare fire activity when the observing instruments change?** Spin the Earth, zoom in and tap a country. Then inspect a dated observation brief or explore a historical calendar whose sensor correction can be checked against real VIIRS measurements.
 
-MODIS and VIIRS observe fire at different resolutions and sensitivities. Simply joining their counts can make a change of sensor look like a change in burning. We reconstruct earlier observations on a common weekly VIIRS scale, show uncertainty, and connect that history to calendars, maps and seasonal comparisons.
+MODIS and VIIRS have different resolutions and sensitivities. Joining raw counts can make a change of instrument look like a change in burning. Our historical pipeline estimates earlier weekly activity on a VIIRS S-NPP detection scale and keeps observations, estimates and uncertainty distinguishable.
 
-> **Current snapshot · 29 October 2026:** the **Soft Earth design is restored on `main`**, alongside the eight interface upgrades. The screenshots below show the actual production build: a textured Earth, soft blue/cream surfaces and coral accents. Committed observations end on **9 October 2026**; the saved outlooks are archived examples. Earth/cloud textures provide static geographic context, not live satellite imagery. A working public deployment has not been verified.
+> **14 November 2026 release:** recent observations cover **242 Natural Earth countries and territories**, with MODIS, NOAA-20 and NOAA-21 kept separate. Historical reconstruction is evaluated in **four South Asian areas**, not worldwide. The Soft Earth design remains. Static Earth/cloud textures are geographic context, not live weather. The app shows each feed's observation window and flags stale snapshots.
 
-## Start here
+## Start with a place
 
-| What you want to understand | Read |
+1. **Spin, zoom and tap.** Explore recent observations on a textured 3D Earth. No country search is needed; keyboard selection and a flat map are available as alternatives.
+2. **Read the source.** Change the satellite or day, play the timeline and inspect the country's counts. Detections are not unique fires; repeat observations and industrial heat can remain.
+3. **Keep the evidence.** Save a country locally, export its dated PNG/JSON/daily CSV, or open a supported historical case and reveal the reference observations.
+4. **Return on a phone.** Install the PWA through the browser's install/share menu. Global summaries and historical cases work offline after installation; country points are cached on visit. New observations and external map tiles need connectivity.
+
+<table><tr>
+<td width="67%"><img src="docs/review/screenshots/global-experiment.png" alt="Actual sensor-switch experiment showing model, factor, raw join and withheld VIIRS reference" width="100%"><br><b>Inspect the correction.</b> Choose a test year, move the sensor-switch week and reveal VIIRS.</td>
+<td><img src="docs/review/screenshots/world-phone.png" alt="Actual responsive phone interface with the interactive Earth" width="100%"><br><b>Keep a country close.</b> Local watchlist, dated reports and cached reference data.</td>
+</tr></table>
+
+## What the project delivers
+
+| Capability | Scope and interpretation |
 | --- | --- |
-| The complete project, methods, results and limits | [Project brief for academic review](docs/PROJECT_BRIEF.md) |
-| Where mentorship or research collaboration would help | [Academic review guide](docs/MENTOR_BRIEFING.md) |
-| Proposed global-round features and evaluation milestones | [Global extension plan](docs/GLOBAL_EXTENSION_PLAN.md) |
-| Statistical concerns and source-level evidence | [Scientific review](docs/SCIENTIFIC_REVIEW.md) |
-| What was tested and how to reproduce the checks | [Verification report](docs/VERIFICATION.md) |
-| Data sources, credits and supplied competition guidance | [Sources and submission notes](docs/SOURCES_AND_SUBMISSION.md) |
-| All documentation, including historical plans | [Documentation index](docs/README.md) |
+| Worldwide observations | Recent seven-day NASA FIRMS feeds; 242 country/territory summaries, daily playback, per-satellite totals, source timestamps and SHA-256 provenance |
+| Historical evidence workbench | Bangladesh, Nepal, Chin in Myanmar, and Punjab–Haryana in India; frozen temporal experiments, full baselines, interval coverage, calendars and exports |
+| Bangladesh fire almanac | Weekly history from 2001, five analysis regions, 64 districts, seasonal normals, local CHT calendars, maps and sensor comparisons |
+| Successor continuity | Shared monthly correction and handover/outage rules for main/local/neighbour series; actual zero and missing source stay distinct |
+| Experimental research views | Two-week outlooks, fire-weather context, ESA burned-area comparison and cross-border/aerosol timing; expired outlooks are suppressed |
+| Access | English/Bangla, light/dark themes, reduced motion, keyboard/table alternatives, responsive layout and installable PWA |
+| Public evidence | Refit-ready feature files, model card, academic briefs, seven-slide deck, 29-second captioned demo and submission-page draft |
 
-## What works now
+The intended benefit is easier access to comparable fire-season evidence for students, communities, researchers and land managers. **A practitioner pilot, adoption and measured prevention benefits have not been established.** This is a research and communication prototype, not an emergency warning service.
 
-| Capability | Current scope |
-| --- | --- |
-| Comparable historical record | Weekly VIIRS-scale history from 2001, with observed/estimated provenance and nominal 80% intervals |
-| Seasonal context | Cumulative activity against historical normals for Bangladesh, five analysis regions and 64 districts |
-| Fire calendar | Interactive year/week heatmap, keyboard inspection, table alternative and local CHT calendars |
-| Sensor comparison | Raw observations, a scaling baseline, harmonized history, monthly ratios, validation and sonification |
-| Geographic exploration | Archived FIRMS coordinates, district choropleth, clusters, static-source controls and a textured Three.js Earth with an interactive 2D fallback |
-| Local calendars | 25 upazilas and 124 unions across Rangamati, Khagrachhari and Bandarban; historical values include apportioned estimates |
-| Experimental outlooks | Two-week national/regional activity outlooks, fire-weather views and district anomaly feeds; operational performance remains unverified |
-| Cross-border context | CHT and neighbouring areas; upwind burning beside Dhaka aerosol timing, without causal smoke attribution |
-| Access and reporting | English/Bangla, light/dark themes, mobile layouts, CSV/PNG/print outputs, guided demo and cached offline resources |
+## Evidence, including the failures
 
-The users are intended forest officers, communities, researchers and newsrooms. **A completed field pilot, agency adoption and measured prevention benefits have not yet been established.**
+The portable detector-only ensemble is **30% negative-binomial regression + 70% five-seed LightGBM**. Each area is fitted separately: **fit 2013–2018; calibrate 2019–2021; test 2022–2024**, with 156 test weeks per area. These periods were known during development: this is a disjoint temporal replay, not an untouched final holdout or unseen-country transfer test.
 
-## See the application
+| Area | Ensemble weekly MAE | Fitted-factor MAE | Weekly error change | Coverage of nominal 80% interval |
+| --- | ---: | ---: | ---: | ---: |
+| Bangladesh | 45.970 | 61.571 | 25.34% lower | 81.4% |
+| Nepal | 113.001 | 158.019 | 28.49% lower | 75.6% |
+| Chin, Myanmar | 136.414 | 101.030 | 35.02% higher | 73.7% |
+| Punjab & Haryana, India | 313.525 | 271.623 | 15.43% higher | 76.3% |
 
-These production-build captures were made on 29 October 2026 from the current application, using the committed data snapshot. A screenshot of an outlook or map is not a live-data claim.
+<img src="docs/latex/figures/global-transfer.png" alt="Weekly error improves in Bangladesh and Nepal but worsens in Chin and Punjab–Haryana" width="800">
 
-<table>
-<tr>
-<td width="50%"><img src="docs/review/screenshots/calendar-desktop.png" alt="Current interactive fire calendar" width="100%"/><br/><b>Calendar</b> · Compare seasons and inspect a selected week.</td>
-<td width="50%"><img src="docs/review/screenshots/sensors-desktop.png" alt="Current sensor comparison screen with raw, factor and harmonized series" width="100%"/><br/><b>Sensors</b> · See how instrument differences affect the record.</td>
-</tr>
-<tr>
-<td><img src="docs/review/screenshots/map-desktop.png" alt="Current district map and archived weekly detections" width="100%"/><br/><b>Map</b> · Explore district patterns and archived observations.</td>
-<td><img src="docs/review/screenshots/outlook-desktop.png" alt="Current experimental outlook and weather screen using archived exports" width="100%"/><br/><b>Outlook</b> · Inspect experimental activity and weather products.</td>
-</tr>
-</table>
+Where the ensemble loses to the fitted factor, the application withholds reconstructed pre-VIIRS calendar rows and retains the observed data and failed experiment. Nepal's fitted factor also has lower annual-total error than the ensemble. All baselines, annual errors, regional results and limitations are in the [model card](docs/GLOBAL_EVALUATION.md) and [public packages](web/public/data/global/). Absolute MAE should not be ranked between differently sized areas.
 
-<details>
-<summary><b>Mobile Soft Earth preview</b></summary>
+The older Bangladesh weather-assisted leave-one-year-out benchmark is a separate evaluation. Its independence and calibration concerns are retained in the [scientific review](docs/SCIENTIFIC_REVIEW.md); its scores are not substituted for this portable experiment.
 
-<p align="center"><img src="docs/review/screenshots/home-mobile.png" alt="Restored mobile Soft Earth layout with textured globe, blue and cream surfaces and coral controls" width="330"/></p>
+## Run locally
 
-The UI is bilingual; [Bangla/dark-theme capture](docs/review/screenshots/home-mobile-bn.png). Union place names are not yet fully localized. Offline use requires previously cached same-origin resources, and external fonts/map tiles may be unavailable.
+Frontend: **Node.js 22.12+**. Python is unnecessary to view committed exports.
 
-</details>
-
-[Capture provenance and full-size images](docs/review/README.md) · [Watch the team's project video](https://youtu.be/9FMIzcXhqB4)
-
-## Scientific methodology
-
-The pipeline cleans and geographically tags FIRMS observations, applies confidence/static-source filters, aggregates to region-week records and learns a mapping to S-NPP counts during the **2012–2025 overlap**. The shipped ensemble combines **30% negative-binomial regression and 70% bagged Poisson LightGBM**, averaged over five seeds. A separate Terra-only reconstruction covers the earliest period.
-
-```mermaid
-flowchart LR
-    F["NASA FIRMS: MODIS and VIIRS"] --> I["Clean, tag and aggregate"]
-    G["geoBoundaries"] --> I
-    I --> H["Harmonize and quantify uncertainty"]
-    P["POWER weather / FWI"] --> H
-    H --> C["Comparable history and seasonal normals"]
-    C --> E["Static JSON / CSV exports"]
-    C --> O["Experimental outlooks and feeds"]
-    M["Open-Meteo"] --> O
-    O --> E
-    A["ESA burned area"] --> V["External cross-check"]
-    C --> V
-    V --> E
-    E --> W["React / TypeScript app: calendars, maps and reports"]
-```
-
-This is a retrospective reconstruction: some model features use neighbouring weeks, including the following week's MODIS activity. It should not be described as an issue-time prediction method.
-
-### Internal results
-
-![Internal reconstruction benchmark from the committed validation export](docs/review/figures/model-comparison.png)
-
-| Result | Scope and source |
-| --- | --- |
-| Weekly national MAE **36.964**, versus **49.450** for a fitted factor | About **25% lower error** in the internal 2012–2025 leave-one-year-out comparison; [validation JSON](web/public/data/validation.json) |
-| **81.3%** national-week interval coverage for an 80% target | Current empirical check; strictly independent nested calibration is still needed |
-| ESA transition diagnostic **0.95** harmonized versus **3.09** raw stitched | Aggregate plausibility check against a different observable; [partner JSON](web/public/data/partner.json) |
-| NOAA-20 **4.58%**, NOAA-21 **10.79%** mean absolute held-out total error | Selected identity bridge, differing overlap lengths; [bridge JSON](web/public/data/bridge.json) |
-
-These are **saved internal evaluation results**, not a new training run, independent final validation or operational forecast accuracy. The model is not best on every metric or in every region. [Complete comparisons and limitations](docs/PROJECT_BRIEF.md#5-results-and-what-they-establish)
-
-![Annual continuity cross-check, with the 2012 sensor transition and 2019 ESA product change marked](docs/review/figures/continuity-crosscheck.png)
-
-Burned area and detection counts measure different phenomena. The normalized plot checks broad continuity and variability; it does not prove that every fire was detected or that all sensor bias was removed. [Figure sources, captions and vector downloads](docs/review/README.md)
-
-### What remains uncertain
-
-- Earlier history is reconstructed. Terra-only years have lower confidence; small-area estimates are apportioned rather than independently fitted.
-- The current uncertainty check is not strictly nested, and model/feature selection needs an untouched final holdout.
-- Weather-assisted hindcast skill uses observed future FWI as an optimistic experiment. It is not operational weather-forecast performance; no season-total skill is claimed.
-- Static-source filtering is a tuned heuristic with small manual image samples, not a validated inventory of industrial facilities.
-- Missing sensor coverage, data freshness and handover behavior need stronger checks across all exports.
-- No individual-fire ignition prediction, causal smoke-arrival model, field-tested warning service or globally validated accuracy is claimed.
-
-[Source-level scientific review](docs/SCIENTIFIC_REVIEW.md) · [Proposed research and user-validation work](docs/GLOBAL_EXTENSION_PLAN.md)
-
-## Proposed global extension
-
-The next proposed direction is **comparable fire calendars across independently evaluated areas**, with an inspectable sensor-transition comparison and a dated evidence report. Begin with Bangladesh, reproduce Nepal, and choose a contrasting third setting with a domain reviewer. Each case should publish baselines, coverage, uncertainty and failures.
-
-The first release would use supported area packages. Arbitrary polygons require additional processing and area-specific validation; drawing a polygon around existing map points does not make a calibrated history for that area. Low-data cases should explain their limits rather than display false precision.
-
-The proposal also prioritizes a reliable public demo, stronger independent evaluation, a small practitioner/user study and a focused global submission. These features are **planned, not implemented**. [Read the roadmap and acceptance criteria](docs/GLOBAL_EXTENSION_PLAN.md).
-
-## Getting started
-
-**Frontend:** Node.js 20+ and npm. The committed exports are sufficient; a FIRMS key is not needed to inspect the interface.
-
-```sh
-git clone https://github.com/polymathicX/Agun-Panjika.git
-cd Agun-Panjika/web
+```powershell
+cd web
 npm ci
 npm run dev
 ```
 
-For a production preview, run from `web/`:
+Open the URL Vite prints. For a production/PWA check, run `npm run build`, then `npm run preview -- --host 127.0.0.1 --port 4173 --strictPort`. PWA installation requires HTTPS or localhost. The browser receives no FIRMS secret.
 
-```sh
-npm run typecheck
-npm run build
-npm run preview -- --host 127.0.0.1 --port 4173 --strictPort
-```
-
-**Python:** Python 3.11+. From the repository root, create and activate a virtual environment using your shell, then:
-
-```sh
-python -m pip install -e ".[dev]"
-python -m pytest -q
-python -m pipeline.run_all --help
-```
-
-To regenerate scientific outputs, `python -m pipeline.run_all` downloads archive inputs and fits the pipeline. For API backfill and cross-border products:
-
-```sh
-python -m pipeline.run_all --api-since 2025-01-01 --neighbours
-```
-
-Fresh FIRMS API requests need `FIRMS_MAP_KEY` in the gitignored root `.env` or process environment. Preserve any existing environment configuration. Keep credentials on the pipeline side. Full regeneration can download substantial datasets and rewrite exports; ordinary interface review does not require it.
-
-For a Nepal build in PowerShell:
+Python: **3.11+**. From the repository root:
 
 ```powershell
-$env:AP_COUNTRY = "pipeline/countries/npl.json"
-python -m pipeline.run_all
-Remove-Item Env:AP_COUNTRY
+python -m pip install -e ".[dev]"
+python -m pipeline.global_cases --from-packages
+python -m pytest -q
+python -m ruff check pipeline tests
 ```
 
-Other-country outputs are isolated in country-specific `data/` and `build/` folders. Configuration support alone does not establish scientific transfer performance.
+`--from-packages` refits all four experiments from checksum-verified public feature CSVs without downloading raw observations or using a key. It does not independently rebuild the raw-to-feature preprocessing. Numerical differences between library/platform versions remain possible. [Complete reproduction and checks](docs/VERIFICATION.md).
 
-[Browser-test commands, scientific reproduction and review-figure generation](docs/VERIFICATION.md)
+## Refresh and free hosting
 
-## Verification and release status
+The app is a static site on **GitHub Pages**. `.github/workflows/daily.yml` publishes pushes to `main`. Its six-hour schedule refreshes worldwide public feeds; **Actions → Publish app and refresh NASA observations → Run workflow → refresh_data** also refreshes them. The first hosted global refresh and deployment succeeded on 14 November ([run](https://github.com/polymathicX/Agun-Panjika/actions/runs/43594804856)). Failed data retrieval fails explicitly; ordinary code publishing does not depend on retraining the science pipeline.
 
-On **29 October 2026**, the current code passed **59 Python tests**, TypeScript checking, the production build and **11 production browser test groups**. The 42-view matrix recorded no page/console errors, page overflow or axe findings. Those checks do not replace physical-device, assistive-technology, field-user or prospective scientific evaluation. [Recorded evidence](docs/review/verification-2026-10-29.json)
-
-The existing daily workflow is configured to refresh and deploy through GitHub Pages, but recent hosted refreshes failed at the pipeline step. A local pass does not establish a successful hosted deployment. Check [Actions](https://github.com/polymathicX/Agun-Panjika/actions) for subsequent runs. Dependency advisories, source licensing and in-app method-copy drift are also tracked as follow-up work. [Verification and known limits](docs/VERIFICATION.md)
-
-## Repository map
-
-```text
-pipeline/             Ingest, filtering, geography, models, weather, exports
-web/src/              React screens, charts, maps, language and state
-web/public/data/      Committed scientific exports and feeds
-notebooks/            Validation notebook and reproducible figure scripts
-tests/                Scientific, forecast, schema and contrast checks
-docs/                 Project brief, roadmap, review and historical plans
-docs/review/          Current screenshots, figures and verification evidence
-graphify-out/         Code relationship graph and architecture report
-.github/workflows/    Refresh/build/deploy workflow
+```powershell
+python -m pipeline.world_snapshot
+# Or reproduce the locally cached source snapshot:
+python -m pipeline.world_snapshot --cached
 ```
 
-## Data sources, credits and citation
+Bangladesh/scientific regeneration is a separate, heavier process: `python -m pipeline.run_all --help`. Store optional `FIRMS_MAP_KEY` only in the ignored root `.env` or CI secrets. Raw/intermediate files are ignored. Feature fixtures and browser exports are public. Scheduled builds may serve newer recent observations than the committed repository snapshot.
 
-The project uses [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/), [NASA POWER](https://power.larc.nasa.gov/), [ESA Fire_cci](https://climate.esa.int/en/projects/fire/), [geoBoundaries](https://www.geoboundaries.org/), [Open-Meteo](https://open-meteo.com/) and [NOAA CPC](https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ensoyears.shtml). Map attribution includes OpenFreeMap/OpenMapTiles/OpenStreetMap. Static-source inspection imagery credits include Esri, Maxar and Earthstar Geographics. [Full credits and sources](docs/SOURCES_AND_SUBMISSION.md)
+## How it is built
 
-A project-wide software license has not yet been selected in this repository; source availability should not be treated as a license grant. Source datasets, imagery and libraries retain their own terms and attribution requirements.
-
-```text
-KUETaguns (2026). Agun Panjika: a harmonized MODIS and VIIRS fire record
-and bilingual fire almanac for Bangladesh, 2001 onward.
-NASA Space Apps Challenge 2026. Data snapshot through 9 October 2026.
-https://github.com/polymathicX/Agun-Panjika
+```mermaid
+flowchart LR
+  A[NASA FIRMS archives and public recent feeds] --> B[Confidence and geography rules]
+  B --> C[Recent country summaries and sampled points]
+  B --> D[Weekly sensor features]
+  D --> E[Reconstruction, baselines and calibration]
+  E --> F[Historical evidence packages]
+  C --> G[Static React application and PWA]
+  F --> G
+  G --> H[Interactive Earth, calendars and dated exports]
 ```
+
+`pipeline/` contains ingestion, geography, aggregation and evaluation. `web/` contains React/TypeScript, Three.js, D3, MapLibre and the service worker. `web/public/data/` is the export contract. `tests/` and `web/scripts/upgrade/` verify scientific and browser behavior. `docs/` contains the mentor and submission package. [Graphify map](graphify-out/GRAPH_REPORT.md).
+
+## Read, review or present
+
+| Material | Purpose |
+| --- | --- |
+| [Project brief](docs/PROJECT_BRIEF.md) · [PDF](docs/pdf/PROJECT_BRIEF.pdf) | Complete product, methods, sources, results, architecture and limits |
+| [Global roadmap](docs/GLOBAL_EXTENSION_PLAN.md) · [PDF](docs/pdf/GLOBAL_EXTENSION_PLAN.pdf) | Delivered extensions, remaining research and acceptance criteria |
+| [Model card](docs/GLOBAL_EVALUATION.md) | Reproducible protocol and complete failure reporting |
+| [Mentor guide](docs/MENTOR_BRIEFING.md) | Reading order and concrete academic questions |
+| [Verification](docs/VERIFICATION.md) | Executed checks, deployment evidence and reproduction |
+| [29-second demo](https://polymathicx.github.io/Agun-Panjika/demo/) · [seven-slide PDF](docs/pdf/GLOBAL_DEMO_SLIDES.pdf) | English demo alternatives; submit one compliant demo format |
+| [Project-page draft](docs/submission/PROJECT_PAGE_DRAFT.md) | Submission fields, team, data sources and assistance statement |
+| [Sources and credits](docs/SOURCES_AND_SUBMISSION.md) · [AI disclosure](docs/DATA_AND_AI_DISCLOSURE.md) | Judge-visible provenance, software and assistance acknowledgments |
+| [Implementation status](docs/IMPLEMENTATION_STATUS.md) · [all documents](docs/README.md) | Delivery record and original plans |
+
+The [older 2:42 local video](https://youtu.be/9FMIzcXhqB4) remains background material; it is not the compliant global short demo. The team must review the project page, confirm membership and click **Submit for Judging** in the official interface. Publishing this repository does not perform that submission.
+
+## Team and credits
+
+**Sohaib Hasan Niloy** (Team Owner), **Ayesha Mehereen**, **Sarwad Hasan Siddiqui**, **Adiba Tahsin**, **Abdullah Al Saif**, **Md. Rafsani Shazid**. KUETaguns, Bangladesh.
+
+We acknowledge NASA FIRMS, part of LANCE and ESDIS, for the fire observations. NASA POWER, ESA Fire_cci, geoBoundaries, Natural Earth and other credited sources support the research/geography. Earth/cloud textures: [Solar System Scope](https://www.solarsystemscope.com/textures/), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). NASA does not endorse this project. [Full attribution](docs/SOURCES_AND_SUBMISSION.md).
+
+AI assisted implementation, review, plotting, editorial work and demo assembly. NASA observations remain measured source data; NB/LightGBM outputs are labeled estimates. [Disclosure](docs/DATA_AND_AI_DISCLOSURE.md). Original code is [Apache 2.0](LICENSE); third-party assets retain their terms ([NOTICE](NOTICE), [dependency notices](web/public/THIRD_PARTY_NOTICES.txt)).

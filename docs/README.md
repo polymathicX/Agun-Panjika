@@ -1,30 +1,23 @@
 # Documentation
 
-## Current review package
+**Current release: 14 November 2026.**
 
-Reviewed 29 October 2026. Start with the current package when assessing implementation, results and proposed next work.
-
-| Document | Purpose |
+| Read or send | Purpose |
 | --- | --- |
-| [Project brief](PROJECT_BRIEF.md) · [PDF](pdf/PROJECT_BRIEF.pdf) | Complete project explanation: problem, contribution, data, method, results, architecture, limits and academic review questions |
-| [Academic review guide](MENTOR_BRIEFING.md) | Suggested reading order and specific requests for mentorship |
-| [Global extension proposal](GLOBAL_EXTENSION_PLAN.md) · [PDF](pdf/GLOBAL_EXTENSION_PLAN.pdf) | Proposed features, research questions, milestones and acceptance criteria |
-| [Scientific review](SCIENTIFIC_REVIEW.md) | Source-level audit of the pipeline, exported evidence and evaluation concerns |
-| [Verification](VERIFICATION.md) | Executed checks, reproducibility, hosted status and known release limits |
-| [Screenshots and figures](review/README.md) | Actual current-interface captures, data figures and vector exports |
-| [Sources and submission](SOURCES_AND_SUBMISSION.md) | Data/imagery credits and the status of supplied competition guidance |
-| [Short mentor message](MENTOR_REPLY.md) | Concise text accompanying the public materials |
-| [LaTeX report sources](latex/README.md) | Dedicated typesetting, vector figures and reproducible builds for the mentor PDFs |
+| [Project brief](PROJECT_BRIEF.md) · [PDF](pdf/PROJECT_BRIEF.pdf) | Whole project: problem, experience, data, methods, results, architecture and limits |
+| [Global roadmap](GLOBAL_EXTENSION_PLAN.md) · [PDF](pdf/GLOBAL_EXTENSION_PLAN.pdf) | Delivered extensions and research gates |
+| [Seven slides](pdf/GLOBAL_DEMO_SLIDES.pdf) · [29-second demo](https://polymathicx.github.io/Agun-Panjika/demo/) | Public English presentation alternatives |
+| [Mentor guide](MENTOR_BRIEFING.md) · [short message](MENTOR_REPLY.md) | Reading order and focused academic questions |
+| [Model card](GLOBAL_EVALUATION.md) | Four-case protocol, all results and public no-key reproduction |
+| [Implementation status](IMPLEMENTATION_STATUS.md) | Original plan items mapped to delivery/evidence |
+| [Verification](VERIFICATION.md) · [visual evidence](review/README.md) | Executed checks and real app captures |
+| [Sources](SOURCES_AND_SUBMISSION.md) · [AI disclosure](DATA_AND_AI_DISCLOSURE.md) | Data, asset, library and assistance credits |
+| [Official guide research](GLOBAL_JUDGING_RESEARCH.md) | Current competition requirements and source links |
+| [Project-page draft](submission/PROJECT_PAGE_DRAFT.md) · [pitch script](submission/30_SECOND_PITCH.md) | Team-reviewable submission copy |
+| [LaTeX build](latex/README.md) · [demo build](submission/README.md) | Reproducible presentation sources |
 
-## Original plans and historical evidence
+## Historical records
 
-These remain useful design/history records. Their proposed features, earlier scores, branch states and deadlines do not supersede the current source, saved exports or dated review package.
+The [29 October project brief](archive/PROJECT_BRIEF-2026-10-29.md), [original global proposal](archive/GLOBAL_EXTENSION_PLAN-2026-10-29.md), [original scientific audit](SCIENTIFIC_REVIEW.md), original product/implementation plans and `UPGRADE_*`/`SERIAL_MERGE_REVIEW.md` remain historical evidence. Earlier dates, metrics and pending feature lists do not supersede the current model card and verification record.
 
-- [Original product requirements](Agun%20Panjika%20%E2%80%94%20Product%20Requirements%20Document.md)
-- [Original implementation plan](Agun%20Panjika%20%E2%80%94%20Hot%20Spots%20Implementation%20Plan.md)
-- [User-test protocol](Agun%20Panjika%20%E2%80%94%20User%20Test%20Protocol.md), with uncompleted participant rows
-- [Video/story planning](Agun%20Panjika%20%E2%80%94%20Video%20and%20Story%20Ideas.md), distinct from the [actual uploaded video](https://youtu.be/9FMIzcXhqB4)
-- [Upgrade baseline](UPGRADE_BASELINE.md), [preview](UPGRADE_PREVIEW.md), [progress](UPGRADE_PROGRESS.md), [regression](UPGRADE_REGRESSION.md) and [serial integration review](SERIAL_MERGE_REVIEW.md)
-- [Individual upgrade notes](upgrade-progress/)
-
-The eight interface upgrade areas and the textured Three.js Soft Earth design are integrated in the reviewed main source. The separate Soft Earth branch is retained as the restoration reference. Older screenshot/figure collections remain historical; the current package uses [review/](review/README.md) for production captures and accurate captions.
+The original user-test protocol is still a plan, not completed participant evidence. The older [2:42 local video](https://youtu.be/9FMIzcXhqB4) is background material, not the global short demo. No team submission, global nomination or award is implied by this package.

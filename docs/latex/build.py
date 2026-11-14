@@ -5,7 +5,6 @@ from __future__ import annotations
 import os
 import shutil
 import subprocess
-import sys
 from pathlib import Path
 
 SOURCE = Path(__file__).resolve().parent
@@ -24,7 +23,6 @@ def main() -> None:
     env = os.environ.copy()
     path_key = next(key for key in env if key.lower() == "path")
     env[path_key] = os.pathsep.join(p for p in env[path_key].split(os.pathsep) if Path(p).is_dir())
-    subprocess.run([sys.executable, str(SOURCE / "build_report_figures.py")], check=True, env=env)
     for source, output in [("project-brief", "PROJECT_BRIEF"), ("global-extension-plan", "GLOBAL_EXTENSION_PLAN")]:
         for pass_number in (1, 2):
             result = subprocess.run(

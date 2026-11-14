@@ -22,6 +22,7 @@ try {
  await page.reload();await page.locator('.world-watchlist').waitFor();
  assert.match(await page.locator('.world-watchlist').innerText(),/Brazil/);
  await choose('jpn');await page.waitForURL(/country=jpn/);
+ const countryDownload=page.waitForEvent('download');await page.getByRole('button',{name:'Download country evidence',exact:true}).click();const countryFile=await countryDownload;await countryFile.saveAs(path.join(out,'country-evidence.json'));const countryReport=JSON.parse(await fs.readFile(path.join(out,'country-evidence.json'),'utf8'));assert.equal(countryReport.country,'Japan');assert.ok(countryReport.source_sha256);
  await page.getByLabel('Satellite',{exact:true}).selectOption('noaa21');await page.waitForURL(/sensor=noaa21/);
  await page.locator('#world-day').fill('2');await page.waitForURL(/day=2/);
  await page.getByRole('button',{name:'Play timeline',exact:true}).click();await page.waitForURL(/day=3/);await page.getByRole('button',{name:'Pause timeline',exact:true}).click();
@@ -43,6 +44,7 @@ try {
  const offlineContext=await browser.newContext();const offline=await offlineContext.newPage();
  await offline.goto(`${base}/?lang=en#/world`);await offline.evaluate(()=>navigator.serviceWorker.ready);await offline.reload();await offline.locator('.world-highlight').waitFor();
  await offlineContext.setOffline(true);await offline.goto(`${base}/?source=pwa#/world`);await offline.locator('.offline-status').waitFor();await offline.locator('.world-highlight').waitFor();
+ // A never-visited lazy route must work from precache, including Vary: Origin module responses.
  await offline.goto(`${base}/?lang=en#/global?area=nepal`);await offline.locator('#evidence-h').waitFor();
  assert.deepEqual(errors,[]);
  await fs.writeFile(path.join(out,'world.json'),JSON.stringify({countries:242,globePicking:true,keyboardSelection:true,sensors:3,timeline:true,watchlist:true,installability:install,offlineShellAndCases:true,errors},null,2));
