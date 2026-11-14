@@ -1,17 +1,17 @@
 # Graph Report - Harmonic-Fire  (2026-11-15)
 
 ## Corpus Check
-- 1045 files · ~212,030 words
+- 1045 files · ~212,128 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 31 file(s) not represented in the graph (top: .css 7, .csv 5, .tex 5)
+- Unclassified: 32 file(s) not represented in the graph (top: .css 7, .csv 5, .tex 5)
 
 ## Summary
-- 1516 nodes · 3280 edges · 125 communities (105 shown, 20 thin omitted)
+- 1516 nodes · 3282 edges · 125 communities (105 shown, 20 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 57 edges (avg confidence: 0.89)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `170b55e3`
+- Built from commit: `4b82a1ce`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -596,16 +596,16 @@ Nodes (15): _irls_nb2(), _nb2_loglik(), test_district_documents_sum_to_regions()
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Scientific review: implementation, evidence and open questions` connect `Scientific review: implementation, evidence and open questions` to `export.py`, `docs/README.md`?**
-  _High betweenness centrality (0.062) - this node is a cross-community bridge._
+  _High betweenness centrality (0.061) - this node is a cross-community bridge._
 - **What connects `agun-panjika` to the rest of the system?**
   _1 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Ingestion and Neighbour Data` be split into smaller, more focused modules?**
   _Cohesion score 0.07832080200501253 - nodes in this community are weakly interconnected._
 - **Why does `Important limitations and improvement opportunities` connect `export.py` to `climatology.py`, `harmonise.py`, `test_continuity.py`, `Scientific review: implementation, evidence and open questions`?**
-  _High betweenness centrality (0.062) - this node is a cross-community bridge._
+  _High betweenness centrality (0.061) - this node is a cross-community bridge._
 - **Should `playwright` be split into smaller, more focused modules?**
   _Cohesion score 0.12318840579710146 - nodes in this community are weakly interconnected._
 - **Why does `Portable reconstruction optimization research` connect `Portable reconstruction optimization research` to `global_cases.py`, `harmonise.py`, `docs/README.md`, `pandas`?**
-  _High betweenness centrality (0.035) - this node is a cross-community bridge._
+  _High betweenness centrality (0.033) - this node is a cross-community bridge._
 - **Should `Scientific Charts and Comparisons` be split into smaller, more focused modules?**
   _Cohesion score 0.14146341463414633 - nodes in this community are weakly interconnected._

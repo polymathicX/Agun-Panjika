@@ -1,0 +1,3 @@
+# Keep source-manifest provenance identical on Windows and Linux.
+pipeline/reference_quality.json text eol=lf
+web/public/data/global/reference_quality.json text eol=lf
