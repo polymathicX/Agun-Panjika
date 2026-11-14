@@ -1,0 +1,33 @@
+import {chromium} from 'playwright';
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+const [base='http://127.0.0.1:4173',out='test-results/experience']=process.argv.slice(2);await fs.mkdir(out,{recursive:true});
+const browser=await chromium.launch();
+try {
+ const context=await browser.newContext({serviceWorkers:'block',reducedMotion:'reduce',viewport:{width:1440,height:1000}});
+ const page=await context.newPage();await page.addInitScript(()=>localStorage.setItem('ap-tutorial-v1','dismissed'));
+ await page.goto(`${base}/?lang=en#/world?country=bra`);await page.locator('.earth-realistic[data-ready=true]').waitFor();
+ await page.locator('.world-controls summary').click();await page.locator('#world-country').selectOption('jpn');await page.locator('.world-controls details').evaluate(e=>e.open=false);
+ await page.goBack();await page.waitForURL(/country=bra/);await page.getByRole('button',{name:'Focus',exact:true}).click();
+ const scene=page.locator('.world-globe .earth-scene'),box=await scene.boundingBox();await scene.click({position:{x:box.width/2,y:box.height/2}});
+ assert.equal(await page.locator('.world-highlight h2').innerText(),'Brazil');
+ const slow=await context.newPage();await slow.route('**/data/world/summary.json',async route=>{await new Promise(r=>setTimeout(r,650));await route.continue();});
+ await slow.route('**/data/world/bra-noaa20.json',async route=>{await new Promise(r=>setTimeout(r,1800));await route.continue();});
+ await slow.goto(`${base}/?lang=en#/world?country=bra&day=2`);await slow.locator('.skeleton-world').waitFor();await slow.screenshot({path:path.join(out,'loading-world.png')});
+ await slow.locator('.world-highlight').waitFor();assert.match(await slow.locator('.world-time strong').innerText(),/^\d{4}-\d{2}-\d{2}$/);
+ assert.ok(await slow.locator('.skeleton-compact').count());
+ const summary=await(await page.request.get(`${base}/data/world/summary.json`)).json();const count=summary.countries.find(c=>c.id==='bra').sensors.noaa20.daily[2];
+ assert.equal(await slow.locator('.world-big-number').innerText(),new Intl.NumberFormat('en').format(count));
+ await slow.locator('.world-globe .skeleton-compact').waitFor({state:'detached'});
+ const bars=slow.locator('.daily-bars button');await bars.nth(4).click();assert.equal(await bars.nth(4).getAttribute('aria-pressed'),'true');await bars.nth(4).click();assert.equal(await slow.locator('.world-time strong').innerText(),'All days');
+ await slow.setViewportSize({width:390,height:844});await slow.screenshot({path:path.join(out,'world-phone.png')});assert.equal(await slow.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ const independent=await context.newPage();await independent.route('**/data/manifest.json',route=>route.fulfill({status:503,body:'unavailable'}));
+ await independent.goto(`${base}/?lang=en#/world`);await independent.locator('.world-highlight').waitFor();assert.equal(await independent.locator('main [role=alert]').count(),0);
+ await independent.goto(`${base}/?lang=en#/global`);await independent.locator('#evidence-h').waitFor();assert.equal(await independent.locator('main [role=alert]').count(),0);
+ const recovery=await context.newPage();let corrupt=true;
+ await recovery.route('**/data/world/summary.json',async route=>{if(!corrupt)return route.continue();const response=await route.fetch();const doc=await response.json();await route.fulfill({json:{...doc,countries:null}});});
+ await recovery.goto(`${base}/?lang=en#/world`);await recovery.getByRole('alert').waitFor();corrupt=false;await recovery.getByRole('button',{name:'Retry',exact:true}).click();await recovery.locator('.world-highlight').waitFor();
+ await fs.writeFile(path.join(out,'experience.json'),JSON.stringify({countryHistoryCamera:true,shapedSkeletons:true,dayStableWhilePointsLoad:true,interactiveDailyBars:true,worldIndependentOfBangladeshManifest:true,mobileOverflow:false},null,2));
+ console.log('PASS: country camera follows history, loading placeholders, stable day counts during slow requests and clickable daily chart');
+} finally {await browser.close();}

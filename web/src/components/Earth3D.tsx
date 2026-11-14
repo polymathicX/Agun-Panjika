@@ -95,8 +95,8 @@ export default function Earth3D(props: Props) {
     const pointMaterial = new THREE.ShaderMaterial({
       transparent: true, depthWrite: false, vertexColors: true,
       uniforms: { pixelRatio: { value: renderer.getPixelRatio() } },
-      vertexShader: 'varying vec3 tint; uniform float pixelRatio; void main(){tint=color;vec4 p=modelViewMatrix*vec4(position,1.);gl_Position=projectionMatrix*p;gl_PointSize=clamp(8./-p.z,3.,10.)*pixelRatio;}',
-      fragmentShader: 'varying vec3 tint; void main(){float d=length(gl_PointCoord-vec2(.5));if(d>.5)discard;gl_FragColor=vec4(tint,1.-smoothstep(.25,.5,d));}',
+      vertexShader: 'varying vec3 tint; uniform float pixelRatio; void main(){tint=color;vec4 p=modelViewMatrix*vec4(position,1.);gl_Position=projectionMatrix*p;gl_PointSize=clamp(5.5/-p.z,2.,7.)*pixelRatio;}',
+      fragmentShader: 'varying vec3 tint; void main(){float d=length(gl_PointCoord-vec2(.5));if(d>.5)discard;gl_FragColor=vec4(tint,1.-smoothstep(.2,.5,d));\n#include <colorspace_fragment>\n}',
     });
     const markers = new THREE.Points(new THREE.BufferGeometry(), pointMaterial); scene.add(markers);
     const boundaryMaterial = new THREE.LineBasicMaterial({ color: '#e7f5e9', transparent: true, opacity: .8 });
@@ -138,9 +138,13 @@ export default function Earth3D(props: Props) {
       const surfaceHit = ray.intersectObject(earth)[0];
       return ray.intersectObject(markers).find(h => h.index !== undefined && (!surfaceHit || h.distance <= surfaceHit.distance + .012));
     };
+    let hoverFrame = 0;
     const move = (e: PointerEvent) => {
-      if (e.buttons) return;
-      const result = hit(e); setSelected(result?.index !== undefined ? latest.current.points[result.index] : null);
+      if (e.buttons || hoverFrame) return;
+      hoverFrame = requestAnimationFrame(() => {
+        hoverFrame = 0;
+        const result = hit(e); setSelected(result?.index !== undefined ? latest.current.points[result.index] : null);
+      });
     };
     const start = (e: PointerEvent) => { down = { x: e.clientX, y: e.clientY }; };
     const end = (e: PointerEvent) => {
@@ -157,7 +161,7 @@ export default function Earth3D(props: Props) {
     const leave = () => setSelected(null);
     canvas.addEventListener('pointermove', move); canvas.addEventListener('pointerdown', start); canvas.addEventListener('pointerup', end); canvas.addEventListener('pointerleave', leave);
     return () => {
-      disposed = true; clearTimeout(settled); cancelAnimationFrame(frame); cancelAnimationFrame(animation); resize.disconnect(); controls.dispose();
+      disposed = true; clearTimeout(settled); cancelAnimationFrame(frame); cancelAnimationFrame(animation); cancelAnimationFrame(hoverFrame); resize.disconnect(); controls.dispose();
       canvas.removeEventListener('webglcontextlost', lost);
       canvas.removeEventListener('pointermove', move); canvas.removeEventListener('pointerdown', start); canvas.removeEventListener('pointerup', end); canvas.removeEventListener('pointerleave', leave);
       geometry.dispose(); surface.dispose(); cloudMaterial.dispose(); atmosphereMaterial.dispose();

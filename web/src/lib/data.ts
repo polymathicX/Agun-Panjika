@@ -4,6 +4,11 @@ import type { BridgeDoc, DistrictYear, Manifest, PointsYear, RegionDoc, Validati
 const BASE = `${import.meta.env.BASE_URL}data/`;
 const cache = new Map<string, Promise<unknown>>();
 
+function invalidData(path: string, message: string): never {
+  cache.delete(path);
+  throw new Error(message);
+}
+
 function validateJson(path:string,value:unknown) {
   if(!value||typeof value!=='object')throw new Error(`${path}: invalid data contract`);
   const doc=value as Record<string,unknown>;
@@ -92,24 +97,24 @@ export const loadLocal = (district: string) => fetchJson<import("./types").Local
 export const GLOBAL_AREAS = ['bangladesh', 'nepal', 'chin', 'punjab_haryana'] as const;
 export const loadGlobalCatalog = async () => {
   const doc = await fetchJson<import("./types").GlobalCatalog>('global/catalog.json');
-  if (!Array.isArray(doc.areas) || !doc.areas.length || !doc.areas.every(a => GLOBAL_AREAS.includes(a.id as typeof GLOBAL_AREAS[number]))) throw new Error('Invalid area catalog');
+  if (!Array.isArray(doc.areas) || !doc.areas.length || !doc.areas.every(a => GLOBAL_AREAS.includes(a.id as typeof GLOBAL_AREAS[number]))) invalidData('global/catalog.json','Invalid area catalog');
   return doc;
 };
 export const loadGlobalCase = async (id: string) => {
   if (!GLOBAL_AREAS.includes(id as typeof GLOBAL_AREAS[number])) throw new Error('Unsupported area');
   const doc = await fetchJson<import("./types").GlobalCase>(`global/${id}.json`);
-  if (doc.id !== id || !doc.splits || !doc.evaluation || !Array.isArray(doc.weeks) || !doc.weeks.every(w => Number.isInteger(w.y) && Number.isInteger(w.w) && w.w >= 1 && w.w <= 53 && [w.modis, w.viirs, w.model, w.factor, w.lo, w.hi].every(n => n === undefined || Number.isFinite(n) && n >= 0))) throw new Error('Invalid area evidence package');
+  if (doc.id !== id || !doc.splits || !doc.evaluation || !Array.isArray(doc.weeks) || !doc.weeks.every(w => Number.isInteger(w.y) && Number.isInteger(w.w) && w.w >= 1 && w.w <= 53 && [w.modis, w.viirs, w.model, w.factor, w.lo, w.hi].every(n => n === undefined || Number.isFinite(n) && n >= 0))) invalidData(`global/${id}.json`,'Invalid area evidence package');
   return doc;
 };
 export const loadWorldSummary = async () => {
   const doc = await fetchJson<import('./types').WorldSummary>('world/summary.json');
-  if (!Array.isArray(doc.countries) || !doc.countries.every(c => /^[a-z0-9]{3}$/.test(c.id)) || !doc.sensors?.noaa20) throw new Error('Invalid world snapshot');
+  if (!Array.isArray(doc.countries) || !doc.countries.every(c => /^[a-z0-9]{3}$/.test(c.id)) || !doc.sensors?.noaa20) invalidData('world/summary.json','Invalid world snapshot');
   return doc;
 };
 export const loadWorldGeo = () => fetchJson<GeoJSON.FeatureCollection>('world/countries.geojson');
 export const loadWorldPoints = async (country: string, sensor: string) => {
   if (!(country === 'overview' || /^[a-z0-9]{3}$/.test(country)) || !['modis', 'noaa20', 'noaa21'].includes(sensor)) throw new Error('Invalid world selection');
   const doc = await fetchJson<import('./types').WorldPoints>(`world/${country}-${sensor}.json`);
-  if (doc.stride !== 3 || !Array.isArray(doc.points) || doc.points.length % 3 !== 0 || !doc.points.every(Number.isFinite)) throw new Error('Invalid worldwide observation points');
+  if (doc.stride !== 3 || !Array.isArray(doc.points) || doc.points.length % 3 !== 0 || !doc.points.every(Number.isFinite)) invalidData(`world/${country}-${sensor}.json`,'Invalid worldwide observation points');
   return doc;
 };

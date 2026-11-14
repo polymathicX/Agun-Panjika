@@ -1,0 +1,11 @@
+.request-skeleton { position:relative;overflow:hidden;display:flex;flex-direction:column;gap:12px;border:0;background:transparent;padding:18px 0; }
+.request-skeleton i,.request-skeleton b { display:block;height:13px;border-radius:6px;background:var(--grid);opacity:.65; }
+.request-skeleton i:nth-child(2) { width:78%; }.request-skeleton i:nth-child(3) { width:56%; }
+.request-skeleton::after { content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 15%,var(--card) 48%,transparent 80%);transform:translateX(-100%);opacity:.55;animation:skeleton-sweep 1.8s ease-in-out infinite;pointer-events:none; }
+.skeleton-world { display:grid;grid-template-columns:1fr 1.7fr .8fr;align-items:center;gap:32px;min-height:620px; }
+.skeleton-copy { display:flex;flex-direction:column;gap:24px; }.skeleton-copy i:first-child { width:55%; }.skeleton-copy b { height:150px;border-radius:24px; }.skeleton-copy i:nth-child(2) { height:65px; }
+.request-skeleton .skeleton-earth { width:min(100%,460px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 36% 30%,var(--card),var(--grid));justify-self:center;box-shadow:inset -25px -20px 60px #17304710; }
+.skeleton-globe { display:grid;place-items:center;min-height:460px; }.skeleton-page { min-height:500px;gap:28px; }.request-skeleton .skeleton-heading { width:45%;height:44px; }.skeleton-panels { display:grid;grid-template-columns:1fr 1fr;gap:24px; }.skeleton-panels b { height:180px; }.request-skeleton .skeleton-chart { height:210px; }
+.skeleton-compact { flex-direction:row;align-items:center;padding:10px 14px;border:1px solid var(--grid);border-radius:30px;background:var(--card);width:110px; }.skeleton-compact i { width:20px!important;height:6px; }
+@keyframes skeleton-sweep { to { transform:translateX(100%); } }
+@media(max-width:639px) { .skeleton-world { display:flex;flex-direction:column;gap:26px;min-height:630px; }.skeleton-world>.skeleton-copy { width:100%; }.skeleton-world>.skeleton-copy:last-of-type { display:none; }.request-skeleton .skeleton-earth { width:270px;flex-shrink:0; }.skeleton-globe { min-height:340px; }.skeleton-panels { gap:12px; }.skeleton-panels b { height:130px; } }
