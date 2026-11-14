@@ -140,7 +140,7 @@ def predict_frame(frame: pd.DataFrame, models: dict) -> pd.DataFrame:
 
 
 def evaluate_case(spec: dict, feat: pd.DataFrame, source_hash: str, dates: dict) -> dict:
-    quality_bytes = QUALITY_PATH.read_bytes()
+    quality_bytes = QUALITY_PATH.read_text(encoding='utf-8').encode('utf-8')
     quality = json.loads(quality_bytes)
     marked = mark_reference_quality(feat, quality)
     excluded = {tuple(pair) for pair in quality['excluded_iso_weeks']}
@@ -235,7 +235,7 @@ def main() -> None:
     output.mkdir(parents=True, exist_ok=True)
     (output / "features").mkdir(exist_ok=True)
     built = datetime.now(UTC).replace(microsecond=0).isoformat()
-    (output / 'reference_quality.json').write_bytes(QUALITY_PATH.read_bytes())
+    (output / 'reference_quality.json').write_bytes(QUALITY_PATH.read_text(encoding='utf-8').encode('utf-8'))
     catalog = {"built_utc": built, "version": VERSION, "areas": [], "protocol": PROTOCOL,
                "sources": ["https://www.earthdata.nasa.gov/data/tools/firms",
                            "https://www.earthdata.nasa.gov/data/alerts-outages/"

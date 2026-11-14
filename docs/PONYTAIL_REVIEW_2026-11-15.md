@@ -10,6 +10,8 @@ Corrections checked include browser Back restoring the camera, selected-day coun
 
 Scientific checks cover strict fitted-support boundaries, preservation of raw references, source-derived outage-week masks, chronological yearly vintages, the same comparable weeks for every baseline, and independent reproduction of published scores. The all-week improvements are distinct from source-quality filtering. Bangladesh/Nepal regressions and Chin's stronger monthly baseline are published.
 
+Live verification also caught a cross-platform line-ending checksum mismatch. Scoped LF attributes and normalized export bytes repair the source-manifest provenance; a regression assertion binds every package to the actual published manifest digest. Numerical results are unchanged.
+
 The completed browser matrix covers 54 views and 14 groups. Targeted checks after the final review cover tutorial restoration/resume, WebGL behavior and offline access. Python has 80 passing tests; frontend evidence tests have four. Build, typechecking and lint pass. See [verification](VERIFICATION.md) for evidence and scope.
 
 **Verdict: Ship.**

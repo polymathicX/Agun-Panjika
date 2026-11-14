@@ -22,6 +22,8 @@ The passing suite follows corrections for camera state after browser Back, trans
 
 After the presentation's final edit, the production preview passed desktop/phone video playback at exactly 29 seconds, zero overflow and zero axe findings. The same check verified the tutorial launch, country selection, current model packages, source-quality checksum, original benchmark archive and slide-PDF access. Every final slide was visually reviewed; the deck highlights the two largest measured improvements and links the full scientific comparison.
 
+The first live check caught Windows-to-Linux line-ending conversion changing the quality-manifest checksum. The two manifest paths now explicitly use LF, the exporter normalizes text before hashing, and the source-quality test checks the published digest. This changes provenance metadata only; observations and numerical scores are unchanged.
+
 Environment: Windows, Python 3.14.6, Node 26.6.0, npm 11.18.0, Playwright 1.64.0. Declared minimums are Python 3.11 and Node 22.12. Hosted refresh uses Python 3.11 and Node 24; a local pass does not establish identical behavior on every version/device.
 
 ## Browser coverage

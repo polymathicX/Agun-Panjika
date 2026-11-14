@@ -1,3 +1,4 @@
+import hashlib
 import json
 from datetime import datetime, timedelta
 from types import SimpleNamespace
@@ -115,10 +116,14 @@ def test_source_quality_rule_is_global_and_published_consistently():
             day += timedelta(days=1)
     assert derived == set(map(tuple, quality['excluded_iso_weeks']))
     assert QUALITY_PATH.read_bytes() == (ROOT / 'web/public/data/global/reference_quality.json').read_bytes()
+    manifest_bytes = QUALITY_PATH.read_bytes()
+    assert b'\r\n' not in manifest_bytes
+    manifest_hash = hashlib.sha256(manifest_bytes).hexdigest()
     expected = {tuple(pair) for pair in quality['excluded_iso_weeks'] if 2022 <= pair[0] <= 2024}
     assert len(expected) == 14
     for name in ['bangladesh', 'nepal', 'chin', 'punjab_haryana']:
         doc = json.loads((ROOT / f'web/public/data/global/{name}.json').read_text(encoding='utf-8'))
+        assert doc['quality_manifest_sha256'] == manifest_hash
         assert set(map(tuple, doc['evaluation']['excluded_test_weeks'])) == expected
         assert doc['historical_vintage']['fit'] == [2013, 2022]
         assert [doc['folds'][str(y)]['calibration_weeks'] for y in (2022, 2023, 2024)] == [51, 49, 50]
