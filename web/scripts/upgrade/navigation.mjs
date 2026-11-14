@@ -7,7 +7,7 @@ await page.locator('main h1').first().waitFor();
 await page.locator('.primary-desktop').getByRole('button',{name:'Compare'}).click();
 await page.waitForURL(/sensors/);assert.match(page.url(),/r=d_bandarban/);assert.match(page.url(),/y=2024/);assert.match(page.url(),/w=14/);
 const harm=page.locator('button[aria-pressed]').filter({hasText:/^Harmonised$/});await harm.click();assert.equal(await harm.getAttribute('aria-pressed'),'true');
-await page.locator('.primary-desktop').getByRole('button',{name:'Overview'}).click();await page.waitForURL(/home/);
+await page.locator('.primary-desktop').getByRole('button',{name:'World',exact:true}).click();await page.waitForURL(/world/);
 await page.goBack();await page.waitForURL(/sensors/);assert.equal(await harm.getAttribute('aria-pressed'),'true');
 await page.reload();await harm.waitFor();assert.equal(await harm.getAttribute('aria-pressed'),'true');
 await page.goto(`${base}/#/panjika?r=d_rangamati&y=2023&w=16`);await page.locator('main h1').first().waitFor();

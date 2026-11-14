@@ -14,7 +14,7 @@ for (const config of (mode==='integration' ? [{width:1440,theme:'dark',lang:'en'
  const context = await browser.newContext({viewport:{width:config.width,height:960},reducedMotion:'reduce'});
  const page = await context.newPage();
  const errors = []; const consoleErrors=[]; page.on('pageerror',e=>errors.push(e.message)); page.on('console',m=>{if(m.type()==='error')consoleErrors.push(m.text())});
- for (const route of ['home','panjika','sensors','map','outlook','borders','method','global']) {
+ for (const route of ['home','panjika','sensors','map','outlook','borders','method','global','world']) {
   consoleErrors.length=0;
   await page.goto(`${base}/?theme=${config.theme}&lang=${config.lang}#/${route}?r=bgd&y=2024&w=14`);
   await page.locator('main h1').first().waitFor();

@@ -6,6 +6,7 @@ import { loadManifest, useAsync } from "./lib/data";
 import { DemoTour } from "./components/DemoTour";
 import { useRoute } from "./lib/router";
 import './screens/Global.css';
+const World=lazy(()=>import('./screens/World').then(m=>({default:m.World})));
 const Global=lazy(()=>import('./screens/Global').then(m=>({default:m.Global})));
 const Home=lazy(()=>import('./screens/Home').then(m=>({default:m.Home})));
 const Borders=lazy(()=>import('./screens/Borders').then(m=>({default:m.Borders})));
@@ -70,7 +71,7 @@ export default function App() {
       </a>
       <header className="app-header no-print sticky top-0 z-30 border-b border-grid backdrop-blur">
         <div className="app-header-inner mx-auto flex items-center justify-between gap-3 px-4 py-3">
-          <button type="button" onClick={() => go("home", carry)} className="flex items-center gap-2 text-left">
+          <button type="button" onClick={() => go("world", carry)} className="flex items-center gap-2 text-left">
             <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
               <defs><linearGradient id="brand-flame" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#e65c35" /><stop offset="1" stopColor="#ffbc67" /></linearGradient></defs>
               <path d="M16 2c2 6 9 9 9 17a9 9 0 0 1-18 0c0-5 3-7 4-11 1 3 2 4 3 5 1-4 2-7 2-11z" fill="url(#brand-flame)" />
@@ -113,6 +114,7 @@ export default function App() {
           <ErrorBoundary key={`${route}-${screenAttempt}`} fallback={(e) => <RequestStatus error={e} retry={()=>setScreenAttempt(n=>n+1)}/> }>
             <Suspense fallback={<p className="text-muted" role="status">{t('app.loading')}</p>}>
             {route === "home" && <Home manifest={manifest} params={params} setParams={setParams} go={go} />}
+            {route === "world" && <World params={params} setParams={setParams} go={go} />}
             {route === "global" && <Global params={params} setParams={setParams} />}
             {route === "outlook" && <OutlookScreen manifest={manifest} params={params} setParams={setParams} />}
             {route === "borders" && <Borders />}

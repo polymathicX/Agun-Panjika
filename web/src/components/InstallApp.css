@@ -1,0 +1,2 @@
+.phone-install { margin:22px 0 0;padding:16px 20px;border:1px solid var(--grid);border-radius:20px;background:var(--card); }
+.phone-install summary { display:flex;justify-content:space-between;gap:20px;font-weight:600;font-size:.85rem;cursor:pointer; }
