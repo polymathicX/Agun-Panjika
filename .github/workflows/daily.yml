@@ -1,14 +1,20 @@
-name: Daily refresh and deploy
+name: Publish app and refresh NASA observations
 
-# Every day at 06:00 UTC: pull new FIRMS detections, NASA POWER weather and the 16-day weather forecast,
-# re-run the pipeline (harmonised record, fire-weather index, outlooks, alerts, RSS/CAP feeds), rebuild the
-# site, deploy to GitHub Pages. Historical years come from cached files and do not change.
 on:
-  schedule:
-    - cron: "0 6 * * *"
-  workflow_dispatch:
   push:
     branches: [main]
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+    inputs:
+      refresh_data:
+        description: Refresh the three public worldwide FIRMS feeds
+        type: boolean
+        default: false
+      full_science:
+        description: Rebuild Bangladesh history/weather/outlooks (requires FIRMS_MAP_KEY)
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -22,56 +28,53 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
+        if: github.event_name == 'schedule' || inputs.refresh_data || inputs.full_science
         with:
           python-version: "3.11"
           cache: pip
-
-      - name: Install pipeline
+      - name: Install scientific pipeline
+        if: github.event_name == 'schedule' || inputs.refresh_data || inputs.full_science
         run: pip install -e ".[dev]"
-
-      - name: Restore FIRMS downloads
-        uses: actions/cache@v4
+      - uses: actions/cache@v4
+        if: inputs.full_science
         with:
           path: |
             data/raw
             data/boundaries
-          key: firms-${{ github.run_id }}
-          restore-keys: firms-
-
-      - name: Run pipeline
+          key: science-${{ github.run_id }}
+          restore-keys: science-
+      - name: Rebuild Bangladesh scientific products
+        if: inputs.full_science
         env:
           FIRMS_MAP_KEY: ${{ secrets.FIRMS_MAP_KEY }}
         run: |
-          if [ -n "$FIRMS_MAP_KEY" ]; then
-            python -m pipeline.run_all --api-since 2025-01-01 --neighbours
-          else
-            echo "::warning::FIRMS_MAP_KEY not set; building from archive country files only"
-            python -m pipeline.run_all
-          fi
-
-      - name: Test
+          test -n "$FIRMS_MAP_KEY" || { echo "FIRMS_MAP_KEY required for a complete requested refresh"; exit 1; }
+          python -m pipeline.run_all --api-since 2025-01-01 --neighbours
+      - name: Refresh worldwide observations
+        if: github.event_name == 'schedule' || inputs.refresh_data || inputs.full_science
+        run: python -m pipeline.world_snapshot
+      - name: Scientific checks
+        if: github.event_name == 'schedule' || inputs.refresh_data || inputs.full_science
         run: pytest -q
-
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
           cache-dependency-path: web/package-lock.json
-
-      - name: Build site
+      - name: Check and build the published snapshot
         working-directory: web
         run: |
           npm ci
+          npm run test:evidence
+          npm run typecheck
           npm run build
-
       - uses: actions/upload-pages-artifact@v3
         with:
           path: web/dist
-
   deploy:
     needs: build
     runs-on: ubuntu-latest
