@@ -209,7 +209,13 @@ def fetch_api_range(sensor: str, since: date, until: date, avail: dict, refetch_
         if src is None or src not in avail:
             day += timedelta(days=API_MAX_DAYS)
             continue
-        last = min(day + timedelta(days=API_MAX_DAYS - 1), until, sp_end if src == sp else until)
+        first_available, last_available = avail[src]
+        if day < first_available:
+            day = first_available
+            continue
+        if day > last_available:
+            break
+        last = min(day + timedelta(days=API_MAX_DAYS - 1), until, last_available)
         n = (last - day).days + 1
         path = cache / f"{tag + '_' if tag else ''}{src}_{day.isoformat()}_{n}.csv"
         fresh = (date.today() - last).days > refetch_days
@@ -217,9 +223,8 @@ def fetch_api_range(sensor: str, since: date, until: date, avail: dict, refetch_
             df = pd.read_csv(path) if path.stat().st_size > 0 else None
         else:
             df = fetch_api(src, days=n, day=day, bbox=bbox)
-            if df is None:  # failed: do not cache, try again next run
-                day = last + timedelta(days=1)
-                continue
+            if df is None:
+                raise RuntimeError(f"Incomplete FIRMS retrieval: {src} {day}..{last}; exports were not rebuilt")
             if df.empty:
                 path.write_text("")
             else:
@@ -235,8 +240,7 @@ def append_api_range(det: pd.DataFrame, since: date, until: date | None = None) 
     until = until or date.today()
     avail = data_availability()
     if not avail:
-        print("  FIRMS API not reachable or MAP_KEY invalid; skipping live data", file=sys.stderr)
-        return det
+        raise RuntimeError("FIRMS API unavailable; requested refresh cannot establish sensor coverage")
     frames = [det]
     for sensor in API_SOURCES:
         # NOAA-21 has no country files: pull it from its first day so the bridge gets a 2024+ overlap.

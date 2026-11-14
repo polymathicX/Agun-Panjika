@@ -19,6 +19,7 @@ import numpy as np
 import pandas as pd
 import requests
 
+from pipeline.bridge import reference_series
 from pipeline.config import BOUNDARIES, COUNTRY, PROCESSED, WEB_DATA
 from pipeline.harmonise import week_month
 from pipeline.regions import load_districts, slug
@@ -90,7 +91,7 @@ def tag(det: pd.DataFrame, un: gpd.GeoDataFrame) -> pd.DataFrame:
     return out[out["unit_district"] == out["district_id"]].drop(columns="unit_district")
 
 
-def unit_series(det: pd.DataFrame, level: str, dist_est: pd.DataFrame, snpp_end_week: tuple[int, int]) -> pd.DataFrame:
+def unit_series(det: pd.DataFrame, level: str, dist_est: pd.DataFrame, bridge: dict) -> pd.DataFrame:
     """Weekly harmonised value per unit at ``level`` (union_id or upazila_id)."""
     d = det[det.keep].copy()
     iso = d.acq_datetime_utc.dt.isocalendar()
@@ -105,6 +106,14 @@ def unit_series(det: pd.DataFrame, level: str, dist_est: pd.DataFrame, snpp_end_
     ulist = det[[level, "district_id"]].drop_duplicates()
     g = ulist.merge(weeks, how="cross").merge(c, on=[level, "district_id", "iso_year", "iso_week"], how="left")
     g = g.fillna({"modis": 0, "snpp": 0, "noaa20": 0, "noaa21": 0})
+    # Zero inside the available sensor span; absent sensors stay missing, never false zeros.
+    week_code = g["iso_year"] * 100 + g["iso_week"]
+    for sensor in ("snpp", "noaa20", "noaa21"):
+        times = det.loc[det.sensor == sensor, "acq_datetime_utc"].dt.isocalendar()
+        codes = times.year * 100 + times.week
+        available = week_code.between(codes.min(), codes.max()) if len(codes) else pd.Series(False, index=g.index)
+        g[sensor] = g[sensor].where(available)
+    g.loc[week_code < 201204, "snpp"] = np.nan
     g = g.merge(dist_est, on=["district_id", "iso_year", "iso_week"], how="left")
     g["month"] = week_month(g["iso_year"], g["iso_week"])
     # Long-run S-NPP share of the unit within its district, by month.
@@ -117,11 +126,10 @@ def unit_series(det: pd.DataFrame, level: str, dist_est: pd.DataFrame, snpp_end_
     mt = g.groupby(["district_id", "iso_year", "iso_week"])["modis"].transform("sum")
     share = np.where(mt > 0, g["modis"] / mt.where(mt > 0, 1), g["clim_share"])
     est = g["dist_est"] * share
-    viirs_flying = g["iso_year"] * 100 + g["iso_week"] >= 201204
-    after = g["iso_year"] * 100 + g["iso_week"] >= snpp_end_week[0] * 100 + snpp_end_week[1]
-    bridged = g[["noaa20", "noaa21"]].replace(0, np.nan).mean(axis=1).fillna(0)
-    g["value"] = np.where(~viirs_flying, est, np.where(after, bridged, g["snpp"]))
-    g["src"] = np.where(~viirs_flying, "e", np.where(after, "b", "o"))
+    t = g.rename(columns={"snpp": "V", "noaa20": "J", "noaa21": "K"})
+    g["value"], source = reference_series(t, pd.Series(est, index=g.index), bridge)
+    g["src"] = source.str[0]
+    g = g[g["src"] != "n"]
     return g[[level, "district_id", "iso_year", "iso_week", "value", "src"]]
 
 
@@ -133,22 +141,24 @@ def main() -> None:
     dist_est = h[(h.unit_type == "district") & h.unit_id.isin(DISTRICTS)].rename(
         columns={"unit_id": "district_id", "harm": "dist_est"})[["district_id", "iso_year", "iso_week", "dist_est"]]
     bridge = json.loads((PROCESSED / "bridge_factors.json").read_text())
-    end = pd.Timestamp(bridge["snpp_end_utc"]).isocalendar()
     names = un.drop_duplicates("union_id").set_index("union_id")
     upn = un.drop_duplicates("upazila_id").set_index("upazila_id")
     for did in DISTRICTS:
         doc = {"district_id": did, "levels": {}}
         for level in ("upazila_id", "union_id"):
-            s = unit_series(det[det.district_id == did], level, dist_est[dist_est.district_id == did],
-                            (end.year, end.week))
+            s = unit_series(det[det.district_id == did], level, dist_est[dist_est.district_id == did], bridge)
             out = {}
             for uid, g in s.groupby(level):
-                years = {}
+                years, sources = {}, {}
                 for y, gy in g.groupby("iso_year"):
                     arr = [None] * 53
                     for w, v in zip(gy.iso_week, gy.value, strict=True):
                         arr[int(w) - 1] = round(float(v), 1)
                     years[int(y)] = arr
+                    code = ["-"] * 53
+                    for w, src in zip(gy.iso_week, gy.src, strict=True):
+                        code[int(w) - 1] = src
+                    sources[int(y)] = "".join(code)
                 if level == "union_id":
                     name_en = names.loc[uid, "union"]
                     parent = names.loc[uid, "upazila_id"]
@@ -157,7 +167,7 @@ def main() -> None:
                     name_en = upn.loc[uid, "upazila"]
                     meta = {"name_en": name_en, "name_bn": upazila_bn(name_en)}
                 total = float(g[g.iso_year.between(2012, 2025)]["value"].sum())
-                out[uid] = {**meta, "total_2012_2025": round(total), "years": years}
+                out[uid] = {**meta, "total_2012_2025": round(total), "years": years, "sources": sources}
             doc["levels"][level.replace("_id", "")] = out
         path = WEB_DATA / "local" / f"{did}.json"
         path.parent.mkdir(parents=True, exist_ok=True)

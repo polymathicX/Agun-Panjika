@@ -181,6 +181,7 @@ def to_unit_week(det: pd.DataFrame) -> pd.DataFrame:
 
 def series(det: pd.DataFrame) -> dict:
     """Harmonised weekly series per neighbour unit: S-NPP observed from 2012, ensemble estimate before."""
+    from pipeline.bridge import bridge_document, reference_series
     from pipeline.harmonise import EnsembleModel, build_features, training_rows
 
     dw = to_unit_week(det)
@@ -188,10 +189,7 @@ def series(det: pd.DataFrame) -> dict:
     model = EnsembleModel().fit(training_rows(feat))
     feat = feat[feat["iso_year"] >= 2003].copy()
     feat["est"] = np.where(feat["M"].notna(), model.predict(feat.fillna({"M": 0})), np.nan)
-    bridged = feat[[c for c in ("J", "K") if c in feat]].mean(axis=1) if {"J", "K"} & set(feat) else np.nan
-    feat["harm"] = feat["V"].where(feat["V"].notna(), bridged)
-    feat["src"] = np.where(feat["V"].notna(), "observed", np.where(pd.notna(bridged), "bridged", "estimated"))
-    feat.loc[feat["harm"].isna(), "harm"] = feat["est"]
+    feat["harm"], feat["src"] = reference_series(feat, feat["est"], bridge_document(dw))
     out = {}
     for uid, g in feat.groupby("region_id"):
         g = g.sort_values(["iso_year", "iso_week"])

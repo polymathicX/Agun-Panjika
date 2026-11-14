@@ -13,6 +13,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 from datetime import UTC, datetime
@@ -95,7 +96,7 @@ def unit_json(h: pd.DataFrame, season: pd.DataFrame, normals: pd.DataFrame, unit
     for r in h.itertuples(index=False):
         row = {"y": int(r.iso_year), "w": int(r.iso_week), "modis": _num(r.M, 0), "viirs": _num(r.V, 0),
                "n20": _num(r.J, 0), "naive": _num(r.naive), "harm": _num(r.harm), "src": r.src}
-        if r.src == "estimated":  # observed and bridged weeks have lo = hi = harm
+        if r.src in ("estimated", "bridged"):
             row["lo"], row["hi"] = _num(r.lo), _num(r.hi)
         # Missing sensors (not yet flying) are omitted rather than written as null.
         weeks.append({k: v for k, v in row.items() if v is not None})
@@ -192,14 +193,25 @@ def write_points(det: pd.DataFrame) -> None:
     iso = det["acq_datetime_utc"].dt.isocalendar()
     det["iso_year"], det["iso_week"] = iso.year.astype(int), iso.week.astype(int)
     det["status"] = np.select([det.static_flag, det.keep], [2, 1], 0)
+    from pipeline.bridge import SNPP_END_UTC
+
+    end = pd.Timestamp(SNPP_END_UTC).isocalendar()
     for y, g in det.groupby("iso_year"):
-        sensors = set(g.sensor)
-        primary = "snpp" if "snpp" in sensors else ("noaa20" if "noaa20" in sensors else "modis")
-        g = g[g.sensor == primary]
+        chunks, by_week = [], {}
+        for week, rows in g.groupby("iso_week"):
+            after = (int(y), int(week)) >= (end.year, end.week)
+            order = ("noaa20", "noaa21", "modis") if after else ("snpp", "noaa20", "noaa21", "modis")
+            primary = next(s for s in order if s in set(rows.sensor))
+            chunks.append(rows[rows.sensor == primary])
+            by_week[int(week)] = primary
+        g = pd.concat(chunks)
+        sensors = sorted(set(by_week.values()))
         flat = []
         for r in g.itertuples(index=False):
             flat += [round(r.lon, 3), round(r.lat, 3), int(r.iso_week), int(r.status)]
-        _dump(WEB_DATA / f"points/{int(y)}.json", {"year": int(y), "sensor": primary, "stride": 4, "pts": flat})
+        _dump(WEB_DATA / f"points/{int(y)}.json",
+              {"year": int(y), "sensor": sensors[0] if len(sensors) == 1 else "mixed",
+               "sensor_by_week": by_week, "stride": 4, "pts": flat})
 
 
 def write_static_cells() -> None:
@@ -234,6 +246,13 @@ def write_manifest(h, updated, handover, validation, bridge, clim_meta, det) -> 
         "updated_utc": updated,
         "data_through": {"iso_year": int(last.iso_year), "iso_week": int(last.iso_week), "by_sensor": by_sensor},
         "model_version": MODEL_VERSION,
+        "export_version": 3,
+        "input_sha256": hashlib.sha256((PROCESSED / "detections.parquet").read_bytes()).hexdigest(),
+        "model": {"task": "retrospective_reconstruction", "negbin_weight": 0.3, "gbm_weight": 0.7,
+                  "train_years": validation["final_fit"]["train_years"]},
+        "coverage": {"basis": "sensor_span", "daily_completeness_verified": False,
+                     "note": "Zero-filled within each sensor's observed span. Daily cloud/overpass "
+                     "coverage is not established; zero detections do not prove no fire."},
         "naive_factor": validation["final_fit"]["naive_k"],
         "baseline_years": clim_meta["baseline_years"],
         "handover": {"snpp_end_utc": handover, "bridge_overlap_years": bridge["overlap_years"]},

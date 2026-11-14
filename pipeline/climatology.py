@@ -22,6 +22,7 @@ import numpy as np
 import pandas as pd
 
 from pipeline.aggregate import wide
+from pipeline.bridge import reference_series, successor_counts
 from pipeline.config import HISTORY_FIRST_YEAR, PROCESSED, RECORD_FIRST_YEAR
 from pipeline.harmonise import ConformalBands, week_month
 
@@ -43,21 +44,14 @@ def _unit_tables(dw: pd.DataFrame) -> dict[str, pd.DataFrame]:
     return {"national": nat, "region": reg, "district": dis}
 
 
-def _bridged(t: pd.DataFrame, k20: dict, k21: dict) -> pd.Series:
-    """S-NPP-scale value from NOAA-20 and NOAA-21: mean of the available bridged counts."""
-    bj = t["J"] * t["month"].map(k20) if "J" in t else pd.Series(np.nan, index=t.index)
-    bk = t["K"] * t["month"].map(k21) if "K" in t else pd.Series(np.nan, index=t.index)
-    return pd.concat([bj, bk], axis=1).mean(axis=1, skipna=True)
-
-
-def _bridge_bands(reg: pd.DataFrame, k20: dict, k21: dict) -> ConformalBands:
+def _bridge_bands(reg: pd.DataFrame, bridge: dict) -> ConformalBands:
     """80% bands for bridged weeks, from region-weeks where S-NPP and a successor both flew."""
     t = reg.copy()
     t["month"] = week_month(t["iso_year"], t["iso_week"])
     for c in ("J", "K"):
         if c not in t:
             t[c] = np.nan
-    b = _bridged(t, k20, k21)
+    b = successor_counts(t, bridge)
     ok = b.notna() & t["V"].notna()
     return ConformalBands().fit(b[ok].to_numpy(), t.loc[ok, "V"].to_numpy(), t.loc[ok, "month"].to_numpy())
 
@@ -66,13 +60,8 @@ def build_harmonised(dw: pd.DataFrame) -> pd.DataFrame:
     with open(PROCESSED / "model.pkl", "rb") as f:
         models = pickle.load(f)
     bridge = json.loads((PROCESSED / "bridge_factors.json").read_text())
-    k20 = {int(m): v for m, v in bridge["noaa20_to_snpp_monthly"].items()}
-    k21 = {int(m): v for m, v in bridge["noaa21_to_snpp_monthly"].items()}
-    snpp_end = datetime.fromisoformat(bridge["snpp_end_utc"].replace("Z", "+00:00"))
-    end_iso = snpp_end.isocalendar()
-
     tables = _unit_tables(dw)
-    bands = _bridge_bands(tables["region"], k20, k21)
+    bands = _bridge_bands(tables["region"], bridge)
 
     frames = []
     for utype, t in tables.items():
@@ -90,14 +79,8 @@ def build_harmonised(dw: pd.DataFrame) -> pd.DataFrame:
                 t[c] = np.nan
         t["unit_type"] = utype
         t["month"] = week_month(t["iso_year"], t["iso_week"])
-        after_end = (t["iso_year"] > end_iso.year) | ((t["iso_year"] == end_iso.year) & (t["iso_week"] >= end_iso.week))
-        bridged = _bridged(t, k20, k21)
-
-        obs = t["V"].notna() & ~after_end
-        # Bridge after the handover, and also in any S-NPP outage week where NOAA-20/21 flew.
-        brg = bridged.notna() & (after_end | t["V"].isna())
-        t["src"] = np.select([obs, brg, t["est"].notna()], ["observed", "bridged", "estimated"], "none")
-        t["harm"] = np.select([obs, brg], [t["V"], bridged], t["est"])
+        bridged = successor_counts(t, bridge)
+        t["harm"], t["src"] = reference_series(t, t["est"], bridge)
         blo, bhi = bands.bounds(np.nan_to_num(bridged.to_numpy()), t["month"].to_numpy())
         t["lo"] = np.select([t["src"] == "estimated", t["src"] == "bridged"], [t["lo80"], blo], t["harm"])
         t["hi"] = np.select([t["src"] == "estimated", t["src"] == "bridged"], [t["hi80"], bhi], t["harm"])
