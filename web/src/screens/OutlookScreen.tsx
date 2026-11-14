@@ -31,8 +31,9 @@ export function OutlookScreen({ manifest, params, setParams }: { manifest: Manif
       <RequestStatus error={error} loading={loading} retry={retry}/>
       <RequestStatus error={fwError} loading={fwLoading} retry={retryFW}/>
       <RequestStatus error={docError} loading={docLoading} retry={retryDoc}/>
+      {fc?.expired && <p role="status" className="card p-4">{lang === 'bn' ? 'সংরক্ষিত পূর্বাভাসের মেয়াদ শেষ। নতুন তথ্য না আসা পর্যন্ত পূর্বাভাস ও সক্রিয় সতর্কতা দেখানো হচ্ছে না।' : 'The saved outlook has expired. Current outlooks and active alerts are withheld until a newer snapshot is published.'} {fc.valid_until_utc?.slice(0, 10)}</p>}
 
-      {fc && (
+      {fc && !fc.expired && (
         <section aria-labelledby="ol-h" className="flex flex-col gap-3">
           <h2 id="ol-h" className="text-lg font-semibold">
             {t("outlook.twoWeek")}
@@ -61,7 +62,7 @@ export function OutlookScreen({ manifest, params, setParams }: { manifest: Manif
         {fw && <DangerChart doc={fw} region={fwRegion} />}
       </section>
 
-      {fc && (
+      {fc && !fc.expired && (
         <section className="card p-3 sm:p-5" aria-labelledby="al-h">
           <h2 id="al-h" className="text-lg font-semibold">
             {t("outlook.alerts")}

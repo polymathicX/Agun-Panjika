@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
+    "test:evidence": "node --test scripts/evidence.test.mjs",
     "test:upgrade": "node scripts/upgrade-regression.mjs"
   },
   "dependencies": {

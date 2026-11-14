@@ -212,7 +212,8 @@ export default function MapScreen({ manifest, params, setParams }: { manifest: M
   },[ready,lang,week,pts,setParams]);
 
   const weekEnd = new Date(isoWeekStart(year, week).getTime() + 6 * 86400000);
-  const sensorName = pts ? { snpp: "VIIRS S-NPP", noaa20: "VIIRS NOAA-20", modis: "MODIS", noaa21: "VIIRS NOAA-21" }[pts.sensor] ?? pts.sensor : "";
+  const pointSensor = pts?.sensor_by_week?.[String(week)] ?? pts?.sensor ?? '';
+  const sensorName = { snpp: "VIIRS S-NPP", noaa20: "VIIRS NOAA-20", modis: "MODIS", noaa21: "VIIRS NOAA-21" }[pointSensor] ?? pointSensor;
   const ranked = Object.entries(districtState).sort((a, b) => b[1].harm - a[1].harm);
 
   return (

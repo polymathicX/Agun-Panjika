@@ -6,7 +6,7 @@ import { useTooltip } from "./Tooltip";
 import { WeekTip } from "./WeekCell";
 
 interface Props {
-  doc: RegionDoc;
+  doc: Pick<RegionDoc, 'weeks' | 'handover'>;
   series?: "harm"; // component contract: charts take the region doc + a series prop
   years?: number[]; // rows to draw (default: all, newest at the bottom)
   highlightYear?: number;
