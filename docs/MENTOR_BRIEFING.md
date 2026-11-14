@@ -1,6 +1,6 @@
 # Reading guide for our mentor
 
-**Agun Panjika · Team KUETaguns · 14 November 2026**
+**Agun Panjika · Team KUETaguns · 15 November 2026**
 
 The shortest route is the [live application](https://polymathicx.github.io/Agun-Panjika/) and [seven-slide overview](pdf/GLOBAL_DEMO_SLIDES.pdf). The [project-brief PDF](pdf/PROJECT_BRIEF.pdf) explains the whole project; the [global-roadmap PDF](pdf/GLOBAL_EXTENSION_PLAN.pdf) separates delivered extensions from research still requiring evidence.
 
@@ -9,7 +9,7 @@ For technical review, read the [model card](GLOBAL_EVALUATION.md) and inspect a 
 ## Feedback we would value most
 
 1. **Evaluation design:** What new locked temporal/geographic test would support a defensible reconstruction claim, given that the current test years were known during development?
-2. **Failure analysis:** Why does the model help in Bangladesh/Nepal but lose to a fitted factor in Chin/Punjab–Haryana? Which simple baseline, feature ablation or scale choice should we test next?
+2. **Failure analysis:** How should we test the tree-support guard, annual updating, Chin's stronger monthly baseline and the small Bangladesh/Nepal regressions on a new locked period?
 3. **Uncertainty and filtering:** How should we validate interval calibration, observation completeness and industrial-source filtering independently?
 4. **Practical use:** Could a remote-sensing practitioner or land manager help us run a small comprehension/workflow pilot? We have a task protocol but no completed field study.
 

@@ -119,6 +119,7 @@ export interface PointsYear {
 export interface GlobalWeek {
   y: number; w: number; modis?: number; viirs?: number; model?: number;
   factor?: number; monthly?: number; fixed?: number; lo?: number; hi?: number;
+  reference_ok?: boolean; unguarded?: number;
 }
 export interface CaseScore { mae_week: number; abs_total_pct_err: number; weeks: number }
 export interface GlobalArea {
@@ -128,11 +129,15 @@ export interface GlobalArea {
     models: Record<string, CaseScore>; per_region: { id: string; ensemble: CaseScore; naive: CaseScore }[];
     coverage80: number; median_width80: number; improvement_pct: number;
     calibration_weeks: number; status: "model_advantage" | "baseline_preferred";
+    all_weeks: Record<string, CaseScore>; excluded_test_weeks: [number, number][];
+    previous_release_mae: number; raw_change_from_previous_pct: number;
   };
 }
 export interface GlobalCase extends GlobalArea {
   version: string; built_utc: string; snapshot_sha256: string; filter: string;
   splits: Record<"fit" | "calibration" | "test", [number, number]>; weeks: GlobalWeek[];
+  folds: Record<string, {fit: [number,number]; calibration: [number,number]; calibration_weeks: number; raw_test_weeks: number; eligible_test_weeks: number; guarded_region_weeks: number; maximum_modis: number}>;
+  historical_vintage: {target: number; fit: [number,number]; calibration: [number,number]};
 }
 export interface GlobalCatalog {
   built_utc: string; version: string; protocol: string; sources: string[]; areas: GlobalArea[];

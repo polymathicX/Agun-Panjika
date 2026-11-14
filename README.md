@@ -11,6 +11,8 @@ Team **KUETaguns** · NASA Space Apps Challenge 2026<br>
 
 [Project brief PDF](docs/pdf/PROJECT_BRIEF.pdf) · [Global roadmap PDF](docs/pdf/GLOBAL_EXTENSION_PLAN.pdf) · [Model card](docs/GLOBAL_EVALUATION.md) · [Mentor reading guide](docs/MENTOR_BRIEFING.md)
 
+[Video teammate handoff: story, recording links and assets](docs/submission/VIDEO_TEAMMATE_HANDOFF.md)
+
 <img src="docs/review/screenshots/world-hero.png" alt="Actual Soft Earth interface with textured interactive globe, recent NASA observations and satellite-specific counts" width="100%">
 
 </div>
@@ -19,9 +21,11 @@ Agun Panjika brings two questions together: **What are satellites observing in m
 
 MODIS and VIIRS have different resolutions and sensitivities. Joining raw counts can make a change of instrument look like a change in burning. Our historical pipeline estimates earlier weekly activity on a VIIRS S-NPP detection scale and keeps observations, estimates and uncertainty distinguishable.
 
-> **14 November 2026 release:** recent observations cover **242 Natural Earth countries and territories**, with MODIS, NOAA-20 and NOAA-21 kept separate. Historical reconstruction is evaluated in **four South Asian areas**, not worldwide. The Soft Earth design remains. Static Earth/cloud textures are geographic context, not live weather. The app shows each feed's observation window and flags stale snapshots.
+> **15 November 2026 release:** recent observations cover **242 Natural Earth countries and territories**, with MODIS, NOAA-20 and NOAA-21 kept separate. Historical reconstruction is evaluated in **four South Asian areas**, not worldwide. The Soft Earth design remains. Static Earth/cloud textures are geographic context, not live weather. The app shows each feed's observation window and flags stale snapshots.
 
 ## Start with a place
+
+First visit? Choose **Show me around** for an optional, action-led eight-step tutorial. It teaches the real controls and can be replayed later.
 
 1. **Spin, zoom and tap.** Explore recent observations on a textured 3D Earth. No country search is needed; keyboard selection and a flat map are available as alternatives.
 2. **Read the source.** Change the satellite or day, play the timeline and inspect the country's counts. Detections are not unique fires; repeat observations and industrial heat can remain.
@@ -38,7 +42,7 @@ MODIS and VIIRS have different resolutions and sensitivities. Joining raw counts
 | Capability | Scope and interpretation |
 | --- | --- |
 | Worldwide observations | Recent seven-day NASA FIRMS feeds; 242 country/territory summaries, daily playback, per-satellite totals, source timestamps and SHA-256 provenance |
-| Historical evidence workbench | Bangladesh, Nepal, Chin in Myanmar, and Punjab–Haryana in India; frozen temporal experiments, full baselines, interval coverage, calendars and exports |
+| Historical evidence workbench | Bangladesh, Nepal, Chin in Myanmar, and Punjab–Haryana in India; annual past-only temporal experiments, full baselines, interval coverage, source-quality flags, calendars and exports |
 | Bangladesh fire almanac | Weekly history from 2001, five analysis regions, 64 districts, seasonal normals, local CHT calendars, maps and sensor comparisons |
 | Successor continuity | Shared monthly correction and handover/outage rules for main/local/neighbour series; actual zero and missing source stay distinct |
 | Experimental research views | Two-week outlooks, fire-weather context, ESA burned-area comparison and cross-border/aerosol timing; expired outlooks are suppressed |
@@ -47,22 +51,25 @@ MODIS and VIIRS have different resolutions and sensitivities. Joining raw counts
 
 The intended benefit is easier access to comparable fire-season evidence for students, communities, researchers and land managers. **A practitioner pilot, adoption and measured prevention benefits have not been established.** This is a research and communication prototype, not an emergency warning service.
 
-## Evidence, including the failures
+## What changed after validation
 
-The portable detector-only ensemble is **30% negative-binomial regression + 70% five-seed LightGBM**. Each area is fitted separately: **fit 2013–2018; calibrate 2019–2021; test 2022–2024**, with 156 test weeks per area. These periods were known during development: this is a disjoint temporal replay, not an untouched final holdout or unseen-country transfer test.
+The updated workflow retrains once per historical test year using only older labels, and guards against direct-count trees saturating beyond their fitted MODIS range. NASA-documented acquisition gaps are flagged separately. **All 156 original test weeks remain in this before/after comparison.**
 
-| Area | Ensemble weekly MAE | Fitted-factor MAE | Weekly error change | Coverage of nominal 80% interval |
+| Area | Previous release | Updated model | Same-workflow factor | Monthly factors |
 | --- | ---: | ---: | ---: | ---: |
-| Bangladesh | 45.970 | 61.571 | 25.34% lower | 81.4% |
-| Nepal | 113.001 | 158.019 | 28.49% lower | 75.6% |
-| Chin, Myanmar | 136.414 | 101.030 | 35.02% higher | 73.7% |
-| Punjab & Haryana, India | 313.525 | 271.623 | 15.43% higher | 76.3% |
+| Bangladesh | 45.970 | 46.926 | 58.316 | 49.839 |
+| Nepal | 113.001 | 115.232 | 158.516 | 131.390 |
+| Chin, Myanmar | 136.414 | 88.530 | 97.283 | 75.525 |
+| Punjab & Haryana, India | 313.525 | 246.265 | 262.017 | 291.339 |
 
-<img src="docs/latex/figures/global-transfer.png" alt="Weekly error improves in Bangladesh and Nepal but worsens in Chin and Punjab–Haryana" width="800">
+Chin's weekly MAE falls **35.10%** and Punjab–Haryana's **21.45%** against the previous release. Chin's monthly baseline is still better; Bangladesh and Nepal are about 2% worse than before. We keep those outcomes visible.
 
-Where the ensemble loses to the fitted factor, the application withholds reconstructed pre-VIIRS calendar rows and retains the observed data and failed experiment. Nepal's fitted factor also has lower annual-total error than the ensemble. All baselines, annual errors, regional results and limitations are in the [model card](docs/GLOBAL_EVALUATION.md) and [public packages](web/public/data/global/). Absolute MAE should not be ranked between differently sized areas.
+<img src="docs/latex/figures/global-transfer.png" alt="Change from the previous release on all 156 original weeks: Chin and Punjab improve, Bangladesh and Nepal worsen slightly" width="800">
 
-The older Bangladesh weather-assisted leave-one-year-out benchmark is a separate evaluation. Its independence and calibration concerns are retained in the [scientific review](docs/SCIENTIFIC_REVIEW.md); its scores are not substituted for this portable experiment.
+For each year Y, point fitting uses 2013 through Y−2 and interval calibration uses Y−1. The app also compares every method on the **same 142 weeks** after flagging long NASA acquisition outages, while retaining raw counts and all-week scores. Partial reference weeks appear as gaps, not as complete zero observations. These are known development replays, not an untouched final holdout or worldwide calibrated accuracy.
+
+[Protocol, all results and limitations](docs/GLOBAL_EVALUATION.md) · [What caused the errors and the rejected experiments](docs/MODEL_OPTIMIZATION_RESEARCH.md) · [Original frozen benchmark](web/public/data/global/v1/)
+
 
 ## Run locally
 

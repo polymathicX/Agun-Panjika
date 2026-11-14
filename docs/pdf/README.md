@@ -1,6 +1,6 @@
 # Files to share
 
-Current editions: **14 November 2026**.
+Current editions: **15 November 2026**.
 
 1. [PROJECT_BRIEF.pdf](PROJECT_BRIEF.pdf): complete six-page project overview for our mentor.
 2. [GLOBAL_EXTENSION_PLAN.pdf](GLOBAL_EXTENSION_PLAN.pdf): five-page delivery record and next research plan.

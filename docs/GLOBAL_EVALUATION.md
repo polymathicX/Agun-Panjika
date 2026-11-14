@@ -1,8 +1,68 @@
 # Global evaluation and model card
 
-Release: 14 November 2026. The worldwide observation viewer and the historical reconstruction experiments answer different questions. The viewer shows recent NASA measurements across 242 countries and territories. The experiments test whether an earlier fire record can be put on the VIIRS S-NPP scale in four named areas.
+**15 November 2026 · portable-rolling-support-v2**
 
-## Reproduce the experiments
+The worldwide viewer shows recent observations across 242 countries/territories. Historical reconstruction is evaluated in four South Asian areas. This model card describes that historical workflow, not worldwide model accuracy or emergency forecasting.
+
+## What was fixed
+
+Chin's largest error involved a MODIS peak beyond the fitted tree model's numeric support. A direct-count tree saturated while the observed VIIRS count rose sharply. The new guard replaces only that tree contribution with a training-fitted multiplicative factor when MODIS exceeds the **maximum across the entire fitted model**. The negative-binomial contribution remains. The rule is identical in all areas; there is no area-specific switch chosen from test results.
+
+Punjab–Haryana's observation relationship changed over time. A single fit frozen in 2018 was too stale for parts of 2024. The update fits a fresh vintage for each test year using only older labels. The architecture and hyperparameters remain fixed. The [research note](MODEL_OPTIMIZATION_RESEARCH.md) preserves unsuccessful alternative experiments and the final protocol.
+
+NASA also documents acquisition outages. One large Punjab error coincided with the **2–6 November 2024 S-NPP GPS outage**. Local acquisition timestamps confirm missing S-NPP records during the outage while MODIS continued observing. Production resumed later, but backfilled 7–8 November observations are retained. Production delay is not treated as proof of missing acquisition.
+
+## Chronological protocol
+
+| Target year | Point-model fit | Independent interval calibration | Eligible calibration weeks | Raw / comparable test weeks |
+| --- | --- | --- | ---: | ---: |
+| 2022 | 2013–2020 | 2021 | 51 | 52 / 49 |
+| 2023 | 2013–2021 | 2022 | 49 | 52 / 50 |
+| 2024 | 2013–2022 | 2023 | 50 | 52 / 43 |
+
+The model remains 30% negative-binomial regression plus 70% five-seed LightGBM, with the strict support guard above. Detector-only features describe MODIS count, FRP, observation mix, geometry, season and neighbouring weeks. Weather is excluded. Features are built within each year. Following-week MODIS information is appropriate to retrospective reconstruction, not an issue-time forecast.
+
+Each case is fitted locally. Earlier test-year labels intentionally become available to later vintages. This is **annual walk-forward evaluation**, not the original single frozen fit. Every target year keeps point fitting and interval calibration earlier than that year's labels. The years were already known during development and several alternatives were explored. This is a known historical replay, **not an untouched final holdout or unseen-country transfer**.
+
+Pre-2012 historical reconstruction uses the latest evaluated vintage: fit 2013–2022, calibrate 2023. Test-year chart rows use their own chronological vintages. Moving the switch slider joins precomputed values; it does not retrain a model in the browser. The workflow scores do not establish nominal interval coverage decades before the calibration period.
+
+## Changed predictions: all 156 original weeks
+
+Weekly MAE is the mean absolute difference from raw S-NPP counts. Lower is better. These rows preserve all original test weeks, including incomplete references, so the before/after gains are not created by dropping difficult weeks.
+
+| Area | Previous release | Updated model | Same-workflow factor | Monthly factors |
+| --- | ---: | ---: | ---: | ---: |
+| Bangladesh | 45.970 | 46.926 | 58.316 | 49.839 |
+| Nepal | 113.001 | 115.232 | 158.516 | 131.390 |
+| Chin, Myanmar | 136.414 | 88.530 | 97.283 | 75.525 |
+| Punjab & Haryana, India | 313.525 | 246.265 | 262.017 | 291.339 |
+
+Chin improves **35.10%** and Punjab–Haryana **21.45%** relative to the previous release. The new workflow also beats a single factor fitted to the same past labels in all four cases. **Chin's monthly factor remains better** than the updated model. Bangladesh is 2.08% worse than its previous release, and Nepal 1.97% worse. Those trade-offs remain published; methods were not switched per area after inspecting test results.
+
+The fixed 4.4× reference also remains visible. Its PRD provenance uses a 2024 ratio, so it is a historical comparison, not an independently preselected model candidate. All baselines, the unguarded annual workflow and per-year/regional results are included in the packages.
+
+## Comparable references: the same 142 weeks for every method
+
+The [source-linked quality manifest](../pipeline/reference_quality.json) preserves 172 NASA-listed intervals in the 2013–2024 study scope. A fixed rule flags every ISO week overlapping a documented acquisition outage lasting at least 24 hours. Nine long intervals affect 14 test weeks and one earlier calibration week. The same mask applies to every area, model, fit, calibration and comparable score. Raw labels are never overwritten in the public data.
+
+| Area | Updated model | Fitted factor | Monthly factors | Measured 80% coverage |
+| --- | ---: | ---: | ---: | ---: |
+| Bangladesh | 51.201 | 63.785 | 54.523 | 78.2% |
+| Nepal | 125.792 | 173.297 | 143.696 | 79.6% |
+| Chin, Myanmar | 97.198 | 106.860 | 82.957 | 74.6% |
+| Punjab & Haryana, India | 209.497 | 237.311 | 260.711 | 82.4% |
+
+This quality comparison is a correction to reference comparability, **not itself an accuracy gain**. Removing quiet incomplete weeks can raise MAE, as the tables show. Raw counts, all 156-week results, every omitted week and the original [v1 packages](../web/public/data/global/v1/) remain inspectable. Calendar and reference-line gaps mark incomplete weeks; CSV retains the raw value with its quality flag.
+
+The total-count metric groups each year's **identical included weeks**. A total over eligible weeks is not a complete annual total. Every baseline is evaluated on the same set. The 80% intervals have only 49–51 calibration residual weeks per vintage; coverage is empirical, temporally dependent and not guaranteed. It is not tuned using target-year labels.
+
+## Source and coverage limits
+
+Confidence thresholds are MODIS ≥30% and nominal/high VIIRS; FIRMS types 2/3 are excluded. No learned static-cell filter is used in these portable cases. Industrial heat can remain. Sensor-span zero filling does not prove cloud-free observation, daily retrieval completeness or absence of fire. The long-outage rule does not certify complete coverage: shorter granule gaps and cloud/overpass differences still matter.
+
+The older Bangladesh weather-assisted LOYO benchmark is separate. Its independence, filtering and forecast concerns remain in the [original scientific audit](SCIENTIFIC_REVIEW.md). Its scores are not substituted for this detector-only workflow.
+
+## Reproduce without a NASA key
 
 ```powershell
 python -m pip install -e ".[dev]"
@@ -10,51 +70,8 @@ python -m pipeline.global_cases --from-packages
 python -m pytest -q tests/test_global_cases.py tests/test_continuity.py
 ```
 
-The no-key command refits models, calibration and scoring from the [public aggregated feature CSVs](../web/public/data/global/features/). Each area JSON records the feature-file SHA-256, row count and raw input SHA-256. Checksums are verified before refitting. The release environment reproduced every published evaluation exactly; library/platform versions may introduce numerical differences.
+The command verifies public feature CSV checksums, reads the versioned NASA quality manifest, refits all annual vintages and baselines, calibrates their bands and exports the complete comparisons. It reproduces the research's final workflow results in this environment. Library/platform versions may cause numerical differences. This is not an independent audit of raw-to-feature preprocessing. To rebuild features from downloaded country/neighbour snapshots, run without `--from-packages`.
 
-To independently rebuild features from local downloaded FIRMS snapshots, run `python -m pipeline.global_cases` without the flag. Bangladesh and Nepal use their country-pipeline detections; Chin and Punjab–Haryana use archived neighbour inputs. Refit from public features does **not** independently validate raw-to-feature preprocessing. The browser runs from committed exports without credentials.
+Each case records raw-input and feature hashes, source dates, vintage ranges, guard usage and the quality-manifest checksum. The [implementation](../pipeline/global_cases.py), [packages](../web/public/data/global/), [research record](MODEL_OPTIMIZATION_RESEARCH.md) and [verification](VERIFICATION.md) expose the details. Fresh locked evaluation, independent source labels, practitioner testing and prospective forecast evidence remain necessary.
 
-## Protocol
-
-The model is fixed before this replay: 30% negative-binomial regression and 70% five-seed LightGBM Poisson regression. Each area is fitted separately. Inputs describe MODIS counts, FRP, observation mix, geometry, season and neighbouring weeks. Weather features are excluded so all four cases use the same portable detector-only method. Neighbouring-week features are constructed within each year. This is retrospective reconstruction, not a forecast available at the start of a week.
-
-| Partition | Years | Use |
-| --- | --- | --- |
-| Fit | 2013–2018 | Fit the ensemble, single-factor and monthly-factor baselines |
-| Calibration | 2019–2021 | Calibrate national weekly 80% intervals; 157 weeks |
-| Test | 2022–2024 | Evaluate frozen predictions; 156 weeks per area |
-
-VIIRS nominal/high detections and MODIS confidence ≥30% are retained; FIRMS types 2/3 are excluded. The learned Bangladesh industrial-cell filter is **not** used in these experiments, avoiding its use of future test-period detections. Residual industrial heat may remain. Aggregation fills zeros inside each sensor's observed span. This does not establish cloud-free observation or daily retrieval completeness.
-
-Fit labels and interval-calibration labels never include the test period. Nevertheless, these years were already available during project development. These are disjoint temporal replay experiments, **not an untouched final holdout**, a spatial transfer to unseen countries, or prospective deployment evidence. Each country's model has its own local training data.
-
-## Results
-
-Weekly MAE is the mean absolute difference from observed S-NPP detection counts. The annual metric is the mean absolute percentage error of the three yearly totals. Lower values are better. Absolute MAE should not be ranked between differently sized areas.
-
-| Area | Ensemble weekly MAE | Fitted-factor MAE | Change in weekly error | Measured coverage of 80% interval |
-| --- | ---: | ---: | ---: | ---: |
-| Bangladesh | 45.970 | 61.571 | 25.34% lower | 81.4% |
-| Nepal | 113.001 | 158.019 | 28.49% lower | 75.6% |
-| Chin, Myanmar | 136.414 | 101.030 | 35.02% higher | 73.7% |
-| Punjab & Haryana, India | 313.525 | 271.623 | 15.43% higher | 76.3% |
-
-All fixed 4.4×, fitted single-factor and monthly-factor results, annual errors and regional failures are published in the area JSON and in the application. Nepal's lower weekly error does not imply better annual totals: its fitted single factor has lower annual-total error. We retain that result.
-
-The application withholds reconstructed pre-VIIRS calendar rows for Chin and Punjab–Haryana because this model lost to a fitted factor there. Their observed calendars and experiment results remain inspectable. This is a comparison of the fixed ensemble with the fitted single factor; it is not an automatic claim that the ensemble beats every alternative. Observed calendar colors are scaled within each area, not across countries.
-
-## Sensor-switch experiment
-
-Choose a test year and a switch week. Before the switch, the corrected line uses the frozen model and the factor line uses the training-fitted single factor. After it, both use observed VIIRS. The uncorrected line joins raw MODIS to VIIRS. Reveal the withheld reference to inspect the reconstruction, calibrated intervals and error. Changing the slider does not retrain the model. Errors displayed beside the slider refer only to its hidden part of the selected year; the evidence brief reports the complete test period.
-
-## Continuity and missing data
-
-Main, local and neighbouring series now share the same monthly successor-factor and handover/outage selection functions. A real zero participates in the successor average; a missing sensor does not. Map points select their source by ISO week, including within-year handover. Bridged bounds survive the regional JSON export. Synthetic tests exercise nonidentity factors, zeros, missing sources and the switch week.
-
-Requested FIRMS API chunks fail explicitly when retrieval fails. Requests stop at each source's declared availability, including S-NPP's retirement. This prevents silently treating a failed requested chunk as zero, but does not repair all historical coverage assumptions or supply per-pixel cloud masks. Bridge residual bands remain an internal calibration and are not a coverage guarantee.
-
-## Remaining scientific work
-
-A domain reviewer should review area scale and thresholds; a new locked evaluation period should test the method after choices are fixed; industrial-source filtering needs fresh blind labels; forecasts need archived issue-time weather and independently calibrated rolling evaluation. The old Bangladesh leave-one-year-out benchmark is a separate weather-assisted model and evaluation. Do not substitute its numbers for the portable replay results above.
-
-Sources: [NASA FIRMS](https://www.earthdata.nasa.gov/data/tools/firms), [experiment implementation](../pipeline/global_cases.py), [published packages](../web/public/data/global/catalog.json), [continuity implementation](../pipeline/bridge.py), [original source audit](SCIENTIFIC_REVIEW.md).
+Primary sources: [NASA acquisition outage table](https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html), [FIRMS outage notices](https://firms2.modaps.eosdis.nasa.gov/content/notifications/firms/outages.html), [NASA FIRMS](https://www.earthdata.nasa.gov/data/tools/firms). No NASA endorsement is implied.

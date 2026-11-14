@@ -32,21 +32,37 @@ def figures() -> None:
                          "axes.labelcolor": "#173047", "xtick.color": "#536575", "ytick.color": "#173047"})
     catalog = json.loads((ROOT / "web/public/data/global/catalog.json").read_text(encoding="utf-8"))
     areas = catalog["areas"]
-    values = [-a["evaluation"]["improvement_pct"] for a in areas]
+    values = [-a["evaluation"]["raw_change_from_previous_pct"] for a in areas]
     fig, ax = plt.subplots(figsize=(8.6, 4.2), layout="constrained")
     colors = ["#245878" if x < 0 else "#bc4221" for x in values]
     ax.barh(range(4), values, color=colors, height=.58)
     ax.set_yticks(range(4), ["Bangladesh", "Nepal", "Chin, Myanmar", "Punjab & Haryana"])
     ax.invert_yaxis(); ax.axvline(0, color="#536575", lw=.8)
-    ax.set_xlim(-43, 65); ax.set_xlabel("Change in weekly error versus a fitted factor (%)")
+    ax.set_xlim(-45, 35); ax.set_xlabel("Change in weekly error versus the previous release (%)")
     ax.xaxis.grid(True, color="#d4dfe6", alpha=.6); ax.set_axisbelow(True)
     for i, value in enumerate(values):
         ax.text(value / 2 if value < 0 else value + 1, i,
-                f"{abs(value):.1f}% {'lower' if value < 0 else 'higher'}",
+                f"{abs(value):.2f}% {'lower' if value < 0 else 'higher'}",
                 ha="center" if value < 0 else "left", va="center",
                 color="white" if value < 0 else "#173047", fontsize=12, weight="bold")
     for suffix in ("pdf", "png"):
         fig.savefig(FIGURES / f"global-transfer.{suffix}", dpi=220, facecolor="white")
+    plt.close(fig)
+
+    highlights = [a for a in areas if a['id'] in ('chin', 'punjab_haryana')]
+    gains = [a['evaluation']['raw_change_from_previous_pct'] for a in highlights]
+    assert len(highlights) == 2 and all(0 < gain < 100 for gain in gains)
+    fig, ax = plt.subplots(figsize=(8.6, 4.2), layout='constrained')
+    ax.barh(range(2), gains, color='#245878', height=.48)
+    ax.set_yticks(range(2), ['Chin, Myanmar', 'Punjab & Haryana'])
+    ax.invert_yaxis(); ax.set_xlim(0, 45)
+    ax.set_xlabel('Reduction in weekly error versus the previous release (%)')
+    ax.xaxis.grid(True, color='#d4dfe6', alpha=.6); ax.set_axisbelow(True)
+    for i, gain in enumerate(gains):
+        ax.text(gain / 2, i, f'{gain:.2f}% lower error', ha='center', va='center',
+                color='white', fontsize=13, weight='bold')
+    for suffix in ('pdf', 'png'):
+        fig.savefig(FIGURES / f'global-impact.{suffix}', dpi=220, facecolor='white')
     plt.close(fig)
 
     doc = json.loads((ROOT / "web/public/data/national.json").read_text(encoding="utf-8"))
@@ -67,8 +83,8 @@ def figures() -> None:
     for a in areas:
         e=a["evaluation"]
         label=a['name_en'].replace('&', r'\&')
-        rows.append(f"{label} & {e['models']['ensemble']['mae_week']:.1f} & "
-                    f"{e['models']['naive']['mae_week']:.1f} & {e['coverage80']*100:.1f}\\% \\\\")
+        rows.append(f"{label} & {e['all_weeks']['ensemble']['mae_week']:.1f} & "
+                    f"{e['all_weeks']['naive']['mae_week']:.1f} & {e['coverage80']*100:.1f}\\% \\\\")
     (SOURCE / "numbers.tex").write_text("\\newcommand{\\CountryCount}{242}\n"
                                         "\\newcommand{\\CaseTableRows}{"+"\n".join(rows)+"}\n", encoding="utf-8")
 

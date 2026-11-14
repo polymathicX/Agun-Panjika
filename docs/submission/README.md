@@ -2,9 +2,12 @@
 
 The release contains a **seven-slide English PDF** and a **29.00-second captioned MP4**, alternative demo formats. The team must choose one for the official demo field, review its project page and perform the submission. The older local video is too long for the global short demo.
 
+The slide deck highlights the country experience, practical intended benefits and the two largest measured improvements. Its progress chart compares Chin and Punjab–Haryana with the previous release across every original test week. The linked model card and mentor reports contain the complete four-area comparisons and limitations.
+
 - [Public demo page](https://polymathicx.github.io/Agun-Panjika/demo/), including transcript and downloads.
 - [Slide PDF](../pdf/GLOBAL_DEMO_SLIDES.pdf).
 - [Project-page draft](PROJECT_PAGE_DRAFT.md) and [optional narration script](30_SECOND_PITCH.md).
+- [Video teammate handoff](VIDEO_TEAMMATE_HANDOFF.md): product highlights, timing, recording links, assets and credits.
 - `slides.tex`: seven-slide XeLaTeX source. `video.html`: six-scene caption layout.
 - `capture.mjs`: actual production browser screenshots and recorded interactions.
 - `build.py`: figures, slides, storyboard and H.264 video assembly.

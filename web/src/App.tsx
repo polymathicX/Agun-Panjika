@@ -105,10 +105,10 @@ export default function App() {
         </div>
       </header>
 
-      <div className="mission-status no-print"><span>NASA SPACE APPS 2026 <span aria-hidden="true">/</span> KUETaguns</span><span>{lang === "bn" ? "উৎস: NASA FIRMS" : "SOURCE: NASA FIRMS"} · {manifest?.updated_utc.slice(0, 10) ?? "…"}</span></div>
+      {needsManifest && <div className="mission-status no-print"><span>NASA SPACE APPS 2026 <span aria-hidden="true">/</span> KUETaguns</span><span>{lang === "bn" ? "উৎস: NASA FIRMS" : "SOURCE: NASA FIRMS"} · {manifest?.updated_utc.slice(0, 10) ?? "…"}</span></div>}
       <main id="main" tabIndex={-1} className="app-main mx-auto px-4 py-5">
         <DemoTour go={go} route={route} params={params}/>
-        {manifest && <div className="snapshot-status no-print"><strong>{lang === 'bn' ? 'পর্যবেক্ষণের সংরক্ষিত তথ্য' : 'Dated observation snapshot'}</strong><span>{t('app.dataThrough', { date: Object.values(manifest?.data_through.by_sensor ?? {}).sort().pop() ?? '' })} · {lang === 'bn' ? 'সরাসরি সম্প্রচার নয়' : 'not a live feed'}</span><span>{lang === 'bn' ? 'মেঘ ও পর্যবেক্ষণের ঘাটতি থাকতে পারে' : 'Cloud and overpass completeness is not established'}</span></div>}
+        {needsManifest && manifest && <div className="snapshot-status no-print"><strong>{lang === 'bn' ? 'পর্যবেক্ষণের সংরক্ষিত তথ্য' : 'Dated observation snapshot'}</strong><span>{t('app.dataThrough', { date: Object.values(manifest?.data_through.by_sensor ?? {}).sort().pop() ?? '' })} · {lang === 'bn' ? 'সরাসরি সম্প্রচার নয়' : 'not a live feed'}</span><span>{lang === 'bn' ? 'মেঘ ও পর্যবেক্ষণের ঘাটতি থাকতে পারে' : 'Cloud and overpass completeness is not established'}</span></div>}
         {!online&&<ConnectionStatus/>}
         {needsManifest && <RequestStatus error={error} loading={loading} retry={retry} variant="page"/>}
         {(manifest || !needsManifest) && (
@@ -131,7 +131,7 @@ export default function App() {
             <footer className="no-print mt-10 border-t border-grid pt-4 text-xs text-muted">
               <p className="italic">{t("app.tagline")}</p>
               <p className="mt-1">
-                NASA FIRMS MODIS C6.1 · VIIRS 375 m (S-NPP, NOAA-20, NOAA-21) · NASA POWER · ESA Fire_cci · {t("app.dataThrough", { date: Object.values(manifest?.data_through.by_sensor ?? {}).sort().pop() ?? "" })} · KUETaguns, NASA Space Apps 2026
+                NASA FIRMS MODIS C6.1 · VIIRS 375 m (S-NPP, NOAA-20, NOAA-21) · NASA POWER · ESA Fire_cci · {needsManifest ? t("app.dataThrough", { date: Object.values(manifest?.data_through.by_sensor ?? {}).sort().pop() ?? "" }) : "Observation dates are shown with each dataset"} · KUETaguns, NASA Space Apps 2026
               </p>
             </footer>
           </ErrorBoundary>

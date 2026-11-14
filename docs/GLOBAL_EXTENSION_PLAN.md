@@ -1,6 +1,6 @@
 # Global extension: delivered work and next research
 
-**14 November 2026 · Team KUETaguns**
+**15 November 2026 · Team KUETaguns**
 
 [Typeset PDF](pdf/GLOBAL_EXTENSION_PLAN.pdf) · [Project brief](PROJECT_BRIEF.md) · [Item-by-item delivery status](IMPLEMENTATION_STATUS.md) · [Original 29 October proposal](archive/GLOBAL_EXTENSION_PLAN-2026-10-29.md)
 
@@ -11,9 +11,9 @@ The original proposal asked us to make sensor comparability inspectable and eval
 | Original priority | Implementation | Acceptance evidence |
 | --- | --- | --- |
 | A reliable dated public product | GitHub Pages, separate static publishing and six-hour global refresh, feed dates and stale notices | Hosted global refresh/deploy succeeds; software verification is recorded separately from model validity |
-| Evaluation with separated calibration | Fixed detector-only model; fit 2013–18, calibration 2019–21, test 2022–24 | Four complete area packages, all baselines, regional failures and nominal-80% coverage |
-| Contrasting additional areas | Nepal, Chin and Punjab–Haryana alongside Bangladesh | Two gains and two losses versus a fitted factor; no worldwide extrapolation of these scores |
-| A visible sensor-switch experiment | Test-year/week controls, raw/factor/model curves and revealable VIIRS | Frozen test predictions; reference hidden only by the interaction, not retraining |
+| Evaluation with separated calibration | Fixed detector-only model; annual fit through Y−2, independent calibration Y−1, test Y | Four complete area packages, all baselines, regional failures and nominal-80% coverage |
+| Contrasting additional areas | Nepal, Chin and Punjab–Haryana alongside Bangladesh | Updated annual workflow beats the matched fitted factor in four cases; Chin still loses to monthly factors; no worldwide accuracy extrapolation |
+| A visible sensor-switch experiment | Test-year/week controls, raw/factor/model curves and revealable VIIRS | Precomputed chronological test predictions; reference hidden only by the interaction, not retraining |
 | Continuity and missing-source integrity | Shared national/local/neighbour handover, per-week map source, bridge bounds | Nonidentity-factor, zero, missing-sensor, outage and boundary-week tests |
 | Portable evidence briefs | Historical PNG/JSON/CSV/print; recent-country PNG/JSON/daily CSV | Dates, sources, hashes, uncertainty and limitations accompany outputs |
 | Accessible global discovery | Spin/tap/zoom globe, keyboard/flat-map alternatives, daily playback | Responsive browser checks, reduced motion and explicit rendering-sample notice |
@@ -23,9 +23,11 @@ The original proposal asked us to make sensor comparability inspectable and eval
 
 ## What the new evaluation tells us
 
-The ensemble lowers weekly MAE by 25.34% in Bangladesh and 28.49% in Nepal against the training-fitted factor. It raises error by 35.02% in Chin and 15.43% in Punjab–Haryana. Nominal-80% coverage ranges from 73.7% to 81.4%. These differences are material; the app withholds reconstructed pre-VIIRS rows for the unsuccessful cases. Nepal's factor is also better on annual totals. [Model card and complete baselines](GLOBAL_EVALUATION.md).
+Checking the errors identified two different issues. Chin's tree contribution saturated above its fitted support; a strict pooled-support guard corrects that case. Punjab’s changing observation relationship benefits from scheduled past-only retraining. NASA acquisition outages also made some reference weeks incomplete.
 
-Each model has local training data. These are separately fitted cases, not a model transferred to an unseen country. Test years were already known in development. The temporal separation improves the design, but an untouched final evaluation has not been created retroactively.
+On all 156 original weeks, Chin MAE falls from 136.414 to 88.530 (35.10%), and Punjab–Haryana from 313.525 to 246.265 (21.45%). These gains change predictions while retaining every original week. All models also have a matched 142-week comparison after a globally fixed source-quality rule. Original counts, all-week scores and exclusions remain public.
+
+The updated workflow beats the contemporaneous fitted factor in four areas, but Chin’s monthly factor remains better. Bangladesh and Nepal are about 2% worse than the prior release. Nominal-80% interval coverage is measured, not guaranteed. The known development years and explored alternatives do not establish an untouched final evaluation. [Model card](GLOBAL_EVALUATION.md) · [Full research record](MODEL_OPTIMIZATION_RESEARCH.md).
 
 ## Next research gates
 

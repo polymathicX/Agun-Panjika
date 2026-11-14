@@ -23,6 +23,7 @@ try {
   }
  } else {
   const context=await browser.newContext({viewport:{width:1440,height:980},reducedMotion:'reduce'});
+  await context.addInitScript(()=>localStorage.setItem('ap-tutorial-v1','dismissed'));
   const page=await context.newPage();
   await page.goto(`${base}/?lang=en&theme=light#/world`);await page.locator('.earth-realistic[data-ready=true]').waitFor();
   await page.waitForFunction(()=>!document.querySelector('.world-globe .request-skeleton'));
@@ -30,7 +31,7 @@ try {
   await page.goto(`${base}/?lang=en&theme=light#/world?country=bra`);await page.locator('.earth-realistic[data-ready=true]').waitFor();
   await page.waitForFunction(()=>!document.querySelector('.world-globe .request-skeleton'));
   await page.screenshot({path:path.join(shots,'world-country.png')});
-  await page.goto(`${base}/?lang=en&theme=light#/global?area=nepal&testYear=2024&switchWeek=26&reveal=1`);
+  await page.goto(`${base}/?lang=en&theme=light#/global?area=chin&testYear=2023&switchWeek=26&reveal=1`);
   await page.locator('#evidence-h').waitFor();await page.waitForTimeout(250);
   await page.locator('section[aria-labelledby="experiment-h"]').screenshot({path:path.join(shots,'global-experiment.png')});
   await page.screenshot({path:path.join(shots,'global-cases.png'),fullPage:true});
@@ -46,6 +47,7 @@ try {
   // Record real interaction, including camera animation, rather than simulating UI frames.
   for(const name of ['world','experiment']) {
    const film=await browser.newContext({viewport:{width:1440,height:980},recordVideo:{dir:build,size:{width:1440,height:980}}});
+   await film.addInitScript(()=>localStorage.setItem('ap-tutorial-v1','dismissed'));
    const movie=await film.newPage();const created=Date.now();
    if(name==='world') {
     await movie.goto(`${base}/?lang=en&theme=light#/world`);await movie.locator('.earth-realistic[data-ready=true]').waitFor();
@@ -60,7 +62,7 @@ try {
     await movie.waitForTimeout(3900);
     await fs.writeFile(path.join(build,'world-clip.json'),JSON.stringify({start,region:{x:0,y:0,width:1440,height:980}}));
    } else {
-    await movie.goto(`${base}/?lang=en&theme=light#/global?area=nepal&testYear=2024&switchWeek=26`);
+    await movie.goto(`${base}/?lang=en&theme=light#/global?area=chin&testYear=2023&switchWeek=26`);
     await movie.locator('#evidence-h').waitFor();
     const panel=movie.locator('section[aria-labelledby="experiment-h"]');
     await panel.evaluate(e=>window.scrollTo(0,e.getBoundingClientRect().top+scrollY-90));await movie.waitForTimeout(250);

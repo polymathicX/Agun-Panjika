@@ -103,7 +103,15 @@ export const loadGlobalCatalog = async () => {
 export const loadGlobalCase = async (id: string) => {
   if (!GLOBAL_AREAS.includes(id as typeof GLOBAL_AREAS[number])) throw new Error('Unsupported area');
   const doc = await fetchJson<import("./types").GlobalCase>(`global/${id}.json`);
-  if (doc.id !== id || !doc.splits || !doc.evaluation || !Array.isArray(doc.weeks) || !doc.weeks.every(w => Number.isInteger(w.y) && Number.isInteger(w.w) && w.w >= 1 && w.w <= 53 && [w.modis, w.viirs, w.model, w.factor, w.lo, w.hi].every(n => n === undefined || Number.isFinite(n) && n >= 0))) invalidData(`global/${id}.json`,'Invalid area evidence package');
+  const chronological = doc.folds && [2022,2023,2024].every(year=>{
+    const fold=doc.folds[String(year)];
+    return Array.isArray(fold?.fit) && Array.isArray(fold?.calibration)
+      && fold.fit.length===2 && fold.fit.every(Number.isInteger)
+      && fold.fit[0]<=fold.fit[1] && fold.fit[1]<year-1
+      && fold.calibration[0]===year-1 && fold.calibration[1]===year-1;
+  });
+  if (!chronological) invalidData(`global/${id}.json`,'Invalid chronological model vintages');
+  if (doc.id !== id || !doc.splits || !doc.evaluation || !Array.isArray(doc.weeks) || !doc.weeks.every(w => w && Number.isInteger(w.y) && Number.isInteger(w.w) && w.w >= 1 && w.w <= 53 && (w.reference_ok===undefined || typeof w.reference_ok==='boolean') && [w.modis, w.viirs, w.model, w.factor, w.lo, w.hi].every(n => n === undefined || Number.isFinite(n) && n >= 0))) invalidData(`global/${id}.json`,'Invalid area evidence package');
   return doc;
 };
 export const loadWorldSummary = async () => {

@@ -23,3 +23,12 @@ test('CSV keeps source/version metadata with each row and missing counts empty',
   assert.equal(lines.length,4);assert.match(lines[1],/^chin,v1,abc,2011,1,1,,5,/);
   assert.match(lines[2],/,2024,1,1,0,2,4,/);
 });
+
+test('incomplete reference observations remain in CSV but not comparable errors or calendars', () => {
+  const partial={...doc,weeks:[{y:2024,w:1,modis:10,viirs:1,model:50,factor:40,reference_ok:false},{y:2024,w:2,modis:1,viirs:0,model:2,factor:4,reference_ok:true}]};
+  const rows=experimentRows(partial,2024,2);
+  assert.equal(rows[0].viirs,1);assert.equal(rows[0].observed,undefined);
+  assert.equal(hiddenError(rows,2,'model'),null);
+  assert.deepEqual(calendarWeeks(partial).map(w=>w.harm),[0]);
+  assert.match(evidenceCSV(partial,rows),/incomplete/);
+});
