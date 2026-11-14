@@ -101,7 +101,7 @@ try {
   assert.equal(await audio.getAttribute('aria-pressed'), 'true');
   await audio.click();
   assert.equal(await audio.getAttribute('aria-pressed'), 'false');
-  await page.locator('.primary-desktop').getByRole('button', { name: 'Overview', exact: true }).click();
+  await page.locator('.primary-desktop').getByRole('button', { name: 'World', exact: true }).click();
   await page.locator('main h1').first().waitFor();
   await page.getByRole('button', { name: /Theme:/ }).click();
   assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');

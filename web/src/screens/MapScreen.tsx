@@ -1,6 +1,9 @@
 import { RequestStatus } from "../components/RequestStatus";
-import maplibregl, { type GeoJSONSource, type Map as MLMap } from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
+import type { GeoJSONSource, Map as MLMap } from "maplibre-gl";
+import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import "maplibre-gl/dist/maplibre-gl.css";
+maplibregl.setWorkerUrl(workerUrl);
 import { useEffect, useMemo, useRef, useState } from "react";
 import { LevelIcon } from "../components/LevelBadge";
 import { RegionPicker } from "../components/RegionPicker";
