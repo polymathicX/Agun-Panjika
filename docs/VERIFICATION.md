@@ -8,9 +8,9 @@
 | --- | --- | --- |
 | `python -m pytest -q` | **80 passed, zero skips** locally | Scientific/unit/export contracts with available local inputs |
 | `python -m ruff check pipeline tests` | Passed | Pipeline/test lint |
-| `npm run test:evidence` | **4 passed** | Sensor switch, abstention, reference-quality handling and CSV provenance |
+| `npm run test:evidence` | **9 passed** | Sensor switch, abstention, reference quality, CSV provenance and plain readings with zero/missing/expired inputs |
 | `npm run typecheck`; `npm run build` | Passed | TypeScript and production/PWA build |
-| Browser regression, offline enabled | **14 groups passed** | Navigation, interactions, loading/recovery, exports, guided tutorial and offline behavior |
+| Browser regression, offline enabled | **15 groups passed** | Navigation, interactions, loading/recovery, exports, guided tutorial and offline behavior |
 | Responsive route matrix | **54 views**, zero recorded overflow, page/console errors or axe findings | Nine routes × six specified viewport/theme/language combinations in Chromium |
 | `npm audit` | **Zero vulnerabilities** in release installation | Advisory state at audit time, not a security guarantee |
 | Public-feature refit | All four published evaluation objects reproduced exactly in this environment | Annual past-only fitting/calibration, support guard and raw/comparable scoring from checksum-verified features |
@@ -20,7 +20,9 @@
 
 The passing suite follows corrections for camera state after browser Back, transient incorrect day counts, malformed-data retries, and oversized/saturated globe markers. After the full run, targeted tutorial, Earth and offline checks passed again for the final keyboard-focus, pointer-leave and return-to-step fixes. Earlier failures are not represented as passes. Public static-asset caching retains the previously verified `Vary: Origin` fix.
 
-After the presentation's final edit, the production preview passed desktop/phone video playback at exactly 29 seconds, zero overflow and zero axe findings. The same check verified the tutorial launch, country selection, current model packages, source-quality checksum, original benchmark archive and slide-PDF access. Every final slide was visually reviewed; the deck highlights the two largest measured improvements and links the full scientific comparison.
+The presentation uses a final-product story: country discovery, seasonal understanding, readable evidence and phone access. Every slide was visually reviewed; source figures, text bounds and the seven-page count are checked. The 29-second storyboard follows 0:00 team, 0:02 challenge, 0:05 project, 0:10 idea and 0:20 intended benefit. The capture script rejects text that overlaps the footer. Technical development comparisons remain separate from the public pitch.
+
+On-demand help passed all **85 topics across nine pages**, including real targets, free topic/page selection, keyboard focus, closing/restoration and Bangla phone accessibility. Plain-reading checks cover source counts, selected periods, missing/zero values, reference reveal and expired forecasts. Help, historical exports and offline access passed again after the final focus and metadata review.
 
 The first live check caught Windows-to-Linux line-ending conversion changing the quality-manifest checksum. The two manifest paths now explicitly use LF, the exporter normalizes text before hashing, and the source-quality test checks the published digest. This changes provenance metadata only; observations and numerical scores are unchanged.
 
@@ -30,7 +32,7 @@ Environment: Windows, Python 3.14.6, Node 26.6.0, npm 11.18.0, Playwright 1.64.0
 
 Routes: World, Home, Calendar, Sensors, Map, Outlook, Borders, Global cases and Method. Matrix: 1440/light/English; 1440/dark/English; 390/light/English; 360/dark/Bangla; 768/light/Bangla; 1280/dark/English.
 
-The 14 groups are smoke, navigation, globe, textured Earth, charts, map, reliability, guided demo, exports, scientific display, global workbench, worldwide view, experience and offline. They include actual country raycast selection, keyboard country changes, source/timeline/watchlist controls, failure recovery, CSV/JSON/PNG/print flows, source-quality gaps and raw-reference disclosure, expired-outlook suppression and service-worker cached access. The eight-step tutorial checks real actions, skip/exit/replay, restored filters, persistent completion, English/Bangla, phone layout and navigation back to an interrupted step. Experience checks delay data deliberately and verify skeletons, stable selected-day totals, summary independence from the Bangladesh manifest and corrected-data retries.
+The 15 groups are smoke, navigation, globe, textured Earth, charts, map, reliability, guided demo, on-demand help, exports, scientific display, global workbench, worldwide view, experience and offline. They include actual country raycast selection, keyboard country changes, source/timeline/watchlist controls, failure recovery, CSV/JSON/PNG/print flows, source-quality gaps and raw-reference disclosure, expired-outlook suppression and service-worker cached access. The eight-step tutorial checks real actions, skip/exit/replay, restored filters, persistent completion, English/Bangla, phone layout and navigation back to an interrupted step. Experience checks delay data deliberately and verify skeletons, stable selected-day totals, summary independence from the Bangladesh manifest and corrected-data retries.
 
 Chrome reported no PWA installability errors. The offline check uses a fresh browser context, waits for the service worker, disables networking and opens the shell/cases. It is not just an assertion that a manifest exists.
 
@@ -68,7 +70,7 @@ npm run test:upgrade -- http://127.0.0.1:4173 test-results/review
 Remove-Item Env:UPGRADE_OFFLINE
 ```
 
-Raw browser artifacts remain ignored under `web/test-results/`. The complete passing suite is in local `nov15-release/`, and final targeted checks in `nov15-final-targeted/`; portable counts and selected outputs are published in the machine record above.
+Raw browser artifacts remain ignored under `web/test-results/`. The complete passing suite is in local `clear-story-final/`, and final targeted checks in `clear-story-targeted/`; portable counts and selected outputs are published in the machine record above.
 
 ## Reproduce scientific evidence
 
@@ -83,7 +85,7 @@ For recent worldwide data, `python -m pipeline.world_snapshot` fetches the publi
 
 Bangladesh ingestion, weather, harmonization, continuity, climatology, local exports and outlooks were regenerated locally through the available 14 November snapshot. `python -m pipeline.run_all --help` documents orchestration. Optional `FIRMS_MAP_KEY` stays in the ignored root environment. Source retirement and retrieval errors are handled explicitly, while coarse historical coverage assumptions remain.
 
-The portable workflow uses past-only fitting and separate interval calibration for each test year, but the historical years were already known during development. Chin and Punjab–Haryana improve on all original weeks; Bangladesh and Nepal regress about 2%, and Chin's monthly baseline still wins. Untouched final evaluation, blind industrial-source validation, prospective forecasting and a human pilot remain uncompleted. The [earlier audit](SCIENTIFIC_REVIEW.md) preserves the old Bangladesh LOYO concerns.
+The portable workflow uses past-only fitting and separate interval calibration for each test year, but the historical years were already known during development. Current-method and simple-baseline comparisons remain complete; the monthly baseline is stronger in Chin. Untouched final evaluation, blind industrial-source validation, prospective forecasting and a human pilot remain uncompleted. The [earlier audit](SCIENTIFIC_REVIEW.md) preserves the old Bangladesh LOYO concerns.
 
 ## Presentation and publication
 

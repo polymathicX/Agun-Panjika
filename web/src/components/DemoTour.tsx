@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useFmt } from '../i18n';
 import type { Route } from '../lib/router';
 import './DemoTour.css';
+import { PageHelp } from './PageHelp';
 
 const KEY = 'ap-tutorial-v1';
 const STEPS = [
@@ -12,7 +13,7 @@ const STEPS = [
   { target: '[data-tour="watch"]', en: ['Keep your country handy', 'Press Watch this country. It stays on this device, so you can return without finding it again. This does not send alerts.'], bn: ['দেশটি মনে রাখুন', 'এই দেশ মনে রাখুন বোতাম চাপুন। দেশটি এই যন্ত্রে সংরক্ষিত থাকবে। এতে কোনো সতর্কবার্তা পাঠানো হয় না।'], task: true },
   { target: '.experiment-controls', en: ['Why compare satellites?', 'Here is a Nepal example. MODIS and VIIRS see fires differently. The switch slider joins an earlier estimate to later observations, so you can inspect the correction.'], bn: ['উপগ্রহের তুলনা কেন?', 'এটি নেপালের উদাহরণ। MODIS ও VIIRS ভিন্নভাবে আগুন দেখে। স্লাইডার দিয়ে আগের অনুমান ও পরের পর্যবেক্ষণের যোগ দেখুন।'] },
   { target: '[data-tour="reveal"]', en: ['Reveal the answer', 'Press Reveal actual VIIRS. The measured line appears beside the estimates. A closer match means less reconstruction error; the shaded band shows uncertainty.'], bn: ['আসল তথ্য দেখুন', 'আসল VIIRS দেখুন বোতাম চাপুন। অনুমানের পাশে পর্যবেক্ষণ দেখা যাবে। রেখা কাছাকাছি হলে ভুল কম; ছায়া অনিশ্চয়তা দেখায়।'], task: true },
-  { target: '[data-tour="evidence"]', en: ['Take the context with you', 'The evidence brief keeps dates, error and limits together. Download it or share a card when you need it. Other places can have different results. You are ready to explore.'], bn: ['প্রমাণ সঙ্গে রাখুন', 'এই প্রতিবেদনে তারিখ, ভুল ও সীমা একসঙ্গে আছে। প্রয়োজন হলে ডাউনলোড বা শেয়ার করুন। অন্য এলাকার ফল ভিন্ন হতে পারে। এবার নিজে দেখুন।'] },
+  { target: '[data-tour="evidence"]', en: ['Take the context with you', 'The evidence brief keeps dates, error and limits together. Download it or share a card when you need it. For help with any other view, open Explain this page whenever you like.'], bn: ['প্রমাণ সঙ্গে রাখুন', 'এই প্রতিবেদনে তারিখ, ভুল ও সীমা একসঙ্গে আছে। প্রয়োজন হলে ডাউনলোড বা শেয়ার করুন। অন্য যেকোনো দৃশ্য বুঝতে চাইলে এই পৃষ্ঠার সাহায্য খুলুন।'] },
 ];
 
 export function DemoTour({ go, route, params }: { route: Route; params: URLSearchParams; go: (r: Route, p?: Record<string, string | number | undefined>) => void }) {
@@ -83,6 +84,7 @@ export function DemoTour({ go, route, params }: { route: Route; params: URLSearc
   if (step === null) return <div className={`demo-launch no-print ${phase === 'welcome' ? 'tutorial-welcome' : ''}`}>
     <div><span className="tutorial-spark" aria-hidden="true">?</span><span>{phase === 'welcome' ? (bn ? 'নতুন এসেছেন? করে করে শিখুন।' : 'New here? Let’s try it together.') : (bn ? 'একটু সাহায্য দরকার?' : 'Need a hand?')}</span></div>
     <button ref={launch} type="button" className={phase === 'welcome' ? 'btn btn-primary' : 'btn'} onClick={start}>{bn ? 'ঘুরে দেখান' : 'Show me around'}</button>
+    <PageHelp route={route} go={go}/>
     {phase === 'welcome' && <button type="button" className="tutorial-text-button" onClick={() => { mark('dismissed'); setPhase('idle'); }}>{bn ? 'নিজে দেখব' : 'I’ll explore'}</button>}
   </div>;
   const copy = bn ? STEPS[step].bn : STEPS[step].en;

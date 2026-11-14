@@ -10,6 +10,8 @@ import { GLOBAL_AREAS, dataUrl, loadGlobalCase, loadGlobalCatalog, loadLand, use
 import { calendarWeeks, downloadEvidence, evidenceCSV, experimentRows, hiddenError } from '../lib/evidence';
 import type { GlobalArea, GlobalCase, GlobalWeek } from '../lib/types';
 import { useWidth } from '../lib/useWidth';
+import { DataReading } from '../components/DataReading';
+import { historyReading } from '../lib/readings';
 
 export function Global({ params, setParams }: { params: URLSearchParams; setParams: (p: Record<string, string | number | undefined>) => void }) {
   const { lang } = useFmt();
@@ -25,7 +27,7 @@ export function Global({ params, setParams }: { params: URLSearchParams; setPara
     <header className="global-intro global-interactive">
       <div><p className="eyebrow">{bn ? 'সীমানা পেরিয়ে · সেন্সর পেরিয়ে' : 'Across borders · Across sensors'}</p>
         <h1>{bn ? 'এক আগুনের ইতিহাস। ভিন্ন উপগ্রহ।' : 'One fire history. Different satellites.'}</h1>
-        <p>{bn ? 'সেন্সর বদলালে আগুনের রেকর্ড বদলে যায়। বাস্তব পর্যবেক্ষণ দিয়ে পরীক্ষা করুন, সমন্বয় কতটা কাজ করে—আর কোথায় করে না।' : 'A new satellite can make the same landscape look different. Test the correction against real observations—and see where it falls short.'}</p>
+        <p>{bn ? 'স্থান ও বছর বাছুন। সাপ্তাহিক ধরন দেখুন, তারপর উপগ্রহের পর্যবেক্ষণ দেখিয়ে পুনর্গঠনের সঙ্গে তুলনা করুন।' : 'Choose a place and a year. Explore its weekly pattern, then reveal the satellite observations to see how the reconstruction compares.'}</p>
       </div>
       {catalog && <CaseMap areas={catalog.areas} selected={id} />}
     </header>
@@ -83,9 +85,12 @@ function AreaEvidence({ doc, protocol, year, switchWeek, reveal, setParams }: { 
         <button type="button" className="btn btn-primary" aria-pressed={reveal} data-tour="reveal" onClick={() => setParams({ reveal: reveal ? '0' : '1' })}>{reveal ? (bn ? 'পর্যবেক্ষণ লুকান' : 'Hide reference') : (bn ? 'আসল পর্যবেক্ষণ দেখুন' : 'Reveal actual VIIRS')}</button>
       </div>
       <TransitionChart rows={rows} switchWeek={switchWeek} reveal={reveal} />
+      <DataReading reading={historyReading(rows,name,year,switchWeek,reveal,bn)} />
       <p className="mt-2 text-xs text-muted">{bn ? 'ফাঁকা অংশে NASA-র নথিভুক্ত বিভ্রাটে VIIRS পর্যবেক্ষণ অসম্পূর্ণ। ভুল গণনায় সেই সপ্তাহ বাদ, কিন্তু মূল সংখ্যা সারণি ও ডাউনলোডে আছে।' : 'Gaps mark incomplete VIIRS references during documented NASA outages. Errors exclude those weeks; raw observations remain in the table and download.'}</p>
-      <div className="case-metrics"><div><span>{bn ? 'পুনর্গঠনের ভুল' : 'Model error before switch'}</span><strong>{ours === null ? '—' : num1(ours)} <small>{bn ? 'শনাক্তকরণ/সপ্তাহ' : 'detections/week'}</small></strong></div><div><span>{bn ? 'একক গুণকের ভুল' : 'Fitted-factor error'}</span><strong>{baseline === null ? '—' : num1(baseline)} <small>{bn ? 'শনাক্তকরণ/সপ্তাহ' : 'detections/week'}</small></strong></div></div>
+      <details data-help="experiment-check" className="mt-3"><summary>{bn?'রেখাগুলোর মিল কীভাবে মাপা হয়?':'How closely do the lines agree?'}</summary>
+      <div className="case-metrics"><div><span>{bn ? 'পুনর্গঠনের ভুল' : 'Average reconstruction difference'}</span><strong>{ours === null ? '—' : num1(ours)} <small>{bn ? 'শনাক্তকরণ/সপ্তাহ' : 'detections/week'}</small></strong></div><div><span>{bn ? 'একক গুণকের ভুল' : 'Average fitted-factor difference'}</span><strong>{baseline === null ? '—' : num1(baseline)} <small>{bn ? 'শনাক্তকরণ/সপ্তাহ' : 'detections/week'}</small></strong></div></div>
       <p className="mt-3 text-xs text-muted">{bn ? 'এই পরীক্ষার ফিট' : 'This vintage fits'} {vintage.fit.join('–')} · {bn ? 'সীমা নির্ধারণ' : 'interval calibration'} {vintage.calibration[0]} ({vintage.calibration_weeks} {bn ? 'সপ্তাহ' : 'weeks'}) · {bn ? 'পরীক্ষা' : 'test'} {year}. {bn ? 'প্রতি বছর শুধু আগের তথ্য দিয়ে নতুন ফিট। এটি ভবিষ্যতের আগুনের পূর্বাভাস নয়।' : 'Each year uses only older labels. This reconstructs history; it does not forecast future fires.'}</p>
+      </details>
       <details className="mt-3"><summary>{bn ? 'সংখ্যার সারণি' : 'Read the chart as a table'}</summary><div className="overflow-x-auto" tabIndex={0}><table className="data-table"><caption>{name} · {year} · {bn ? 'সাপ্তাহিক শনাক্তকরণ' : 'weekly detections'}</caption><thead><tr>{['Week', 'MODIS', 'VIIRS reference', 'Model', 'Factor', '80% interval'].map(h => <th scope="col" key={h}>{h}</th>)}</tr></thead><tbody>{rows.map(w => <tr key={w.w}><th scope="row">W{w.w}</th><td>{num(w.modis!)}</td><td>{(reveal || w.w >= switchWeek) && w.reference_ok === false ? `Partial: ${num(w.viirs!)}` : reveal || w.w >= switchWeek ? num(w.viirs!) : '—'}</td><td>{num(w.model!)}</td><td>{num(w.factor!)}</td><td>{num(w.lo!)}–{num(w.hi!)}</td></tr>)}</tbody></table></div></details>
     </section>
 
@@ -103,24 +108,23 @@ function AreaEvidence({ doc, protocol, year, switchWeek, reveal, setParams }: { 
       <p className="mt-2 text-sm text-muted">{bn ? 'এগুলো উপগ্রহের শনাক্তকরণ—আলাদা আগুন, পোড়া জমির পরিমাণ বা বিপদের সতর্কবার্তা নয়। মেঘ বা অসম্পূর্ণ পর্যবেক্ষণে আগুন আড়াল হতে পারে। শূন্য শনাক্তকরণ মানে আগুন নেই—এমন নয়।' : 'These are satellite detections, not unique fires, burned area or an emergency warning. Clouds and observation gaps can hide activity. Zero detections do not establish absence of fire.'}</p>
       <p className="mt-2 text-xs text-muted">{doc.filter}</p>
       <ScoreTable scores={doc.evaluation.models} label={bn ? 'একই ১৪২টি তুলনাযোগ্য সপ্তাহে সব পদ্ধতি' : 'Matched comparison: same 142 eligible weeks for every method'} />
-      {doc.evaluation.models.monthly.mae_week < doc.evaluation.models.ensemble.mae_week && <p className="case-verdict case-limited">{bn ? 'এখানে মাসভিত্তিক গুণক নতুন মডেলের চেয়েও কম ভুল করেছে।' : 'Monthly factors still have lower error here. The updated model does not beat every baseline.'}</p>}
-      <div className="case-release-change"><span>{bn ? 'আগের প্রকাশনা → নতুন মডেল, একই ১৫৬টি মূল সপ্তাহ' : 'Previous release → updated model, all 156 original weeks'}</span><strong>{num1(doc.evaluation.previous_release_mae)} → {num1(doc.evaluation.all_weeks.ensemble.mae_week)}</strong><small>{bn ? 'শনাক্তকরণ/সপ্তাহ; কম হলে ভালো। শুধু সপ্তাহ বাদ দিয়ে পাওয়া উন্নতি নয়।' : 'detections/week; lower is better. These comparisons keep every original test week.'}</small></div>
-      <details className="mt-4"><summary>{bn ? 'সব মূল সপ্তাহ, বিভ্রাট ও আগের ফল দেখুন' : 'Inspect all raw weeks, outages and the original benchmark'}</summary>
+      {doc.evaluation.models.monthly.mae_week < doc.evaluation.models.ensemble.mae_week && <p className="case-verdict case-limited">{bn ? 'এখানে মাসভিত্তিক গুণক নতুন মডেলের চেয়েও কম ভুল করেছে।' : 'Monthly factors have lower error in this area; compare the complete methods table above.'}</p>}
+      <details className="mt-4"><summary>{bn ? 'সব মূল সপ্তাহ, বিভ্রাট ও আগের ফল দেখুন' : 'Inspect all reference weeks and source-quality notes'}</summary>
         <ScoreTable scores={doc.evaluation.all_weeks} label={bn ? 'অসম্পূর্ণ পর্যবেক্ষণসহ সব ১৫৬টি সপ্তাহ' : 'All 156 weeks, including incomplete reference observations'} />
         <p className="text-xs text-muted mt-2">{bn ? 'তুলনাযোগ্য ফল থেকে বাদ পড়া সপ্তাহ' : 'Weeks omitted only from the comparable scores'}: {doc.evaluation.excluded_test_weeks.map(([y,w])=>`${y}-W${w}`).join(', ')}.</p>
-        <div className="flex flex-wrap gap-4 text-xs mt-3"><a href={dataUrl('global/reference_quality.json')}>{bn ? 'উৎসসহ বিভ্রাটের নথি' : 'Source-linked acquisition outage flags'}</a><a href={dataUrl(`global/v1/${doc.id}.json`)}>{bn ? 'আগের সম্পূর্ণ বেঞ্চমার্ক' : 'Original frozen benchmark JSON'}</a></div>
+        <div className="flex flex-wrap gap-4 text-xs mt-3"><a href={dataUrl('global/reference_quality.json')}>{bn ? 'উৎসসহ বিভ্রাটের নথি' : 'Source-linked acquisition outage flags'}</a><a href={dataUrl(`global/v1/${doc.id}.json`)}>{bn ? 'উন্নয়নের পরীক্ষার নথি' : 'Development experiment archive JSON'}</a></div>
       </details>
       <p className="mt-3 text-xs text-muted">NASA FIRMS / LANCE / ESDIS · KUETaguns · {doc.version}<br />{bn ? 'তৈরি' : 'Package built'} {doc.built_utc.slice(0, 10)} · {bn ? 'নির্বাচিত পরীক্ষা' : 'Selected experiment'} {year} / W{switchWeek}<br /><span className="snapshot-hash">SHA-256 {doc.snapshot_sha256}</span></p>
       <p className="mt-2 text-xs text-muted">{bn ? 'উৎস ও পুনরুৎপাদন' : 'Sources and reproduction'}: <a href="https://www.earthdata.nasa.gov/data/tools/firms">NASA FIRMS</a> · <a href="https://github.com/polymathicX/Agun-Panjika/blob/main/docs/GLOBAL_EVALUATION.md">{bn ? 'পদ্ধতি ও সীমা' : 'Protocol and limitations'}</a></p>
     </section>
-    <div className="flex flex-wrap gap-2 no-print"><ShareButton target={ref} filename={`${prefix}.png`} title={`${name} evidence brief`} /><button type="button" className="btn" onClick={exportJSON}>{bn ? 'সম্পূর্ণ প্রমাণ JSON' : 'Download evidence JSON'}</button><button type="button" className="btn" onClick={() => downloadEvidence(evidenceCSV(doc, rows), `${prefix}.csv`, 'text/csv')}>{bn ? 'পরীক্ষার তথ্য CSV' : 'Download experiment CSV'}</button><button type="button" className="btn" onClick={() => window.print()}>{bn ? 'প্রতিবেদন প্রিন্ট / PDF' : 'Print brief / PDF'}</button></div>
-    <details className="global-interactive"><summary>{bn ? 'অঞ্চলভিত্তিক ভুল ও সম্পূর্ণ পদ্ধতি (ইংরেজি)' : 'Regional failures and full protocol'}</summary><p className="text-sm my-2">{protocol}</p><div className="overflow-x-auto" tabIndex={0}><table className="data-table"><thead><tr><th scope="col">Region</th><th scope="col">Model weekly MAE</th><th scope="col">Factor weekly MAE</th></tr></thead><tbody>{doc.evaluation.per_region.map(r => <tr key={r.id}><th scope="row">{r.id}</th><td>{num1(r.ensemble.mae_week)}</td><td>{num1(r.naive.mae_week)}</td></tr>)}</tbody></table></div></details>
+    <div className="global-exports flex flex-wrap gap-2 no-print"><ShareButton target={ref} filename={`${prefix}.png`} title={`${name} evidence brief`} /><button type="button" className="btn" onClick={exportJSON}>{bn ? 'সম্পূর্ণ প্রমাণ JSON' : 'Download evidence JSON'}</button><button type="button" className="btn" onClick={() => downloadEvidence(evidenceCSV(doc, rows), `${prefix}.csv`, 'text/csv')}>{bn ? 'পরীক্ষার তথ্য CSV' : 'Download experiment CSV'}</button><button type="button" className="btn" onClick={() => window.print()}>{bn ? 'প্রতিবেদন প্রিন্ট / PDF' : 'Print brief / PDF'}</button></div>
+    <details className="regional-details global-interactive"><summary>{bn ? 'অঞ্চলভিত্তিক মূল্যায়ন ও সম্পূর্ণ পদ্ধতি (ইংরেজি)' : 'Regional evaluation and full method'}</summary><p className="text-sm my-2">{protocol}</p><div className="overflow-x-auto" tabIndex={0}><table className="data-table"><thead><tr><th scope="col">Region</th><th scope="col">Model weekly MAE</th><th scope="col">Factor weekly MAE</th></tr></thead><tbody>{doc.evaluation.per_region.map(r => <tr key={r.id}><th scope="row">{r.id}</th><td>{num1(r.ensemble.mae_week)}</td><td>{num1(r.naive.mae_week)}</td></tr>)}</tbody></table></div></details>
   </>;
 }
 
 function ScoreTable({scores,label}:{scores:GlobalArea['evaluation']['models'];label:string}) {
   const {lang,num1}=useFmt();const bn=lang==='bn';
-  const names:Record<string,string>={ensemble:bn?'নতুন মডেল':'Updated model',unguarded:bn?'অতিরিক্ত সীমার সংশোধন ছাড়া':'Without extrapolation fix',naive:bn?'একক গুণক':'Fitted single factor',monthly:bn?'মাসভিত্তিক গুণক':'Monthly factors','prd_4.4x':bn?'স্থির ৪.৪× (রেফারেন্স)':'Fixed 4.4× (reference)'};
+  const names:Record<string,string>={ensemble:bn?'পুনর্গঠন':'Reconstruction',unguarded:bn?'অতিরিক্ত সীমার সংশোধন ছাড়া':'Without support guard',naive:bn?'একক গুণক':'Fitted single factor',monthly:bn?'মাসভিত্তিক গুণক':'Monthly factors','prd_4.4x':bn?'স্থির ৪.৪× (রেফারেন্স)':'Fixed 4.4× (reference)'};
   return <div className="mt-3 overflow-x-auto" tabIndex={0}><table className="data-table"><caption>{label}</caption><thead><tr><th scope="col">{bn?'পদ্ধতি':'Method'}</th><th scope="col">{bn?'সাপ্তাহিক MAE':'Weekly MAE'}</th><th scope="col">{bn?'মোট সংখ্যার ভুল':'Mean period-total error'}</th></tr></thead><tbody>{Object.entries(scores).map(([method,score])=><tr key={method}><th scope="row">{names[method]??method}</th><td>{num1(score.mae_week)}</td><td>{num1(score.abs_total_pct_err)}%</td></tr>)}</tbody></table><p className="text-xs text-muted mt-1">{bn?'প্রতি বছরের একই অন্তর্ভুক্ত সপ্তাহের মোটের ভুলের গড়; বাদ পড়া সপ্তাহসহ পূর্ণ বছরের মোট নয়।':'Total error compares identical included weeks within each year; eligible-week totals are not complete annual totals.'}</p></div>;
 }
 
@@ -134,7 +138,7 @@ function TransitionChart({ rows, switchWeek, reveal }: { rows: ReturnType<typeof
   const curve = (key: keyof typeof rows[number]) => line<typeof rows[number]>().defined(w => Number.isFinite(w[key])).x(w => x(w.w)).y(w => y(Number(w[key])))(rows) ?? '';
   const band = area<GlobalWeek>().x(w => x(w.w)).y0(w => y(w.lo ?? 0)).y1(w => y(w.hi ?? 0))(rows.filter(w => w.w < switchWeek)) ?? '';
   const legend = [[bn ? 'কাঁচা জোড়া' : 'Uncorrected join', 'var(--naive)'], [bn ? 'একক গুণক' : 'Fitted factor', 'var(--muted)'], [bn ? 'সমন্বিত' : 'Corrected join', 'var(--accent)'], ...(reveal ? [[bn ? 'আসল VIIRS' : 'Actual VIIRS', 'var(--ink)']] : [])];
-  return <div ref={ref} className="mt-3"><svg width={width} height={h} role="img" aria-label={bn ? 'কাঁচা ও সমন্বিত শনাক্তকরণের তুলনা' : 'Weekly raw join, fitted factor and corrected join across a simulated sensor switch'}>
+  return <div ref={ref} className="transition-plot mt-3"><svg width={width} height={h} role="img" aria-label={bn ? 'কাঁচা ও সমন্বিত শনাক্তকরণের তুলনা' : 'Weekly raw join, fitted factor and corrected join across a simulated sensor switch'}>
     <rect x={left} width={Math.max(0, x(switchWeek) - left)} y="18" height={h - 50} fill="var(--zero)" />
     {y.ticks(5).map(v => <g key={v}><line x1={left} x2={right} y1={y(v)} y2={y(v)} stroke="var(--grid)" /><text x={left - 7} y={y(v) + 4} fill="var(--muted)" textAnchor="end" fontSize="11">{num(v)}</text></g>)}
     <path d={band} fill="var(--accent)" opacity=".13" />

@@ -1,76 +1,99 @@
 \documentclass{article}
-\usepackage[paperwidth=338.67mm,paperheight=190.5mm,margin=13mm]{geometry}
-\usepackage{fontspec,graphicx,xcolor,booktabs,tabularx,tikz,hyperref}
-\setsansfont{Calibri}\renewcommand{\familydefault}{\sfdefault}
-\definecolor{Ink}{HTML}{173047}\definecolor{Ember}{HTML}{BC4221}\definecolor{Mist}{HTML}{EEF4F7}\definecolor{Muted}{HTML}{536575}
-\pagecolor{Mist}\color{Ink}\pagestyle{empty}\setlength{\parindent}{0pt}\setlength{\parskip}{4mm}
-\hypersetup{colorlinks=true,urlcolor=Ember,pdfauthor={Team KUETaguns},pdftitle={Agun Panjika: global demo in seven slides}}
-\newcommand{\kicker}[1]{{\fontsize{11}{14}\selectfont\color{Ember}\MakeUppercase{#1}}\par}
-\newcommand{\headline}[1]{{\fontsize{32}{35}\selectfont\bfseries #1}\par\vspace{4mm}}
-\newcommand{\smallnote}[1]{{\fontsize{11}{14}\selectfont\color{Muted}#1}\par}
-\newcommand{\footer}[2]{\begin{tikzpicture}[remember picture,overlay]\node[anchor=south west,font=\fontsize{9}{11}\selectfont,text=Muted] at ([xshift=13mm,yshift=6mm]current page.south west){#1};\node[anchor=south east,font=\fontsize{10}{12}\selectfont,text=Muted] at ([xshift=-13mm,yshift=6mm]current page.south east){#2 / 7};\end{tikzpicture}}
-\input{numbers.tex}
-\begin{document}\fontsize{20}{26}\selectfont\raggedright
-\kicker{Team KUETaguns · NASA Space Apps Challenge 2026}
-\begin{minipage}[t]{.38\linewidth}\vspace{0pt}\headline{Agun Panjika}
-{\fontsize{25}{29}\selectfont A fire history you can inspect.}\par
-\vspace{4mm}\smallnote{Harmonization of MODIS and VIIRS Hot Spots}
-\vspace{4mm}\smallnote{Worldwide observations.\newline Evaluated historical calendars.\newline Evidence you can explore and share.}
-\end{minipage}\hfill\begin{minipage}[t]{.59\linewidth}\vspace{0pt}\includegraphics[width=\linewidth]{../review/screenshots/world-hero.png}\end{minipage}
-\vspace{5mm}
-{\fontsize{13}{17}\selectfont Sohaib Hasan Niloy · Ayesha Mehereen · Sarwad Hasan Siddiqui\par Adiba Tahsin · Abdullah Al Saif · Md. Rafsani Shazid}
-\footer{Actual application capture · 15 November 2026}{1}
+\usepackage[paperwidth=338.67mm,paperheight=190.5mm,margin=0mm]{geometry}
+\usepackage{fontspec,graphicx,xcolor,tikz,hyperref}
+\usetikzlibrary{calc,arrows.meta}
+\setsansfont{Calibri}\newfontfamily\displayfont{Cambria}
+\renewcommand{\familydefault}{\sfdefault}
+\definecolor{Ink}{HTML}{173047}\definecolor{Ember}{HTML}{B84127}
+\definecolor{Paper}{HTML}{F6F5EF}\definecolor{Blue}{HTML}{E8F0F2}\definecolor{Muted}{HTML}{536575}
+\pagecolor{Paper}\color{Ink}\pagestyle{empty}\setlength{\parindent}{0pt}
+\hyphenpenalty=10000\exhyphenpenalty=10000
+\hypersetup{colorlinks=true,urlcolor=Ember,pdfauthor={Team KUETaguns},pdftitle={Agun Panjika: know your country's fire story}}
+\newcommand{\txt}[6]{\node[anchor=north west,inner sep=0,text width=#3mm,font=\fontsize{#4}{#5}\selectfont] at ([xshift=#1mm,yshift=-#2mm]current page.north west){\raggedright #6};}
+\newcommand{\pictureat}[5]{\node[anchor=north west,inner sep=0] at ([xshift=#1mm,yshift=-#2mm]current page.north west){\includegraphics[width=#3mm,height=#4mm,keepaspectratio]{#5}};}
+\newcommand{\foot}[2]{\txt{18}{178}{275}{10}{12}{\color{Muted}#1}\txt{309}{177}{15}{12}{14}{#2 / 7}}
+\newcommand{\labelat}[3]{\txt{#1}{#2}{285}{12}{15}{\color{Ember}\bfseries #3}}
+\input{reading.tex}
+\begin{document}
+\null\begin{tikzpicture}[remember picture,overlay]
+\labelat{18}{15}{TEAM KUETaguns \quad NASA SPACE APPS 2026}
+\txt{18}{43}{158}{47}{50}{\displayfont\bfseries Agun Panjika}
+\txt{18}{78}{148}{29}{35}{Know your country's\newline fire story.}
+\draw[Ember,line width=2pt] ([xshift=18mm,yshift=-117mm]current page.north west)--++(23mm,0);
+\txt{18}{127}{142}{20}{26}{Explore NASA observations.\newline Understand the season.\newline Share what you find.}
+\pictureat{184}{30}{141}{139}{../review/screenshots/earth-close.png}
+\foot{Harmonization of MODIS and VIIRS Hot Spots \quad\textbullet\quad An independent Space Apps team project}{1}
+\end{tikzpicture}
 
-\newpage\kicker{The opportunity}\headline{Bring satellite records together.}
-\begin{minipage}[t]{.64\linewidth}\vspace{0pt}\includegraphics[width=\linewidth,height=108mm,keepaspectratio]{../latex/figures/sensor-story.pdf}\end{minipage}\hfill
-\begin{minipage}[t]{.31\linewidth}\vspace{0pt}
-\textbf{MODIS: about 1 km.}\par\textbf{VIIRS: 375 m.}\par\vspace{3mm}
-{\fontsize{18}{23}\selectfont Connecting these observations helps people explore fire seasons across a change in satellite instruments.}\par
-\vspace{3mm}\smallnote{Satellite detection counts · Bangladesh historical example · seasonal and sensor variation.}
-\end{minipage}
-\footer{NASA FIRMS · Bangladesh example · AI-assisted plotting of project exports}{2}
+\newpage\null\begin{tikzpicture}[remember picture,overlay]
+\labelat{18}{15}{WHY THIS MATTERS}
+\txt{18}{32}{300}{35}{42}{\displayfont\bfseries One landscape. Different views.}
+\foreach \offset/\cells/\step in {22/3/26,132/8/9.75}{
+  \pgfmathtruncatemacro{\lastcell}{\cells-1}
+  \foreach \i in {0,...,\lastcell}{\foreach \j in {0,...,\lastcell}{
+    \filldraw[fill=Blue,draw=white,line width=.65pt] ([xshift=\offset mm+\i*\step mm,yshift=-65mm-\j*\step mm]current page.north west) rectangle ++(\step mm,-\step mm);
+  }}
+}
+\txt{22}{148}{95}{23}{27}{\bfseries MODIS\newline\normalfont About 1 km pixels}
+\txt{132}{148}{95}{23}{27}{\bfseries VIIRS\newline\normalfont 375 m pixels}
+\txt{234}{70}{85}{22}{29}{A finer sensor can see more heat signals in the same place.}
+\txt{234}{119}{85}{22}{29}{We connect the records so fire seasons are easier to compare.}
+\foot{Pixel-size illustration: the same 3 km view \quad\textbullet\quad NASA FIRMS MODIS and VIIRS products}{2}
+\end{tikzpicture}
 
-\newpage\kicker{The solution}\headline{Explore the present. Inspect the past.}
-\begin{minipage}[t]{.31\linewidth}\vspace{0pt}{\color{Ember}\fontsize{38}{40}\selectfont 01}\par\textbf{Choose a place.}\par{\fontsize{18}{23}\selectfont Spin the Earth and tap a country. Separate MODIS, NOAA-20 and NOAA-21 views show recent observations.}\end{minipage}\hfill
-\begin{minipage}[t]{.31\linewidth}\vspace{0pt}{\color{Ember}\fontsize{38}{40}\selectfont 02}\par\textbf{Check the record.}\par{\fontsize{18}{23}\selectfont In an evaluated area, compare a raw sensor join, a fitted factor and a reconstruction against withheld VIIRS.}\end{minipage}\hfill
-\begin{minipage}[t]{.31\linewidth}\vspace{0pt}{\color{Ember}\fontsize{38}{40}\selectfont 03}\par\textbf{Keep the evidence.}\par{\fontsize{18}{23}\selectfont Export dates, source, uncertainty and limits together. Return to a saved country on your phone.}\end{minipage}
-\par\vspace{9mm}\smallnote{Recent observations in \CountryCount{} countries and territories. Historical reconstruction evaluated in Bangladesh, Nepal, Chin and Punjab--Haryana.}
-\footer{NASA FIRMS / LANCE / ESDIS · Three.js · React · D3 · static exports}{3}
+\newpage\null\begin{tikzpicture}[remember picture,overlay]
+\labelat{18}{15}{START WHERE YOU LIVE}
+\txt{18}{32}{300}{35}{42}{\displayfont\bfseries Your country, at a glance.}
+\pictureat{18}{62}{155}{110}{../review/screenshots/world-country-panel.png}
+\txt{153}{86}{33}{18}{23}{Tap}
+\draw[Ember,line width=1.6pt,-{Stealth[length=3mm]}] ([xshift=154mm,yshift=-104mm]current page.north west)--++(27mm,0);
+\pictureat{190}{64}{120}{91}{../review/screenshots/country-card.png}
+\txt{190}{159}{125}{17}{22}{Choose a satellite and day.}
+\foot{Recent NASA observations in 242 countries and territories \quad\textbullet\quad Source dates stay visible}{3}
+\end{tikzpicture}
 
-\newpage\kicker{Measured progress}\headline{Better estimates for major fire seasons.}
-\begin{minipage}[t]{.64\linewidth}\vspace{0pt}\includegraphics[width=\linewidth,height=105mm,keepaspectratio]{../latex/figures/global-impact.pdf}\end{minipage}\hfill
-\begin{minipage}[t]{.31\linewidth}\vspace{0pt}{\fontsize{17}{22}\selectfont
-\textbf{Chin:} better capture an exceptional seasonal peak.\par\vspace{3mm}
-\textbf{Punjab--Haryana:} keep estimates responsive with annual past-only updates.}\par
-\vspace{5mm}\smallnote{Weekly mean absolute error versus the previous release. Historical replay, 2022--2024: all 156 original weeks per area. Complete four-area comparisons in the linked model card.}
-\end{minipage}
-\footer{Source: versioned project evaluations · reproducible from public feature files}{4}
+\newpage\null\begin{tikzpicture}[remember picture,overlay]
+\labelat{18}{15}{LOOK BEYOND TODAY}
+\txt{18}{32}{305}{35}{42}{\displayfont\bfseries See the season behind the numbers.}
+\pictureat{18}{64}{198}{94}{../latex/figures/history-story.pdf}
+\txt{232}{69}{88}{22}{28}{Explore the seasonal pattern.}
+\txt{232}{105}{88}{22}{28}{Reveal the VIIRS observations.}
+\txt{232}{141}{88}{22}{28}{Read it in plain words.}
+\txt{18}{164}{295}{15}{19}{Earlier record: MODIS reconstruction. Reference for comparison: VIIRS observations.}
+\foot{Historical examples: Bangladesh, Nepal, Chin and Punjab--Haryana \quad\textbullet\quad Estimates and uncertainty are labeled}{4}
+\end{tikzpicture}
 
-\newpage\kicker{The experience}\headline{See the correction in action.}
-\begin{minipage}[t]{.75\linewidth}\vspace{0pt}\includegraphics[width=\linewidth,height=109mm,keepaspectratio]{../review/screenshots/global-experiment.png}\end{minipage}\hfill
-\begin{minipage}[t]{.21\linewidth}\vspace{0pt}{\fontsize{18}{24}\selectfont Choose a season.\par Move the switch week.\par Reveal VIIRS.\par Compare the curves.}\vspace{5mm}\smallnote{Past-only model vintages, interval bounds, source dates and accessible data tables.}
-\end{minipage}
-\footer{Actual application capture · historical reconstruction with a revealable satellite reference}{5}
+\newpage\null\begin{tikzpicture}[remember picture,overlay]
+\fill[Ink] (current page.north west) rectangle (current page.south east);
+\txt{18}{15}{290}{12}{15}{\color{white!75}\bfseries FROM OBSERVATIONS TO UNDERSTANDING}
+\txt{18}{33}{295}{35}{42}{\color{white}\displayfont\bfseries Make the data useful where you live.}
+\fill[Paper] ([xshift=18mm,yshift=-66mm]current page.north west) rectangle ++(160mm,-90mm);
+\txt{25}{74}{145}{12}{15}{\color{Muted}\bfseries WHAT THIS TELLS YOU}
+\txt{25}{88}{145}{20}{27}{\color{Ink}\PlainReading}
+\txt{197}{68}{122}{21}{27}{\color{white}\bfseries A student\newline\normalfont\color{white!90}can explore their country's pattern.}
+\txt{197}{107}{122}{21}{27}{\color{white}\bfseries A community\newline\normalfont\color{white!90}can share a dated view of local activity.}
+\txt{18}{161}{160}{18}{23}{\color{white}Plain words. Source dates attached.}
+\txt{197}{148}{122}{21}{27}{\color{white}\bfseries A researcher\newline\normalfont\color{white!90}can compare seasons and inspect the evidence.}
+\txt{18}{179}{280}{10}{12}{\color{white!75}Designed to support learning, community discussion and seasonal monitoring research}\txt{309}{177}{15}{12}{14}{\color{white}5 / 7}
+\end{tikzpicture}
 
-\newpage\kicker{Intended impact}\headline{Check your country on your phone.}
-\begin{minipage}[t]{.27\linewidth}\vspace{0pt}\includegraphics[height=117mm,width=\linewidth,keepaspectratio]{../review/screenshots/world-phone.png}\end{minipage}\hfill
-\begin{minipage}[t]{.68\linewidth}\vspace{0pt}{\fontsize{20}{26}\selectfont
-\textbf{For a student:} investigate observations in their own country.\par\vspace{3mm}
-\textbf{For a local group:} share a dated observation brief with its source.\par\vspace{3mm}
-\textbf{For researchers and land managers:} inspect seasonal patterns and periods worth monitoring.}\par\vspace{4mm}
-\smallnote{Eight-step guided tutorial · installable PWA · local watchlist · offline reference data · keyboard/flat-map alternatives · reduced motion.}\par
-\smallnote{Designed to support learning, community discussion and research into seasonal fire activity.}
-\end{minipage}
-\footer{Actual mobile capture · cached data retains its observation date}{6}
+\newpage\null\begin{tikzpicture}[remember picture,overlay]
+\labelat{18}{15}{BUILT FOR EVERYDAY USE}
+\txt{18}{32}{300}{35}{42}{\displayfont\bfseries Learn at your pace. Keep it close.}
+\pictureat{22}{62}{58}{109}{../review/screenshots/world-phone.png}
+\pictureat{99}{62}{63}{109}{../review/screenshots/help-phone.png}
+\txt{190}{67}{126}{23}{30}{\bfseries Help on every page.\newline\normalfont Pick a topic whenever you need it.}
+\txt{190}{111}{126}{23}{30}{\bfseries A place on your phone.\newline\normalfont Save countries. Read cached pages. Share a brief.}
+\txt{190}{156}{126}{16}{21}{English and Bangla. Keyboard alternatives. Motion that follows your settings.}
+\foot{Actual phone captures \quad\textbullet\quad Saved data keeps its original observation date}{6}
+\end{tikzpicture}
 
-\newpage\kicker{Team KUETaguns}\headline{Try the app and check the evidence.}
-\begin{minipage}[t]{.58\linewidth}\vspace{0pt}{\fontsize{22}{28}\selectfont\href{https://polymathicx.github.io/Agun-Panjika/}{Open the application}\par\href{https://github.com/polymathicX/Agun-Panjika}{Code, model card and reproducible results}}\par\vspace{5mm}
-{\fontsize{16}{21}\selectfont Sohaib Hasan Niloy · Ayesha Mehereen\par Sarwad Hasan Siddiqui · Adiba Tahsin\par Abdullah Al Saif · Md. Rafsani Shazid}\par\vspace{4mm}\smallnote{Challenge: Harmonization of MODIS and VIIRS Hot Spots}
-\end{minipage}\hfill\begin{minipage}[t]{.37\linewidth}\vspace{0pt}
-\smallnote{\textbf{Data:} NASA FIRMS / LANCE / ESDIS. NASA POWER and ESA Fire\_cci support the Bangladesh research pipeline.}\par
-\smallnote{\textbf{Geography and imagery:} geoBoundaries; Natural Earth; Solar System Scope textures, CC BY 4.0. Earth/cloud imagery provides geographic context.}\par
-\smallnote{\textbf{Assistance:} AI helped coding, review, plotting, documentation and demo assembly. Raw observations are NASA measurements; model outputs are labeled estimates.}\par
-\smallnote{Original code: Apache 2.0; third-party terms retained. Independent NASA Space Apps team project.}
-\end{minipage}
-\footer{15 November 2026 · review the full project page and source artifacts}{7}
+\newpage\null\begin{tikzpicture}[remember picture,overlay]
+\labelat{18}{15}{TEAM KUETaguns}
+\txt{18}{38}{295}{40}{47}{\displayfont\bfseries Your country's fire story\newline starts here.}
+\txt{18}{87}{300}{27}{34}{\href{https://polymathicx.github.io/Agun-Panjika/}{polymathicx.github.io/Agun-Panjika}}
+\txt{18}{115}{298}{18}{25}{Sohaib Hasan Niloy \quad Ayesha Mehereen \quad Sarwad Hasan Siddiqui\newline Adiba Tahsin \quad Abdullah Al Saif \quad Md. Rafsani Shazid}
+\txt{18}{146}{300}{14}{19}{\textbf{NASA data:} FIRMS / LANCE / ESDIS, MODIS and VIIRS. NASA POWER supports the Bangladesh research views.\newline\textbf{Credits:} Natural Earth; geoBoundaries; Solar System Scope Earth textures, CC BY 4.0.\newline AI-assisted development, design and editing. Actual app recordings and NASA observations.}
+\foot{\href{https://github.com/polymathicX/Agun-Panjika}{Code, data notes and full project documentation} \quad\textbullet\quad Harmonization of MODIS and VIIRS Hot Spots}{7}
+\end{tikzpicture}
 \end{document}

@@ -5,6 +5,8 @@ import { RegionPicker } from "../components/RegionPicker";
 import { useFmt } from "../i18n";
 import { WeekTip } from "../components/WeekCell";
 import { loadLocal, loadRegion, useAsync } from "../lib/data";
+import { DataReading } from '../components/DataReading';
+import { seasonReading } from '../lib/readings';
 import type { LocalDoc, Manifest, RegionDoc, Week } from "../lib/types";
 
 const LOCAL_DISTRICTS = ["rangamati", "khagrachhari", "bandarban"];
@@ -56,7 +58,7 @@ export function Panjika({ manifest, params, setParams }: { manifest: Manifest; p
         <h1 className="text-2xl font-bold sm:text-3xl">{t("calendar.title")}</h1>
         <p className="mt-1 max-w-2xl text-muted">{t("calendar.intro")}</p>
       </div>
-      <div className="flex flex-wrap items-end gap-3">
+      <div data-help="calendar-controls" className="flex flex-wrap items-end gap-3">
         <div className="min-w-[220px]">
           <RegionPicker manifest={manifest} value={regionId} onChange={(r) => setParams({ r, u: undefined })} />
         </div>
@@ -91,7 +93,8 @@ export function Panjika({ manifest, params, setParams }: { manifest: Manifest; p
       <RequestStatus error={error} loading={loading} retry={retry}/>
       {hasLocal&&<RequestStatus error={localError} loading={localLoading} retry={retryLocal}/>}
       {shown && doc && (
-        <div className="card p-3 sm:p-5">
+        <div data-help="calendar-view" className="card p-3 sm:p-5">
+          <DataReading reading={seasonReading(shown.weeks,lang==='bn'?shown.region.name_bn:shown.region.name_en,hl??doc.season.year,53,lang==='bn')} />
           {unit && <h2 className="mb-2 text-lg font-semibold">{unit.label}</h2>}
           {table ? (
             <CalendarTable doc={shown} />

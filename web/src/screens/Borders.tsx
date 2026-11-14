@@ -1,4 +1,6 @@
 import { RequestStatus } from "../components/RequestStatus";
+import { DataReading } from '../components/DataReading';
+import { seriesReading } from '../lib/readings';
 import { scaleLinear } from "d3-scale";
 import { line } from "d3-shape";
 import { useMemo, useState } from "react";
@@ -60,6 +62,7 @@ function Hills({ doc }: { doc: NeighboursDoc }) {
         {t("borders.hills")}
       </h2>
       <p className="mb-2 text-sm text-muted">{t("borders.hillsIntro")}</p>
+      <DataReading reading={{text:lang==='bn'?`${y0} থেকে ${y1} পর্যন্ত ${num(units.length)}টি পাশের এলাকার বার্ষিক ধরন তুলনা করছেন। প্রতিটি রং একটি এলাকা।`:`You are comparing annual patterns in ${units.length} neighboring areas from ${y0} to ${y1}. Each color represents a different area.`,basis:lang==='bn'?'প্রকাশিত ধারার অন্তত ৫২টি সপ্তাহ থাকা বছরের যোগফল দেখানো হয়েছে।':'Annual totals include years with at least 52 recorded weeks.',note:lang==='bn'?'ভাঙা রেখা পুনর্গঠিত সংখ্যা। এলাকার আয়তন আলাদা; রেখার মিল দিয়ে আগুন বা ধোঁয়ার চলাচল প্রমাণ হয় না।':'Dashed segments contain reconstruction. Area sizes differ; similar curves alone do not demonstrate fire or smoke movement.'}}/>
       <div ref={ref}>
         <svg width={width} height={height} role="img" aria-label={t("borders.perYear")} onMouseLeave={() => tip.hide()}
           onMouseMove={(e) => {
@@ -155,6 +158,7 @@ function Upwind({ doc }: { doc: NeighboursDoc }) {
           </select>
         </label>
       </div>
+      <DataReading reading={seriesReading(weekly[0].arr.flatMap((value,i)=>value===null?[]:[{label:`${lang==='bn'?'সপ্তাহ':'Week'} ${i+1}`,value}]),lang==='bn'?`${nm(weekly[0].u)}, ${year}-এর সাপ্তাহিক ধারা`:`Reading the weekly ${nm(weekly[0].u)} record for ${year}`,lang==='bn'?'বাছা বছরের প্রথম নামের এলাকার মূল সাপ্তাহিক ধারা থেকে গণনা।':'Calculated from the first named area’s weekly series in the selected year.',lang==='bn'?'ডানদিকের অ্যারোসল স্কেল আলাদা। সময়ের মিল ধোঁয়া কোথা থেকে এসেছে তা প্রমাণ করে না।':'The aerosol line uses a separate right-hand scale. Similar timing does not establish the origin of smoke.',lang==='bn')}/>
       <div ref={ref} className="mt-2">
         <svg width={width} height={height} role="img" aria-label={t("borders.weekly")} onMouseLeave={() => tip.hide()}
           onMouseMove={(e) => {

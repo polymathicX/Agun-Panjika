@@ -201,7 +201,7 @@ def evaluate_case(spec: dict, feat: pd.DataFrame, source_hash: str, dates: dict)
         rows.append(item)
     improvement = 100 * (1 - scores['ensemble']['mae_week'] / scores['naive']['mae_week'])
     original = json.loads((WEB_DATA / 'global/v1' / f"{spec['id']}.json").read_text(encoding='utf-8'))
-    previous_mae = original['evaluation']['models']['ensemble']['mae_week']
+    development_mae = original['evaluation']['models']['ensemble']['mae_week']
     return {**{k: v for k, v in spec.items() if k not in ('input', 'unit')},
             'version': VERSION, 'snapshot_sha256': source_hash, 'data_through': dates,
             'assistance': 'LLM-assisted implementation. Model estimates are distinct from NASA observations.',
@@ -219,9 +219,9 @@ def evaluate_case(spec: dict, feat: pd.DataFrame, source_hash: str, dates: dict)
                            'excluded_test_weeks': [[int(r.iso_year), int(r.iso_week)]
                                                    for _, r in replay[~replay.reference_ok].iterrows()],
                            'total_error_scope': 'Mean error of matched eligible-week totals within each test year',
-                           'previous_release_mae': previous_mae,
-                           'raw_change_from_previous_pct': round(100 * (1 - raw_scores['ensemble']['mae_week']
-                                                                      / previous_mae), 2),
+                           'development_reference_mae': development_mae,
+                           'development_change_pct': round(100 * (1 - raw_scores['ensemble']['mae_week']
+                                                                      / development_mae), 2),
                            'per_year': {str(y): {'eligible': score(g[g.reference_ok]), 'all_weeks': score(g)}
                                         for y, g in replay.groupby('iso_year')}}, 'weeks': rows}
 

@@ -48,7 +48,7 @@ export function Method({ manifest }: { manifest: Manifest }) {
       <RequestStatus error={valError} loading={valLoading} retry={retryValidation}/>
       <RequestStatus error={partnerError} loading={partnerLoading} retry={retryPartner}/>
       <RequestStatus error={bridgeError} loading={bridgeLoading} retry={retryBridge}/>
-      <section className="card flex flex-col gap-3 p-4 sm:p-6">
+      <section data-help="method-steps" className="card flex flex-col gap-3 p-4 sm:p-6">
         <ol className="flex list-decimal flex-col gap-3 pl-5">
           <li>
             <strong>{en ? "Clean." : "পরিষ্কার।"}</strong>{" "}
@@ -100,7 +100,7 @@ export function Method({ manifest }: { manifest: Manifest }) {
 
       {partner && <PartnerCheck doc={partner} />}
 
-      <section className="card flex flex-col gap-3 p-4 sm:p-6">
+      <section data-help="method-checks" className="card flex flex-col gap-3 p-4 sm:p-6">
         {cov && (
           <div>
             <h2 className="text-lg font-semibold">{t("method2.coverage")}</h2>
@@ -126,12 +126,12 @@ export function Method({ manifest }: { manifest: Manifest }) {
         </div>
       </section>
 
-      <section className="card p-4 sm:p-6">
+      <section data-help="method-limits" className="card p-4 sm:p-6">
         <h2 className="text-lg font-semibold">{t("method.limits")}</h2>
         <p className="mt-1 text-sm">{t("method.limitsText")}</p>
       </section>
 
-      <section id="downloads" className="card flex flex-col gap-3 p-4 sm:p-6">
+      <section data-help="method-downloads" id="downloads" className="card flex flex-col gap-3 p-4 sm:p-6">
         <div className="flex flex-wrap gap-2">
           <a className="btn btn-primary" href={dataUrl("download/harmonised.csv")} download>
             {t("method.download")}
@@ -164,7 +164,7 @@ export function Method({ manifest }: { manifest: Manifest }) {
       </section>
 
       <RequestStatus error={copyError}/>
-      <section className="card p-4 sm:p-6">
+      <section data-help="method-sources" className="card p-4 sm:p-6">
         <h2 className="text-lg font-semibold">{t("method.sources")}</h2>
         <ul className="mt-2 flex list-disc flex-col gap-1 pl-5 text-sm">
           {SOURCES.map(([label, href]) => (

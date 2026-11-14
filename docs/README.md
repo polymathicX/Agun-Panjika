@@ -12,6 +12,7 @@
 | [Model card](GLOBAL_EVALUATION.md) | Four-case protocol, all results and public no-key reproduction |
 | [Implementation status](IMPLEMENTATION_STATUS.md) | Original plan items mapped to delivery/evidence |
 | [Verification](VERIFICATION.md) · [visual evidence](review/README.md) | Executed checks and real app captures |
+| [Product story and help review](PONYTAIL_REVIEW_STORY_AND_HELP.md) | Presentation clarity, all-page help, transparent readings and checks |
 | [Sources](SOURCES_AND_SUBMISSION.md) · [AI disclosure](DATA_AND_AI_DISCLOSURE.md) | Data, asset, library and assistance credits |
 | [Official guide research](GLOBAL_JUDGING_RESEARCH.md) | Current competition requirements and source links |
 | [Project-page draft](submission/PROJECT_PAGE_DRAFT.md) · [pitch script](submission/30_SECOND_PITCH.md) | Team-reviewable submission copy |

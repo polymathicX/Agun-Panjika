@@ -8,7 +8,7 @@ Agun Panjika — Fire Almanac
 
 ## High-level summary
 
-Different satellites can make the same fire season look different. Agun Panjika makes that record inspectable. Our web app combines a worldwide view of recent NASA MODIS/VIIRS observations with evaluated historical fire calendars. Spin the Earth, select a country, follow the days, and open a sensor-switch experiment to compare corrected history with withheld observations. Dated evidence exports retain sources and limitations. The app is installable on a phone and supports offline reference data.
+Agun Panjika helps people understand the fire story where they live. Different satellites see heat differently; our app connects those records for easier seasonal comparisons. Our web app combines a worldwide view of recent NASA MODIS/VIIRS observations with evaluated historical fire calendars. Spin the Earth, select a country, follow the days, and open a sensor-switch experiment to compare corrected history with withheld observations. Dated evidence exports retain sources and limitations. The app is installable on a phone and supports offline reference data.
 
 ## Demo and final project
 
@@ -25,7 +25,9 @@ NASA has more than two decades of active-fire observations, but MODIS and VIIRS 
 
 The worldwide viewer uses separate public seven-day MODIS, NOAA-20 and NOAA-21 feeds. A 3D Earth supports country taps, rotation and zooming; 242 Natural Earth country/territory packages provide dated counts and daily charts. A local watchlist, reduced-motion behavior, keyboard and flat-map alternatives, evidence downloads and an installable PWA make repeated use practical. Recent worldwide observations are not represented as a globally calibrated historical reconstruction.
 
-The scientific extension uses detector-only annual walk-forward replay: fit through Y−2, calibrate Y−1 and evaluate Y. A strict tree-support guard and past-only refitting reduce all-week MAE by 35.10% in Chin and 21.45% in Punjab–Haryana against the previous release. All 156 original test weeks remain. Bangladesh and Nepal worsen slightly; Chin’s monthly baseline still does better. NASA acquisition outages are flagged in every area and baseline, with a separate matched 142-week comparison and raw observations retained. These years were known during development, so this is not an untouched final holdout.
+The historical workbench covers Bangladesh, Nepal, Chin in Myanmar and Punjab–Haryana in India. Choose a year, compare weekly patterns, and reveal VIIRS observations to check the reconstruction. Each test-year model uses only older labels, with separate interval calibration. The complete baseline comparison, raw observations and source-quality notes are public. The historical years were known during development; wider independent evaluation remains research work.
+
+Explain this page offers 85 English/Bangla help topics across all nine pages, alongside the optional eight-step introduction. What this tells you describes the selected data in ordinary words using fixed, traceable calculations. It preserves missing observations and expired outlooks. There is no external AI service generating scientific interpretations.
 
 Users can hide VIIRS for part of a test year, reveal its reference observations, inspect uncertainty, and export the evidence. Bangladesh also retains regional/district and CHT local calendars, historical seasonal context, sensor comparisons and experimental outlook products. Stale outlooks expire. Counts are satellite detections, not unique fires, burned area or emergency instructions. Cloud and overpass completeness is not established.
 

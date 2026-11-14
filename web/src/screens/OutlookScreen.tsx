@@ -1,3 +1,5 @@
+import { DataReading } from "../components/DataReading";
+import { outlookReading } from "../lib/readings";
 import { RequestStatus } from "../components/RequestStatus";
 import { scaleLinear } from "d3-scale";
 import { AlertList, DangerChart, OutlookCard } from "../components/Outlook";
@@ -31,6 +33,8 @@ export function OutlookScreen({ manifest, params, setParams }: { manifest: Manif
       <RequestStatus error={error} loading={loading} retry={retry}/>
       <RequestStatus error={fwError} loading={fwLoading} retry={retryFW}/>
       <RequestStatus error={docError} loading={docLoading} retry={retryDoc}/>
+      <div data-help="outlook-status">
+      {fc && <DataReading reading={outlookReading(fc.products.next2.outlook[regionId],!!fc.expired,name(regionId),fc.valid_until_utc,lang==='bn')} />}
       {fc?.expired && <p role="status" className="card p-4">{lang === 'bn' ? 'সংরক্ষিত পূর্বাভাসের মেয়াদ শেষ। নতুন তথ্য না আসা পর্যন্ত পূর্বাভাস ও সক্রিয় সতর্কতা দেখানো হচ্ছে না।' : 'The saved outlook has expired. Current outlooks and active alerts are withheld until a newer snapshot is published.'} {fc.valid_until_utc?.slice(0, 10)}</p>}
 
       {fc && !fc.expired && (
@@ -47,6 +51,7 @@ export function OutlookScreen({ manifest, params, setParams }: { manifest: Manif
         </section>
       )}
 
+      </div>
       <section className="card flex flex-col gap-3 p-3 sm:p-5" aria-labelledby="dg-h">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>

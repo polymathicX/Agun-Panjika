@@ -4,13 +4,11 @@
 
 The worldwide viewer shows recent observations across 242 countries/territories. Historical reconstruction is evaluated in four South Asian areas. This model card describes that historical workflow, not worldwide model accuracy or emergency forecasting.
 
-## What was fixed
+## Reconstruction method
 
-Chin's largest error involved a MODIS peak beyond the fitted tree model's numeric support. A direct-count tree saturated while the observed VIIRS count rose sharply. The new guard replaces only that tree contribution with a training-fitted multiplicative factor when MODIS exceeds the **maximum across the entire fitted model**. The negative-binomial contribution remains. The rule is identical in all areas; there is no area-specific switch chosen from test results.
+The detector-only reconstruction combines a negative-binomial regression with a five-seed LightGBM model. If MODIS exceeds the maximum count in the pooled fitting data, the tree contribution uses a fitted multiplicative factor instead. The rule is identical in all areas. Each test year has a model fitted only to older labels, with an independent preceding year for interval calibration.
 
-Punjab–Haryana's observation relationship changed over time. A single fit frozen in 2018 was too stale for parts of 2024. The update fits a fresh vintage for each test year using only older labels. The architecture and hyperparameters remain fixed. The [research note](MODEL_OPTIMIZATION_RESEARCH.md) preserves unsuccessful alternative experiments and the final protocol.
-
-NASA also documents acquisition outages. One large Punjab error coincided with the **2–6 November 2024 S-NPP GPS outage**. Local acquisition timestamps confirm missing S-NPP records during the outage while MODIS continued observing. Production resumed later, but backfilled 7–8 November observations are retained. Production delay is not treated as proof of missing acquisition.
+NASA acquisition outages are treated as a source-quality issue. For example, the 2–6 November 2024 S-NPP GPS outage interrupts the reference during part of Punjab's fire season. The published quality manifest separates acquisition loss from production delay and retains backfilled observations.
 
 ## Chronological protocol
 
@@ -22,22 +20,22 @@ NASA also documents acquisition outages. One large Punjab error coincided with t
 
 The model remains 30% negative-binomial regression plus 70% five-seed LightGBM, with the strict support guard above. Detector-only features describe MODIS count, FRP, observation mix, geometry, season and neighbouring weeks. Weather is excluded. Features are built within each year. Following-week MODIS information is appropriate to retrospective reconstruction, not an issue-time forecast.
 
-Each case is fitted locally. Earlier test-year labels intentionally become available to later vintages. This is **annual walk-forward evaluation**, not the original single frozen fit. Every target year keeps point fitting and interval calibration earlier than that year's labels. The years were already known during development and several alternatives were explored. This is a known historical replay, **not an untouched final holdout or unseen-country transfer**.
+Each case is fitted locally. Earlier test-year labels intentionally become available to later vintages. This is **annual walk-forward evaluation**, rather than a single fixed fit for the entire period. Every target year keeps point fitting and interval calibration earlier than that year's labels. The years were already known during development and several alternatives were explored. This is a known historical replay, **not an untouched final holdout or unseen-country transfer**.
 
 Pre-2012 historical reconstruction uses the latest evaluated vintage: fit 2013–2022, calibrate 2023. Test-year chart rows use their own chronological vintages. Moving the switch slider joins precomputed values; it does not retrain a model in the browser. The workflow scores do not establish nominal interval coverage decades before the calibration period.
 
-## Changed predictions: all 156 original weeks
+## Current-method comparison: all 156 reference weeks
 
-Weekly MAE is the mean absolute difference from raw S-NPP counts. Lower is better. These rows preserve all original test weeks, including incomplete references, so the before/after gains are not created by dropping difficult weeks.
+Weekly MAE is the mean absolute difference from raw S-NPP counts. Lower is better. Every method is scored on the same 156 weeks, including incomplete references; the quality-comparable table below gives a separate view.
 
-| Area | Previous release | Updated model | Same-workflow factor | Monthly factors |
-| --- | ---: | ---: | ---: | ---: |
-| Bangladesh | 45.970 | 46.926 | 58.316 | 49.839 |
-| Nepal | 113.001 | 115.232 | 158.516 | 131.390 |
-| Chin, Myanmar | 136.414 | 88.530 | 97.283 | 75.525 |
-| Punjab & Haryana, India | 313.525 | 246.265 | 262.017 | 291.339 |
+| Area | Reconstruction | Fitted factor | Monthly factors |
+| --- | ---: | ---: | ---: |
+| Bangladesh | 46.926 | 58.316 | 49.839 |
+| Nepal | 115.232 | 158.516 | 131.390 |
+| Chin, Myanmar | 88.530 | 97.283 | 75.525 |
+| Punjab & Haryana, India | 246.265 | 262.017 | 291.339 |
 
-Chin improves **35.10%** and Punjab–Haryana **21.45%** relative to the previous release. The new workflow also beats a single factor fitted to the same past labels in all four cases. **Chin's monthly factor remains better** than the updated model. Bangladesh is 2.08% worse than its previous release, and Nepal 1.97% worse. Those trade-offs remain published; methods were not switched per area after inspecting test results.
+The reconstruction has lower weekly MAE than the fitted single factor in these four cases. Monthly factors have lower error in Chin. No method is claimed to win every area or metric. Methods were not switched per area after inspecting test results. The research record preserves the development experiments separately from this final-product comparison.
 
 The fixed 4.4× reference also remains visible. Its PRD provenance uses a 2024 ratio, so it is a historical comparison, not an independently preselected model candidate. All baselines, the unguarded annual workflow and per-year/regional results are included in the packages.
 
@@ -45,14 +43,14 @@ The fixed 4.4× reference also remains visible. Its PRD provenance uses a 2024 r
 
 The [source-linked quality manifest](../pipeline/reference_quality.json) preserves 172 NASA-listed intervals in the 2013–2024 study scope. A fixed rule flags every ISO week overlapping a documented acquisition outage lasting at least 24 hours. Nine long intervals affect 14 test weeks and one earlier calibration week. The same mask applies to every area, model, fit, calibration and comparable score. Raw labels are never overwritten in the public data.
 
-| Area | Updated model | Fitted factor | Monthly factors | Measured 80% coverage |
+| Area | Reconstruction | Fitted factor | Monthly factors | Measured 80% coverage |
 | --- | ---: | ---: | ---: | ---: |
 | Bangladesh | 51.201 | 63.785 | 54.523 | 78.2% |
 | Nepal | 125.792 | 173.297 | 143.696 | 79.6% |
 | Chin, Myanmar | 97.198 | 106.860 | 82.957 | 74.6% |
 | Punjab & Haryana, India | 209.497 | 237.311 | 260.711 | 82.4% |
 
-This quality comparison is a correction to reference comparability, **not itself an accuracy gain**. Removing quiet incomplete weeks can raise MAE, as the tables show. Raw counts, all 156-week results, every omitted week and the original [v1 packages](../web/public/data/global/v1/) remain inspectable. Calendar and reference-line gaps mark incomplete weeks; CSV retains the raw value with its quality flag.
+This quality comparison is a correction to reference comparability, **not itself an accuracy gain**. Removing quiet incomplete weeks can raise MAE, as the tables show. Raw counts, all 156-week results, every omitted week and the [development experiment archive](../web/public/data/global/v1/) remain inspectable. Calendar and reference-line gaps mark incomplete weeks; CSV retains the raw value with its quality flag.
 
 The total-count metric groups each year's **identical included weeks**. A total over eligible weeks is not a complete annual total. Every baseline is evaluated on the same set. The 80% intervals have only 49–51 calibration residual weeks per vintage; coverage is empirical, temporally dependent and not guaranteed. It is not tuned using target-year labels.
 

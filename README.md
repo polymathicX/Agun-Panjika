@@ -2,7 +2,7 @@
 
 # Agun Panjika · আগুন পঞ্জিকা
 
-**A fire history you can inspect.**
+**Know your country's fire story.**
 
 Team **KUETaguns** · NASA Space Apps Challenge 2026<br>
 *Harmonization of MODIS and VIIRS Hot Spots*
@@ -25,7 +25,7 @@ MODIS and VIIRS have different resolutions and sensitivities. Joining raw counts
 
 ## Start with a place
 
-First visit? Choose **Show me around** for an optional, action-led eight-step tutorial. It teaches the real controls and can be replayed later.
+First visit? Choose **Show me around** for the optional eight-step introduction. For detailed help, open **Explain this page** anywhere: 85 English/Bangla topics cover all nine pages, with real controls highlighted and any topic available on demand.
 
 1. **Spin, zoom and tap.** Explore recent observations on a textured 3D Earth. No country search is needed; keyboard selection and a flat map are available as alternatives.
 2. **Read the source.** Change the satellite or day, play the timeline and inspect the country's counts. Detections are not unique fires; repeat observations and industrial heat can remain.
@@ -51,25 +51,15 @@ First visit? Choose **Show me around** for an optional, action-led eight-step tu
 
 The intended benefit is easier access to comparable fire-season evidence for students, communities, researchers and land managers. **A practitioner pilot, adoption and measured prevention benefits have not been established.** This is a research and communication prototype, not an emergency warning service.
 
-## What changed after validation
+## Why connect the satellite records?
 
-The updated workflow retrains once per historical test year using only older labels, and guards against direct-count trees saturating beyond their fitted MODIS range. NASA-documented acquisition gaps are flagged separately. **All 156 original test weeks remain in this before/after comparison.**
+MODIS sees larger pixels than VIIRS. A finer sensor can detect smaller heat signals, so raw counts from the two instruments tell different stories. Agun Panjika reconstructs the earlier record on a common scale so people can explore fire seasons across that change.
 
-| Area | Previous release | Updated model | Same-workflow factor | Monthly factors |
-| --- | ---: | ---: | ---: | ---: |
-| Bangladesh | 45.970 | 46.926 | 58.316 | 49.839 |
-| Nepal | 113.001 | 115.232 | 158.516 | 131.390 |
-| Chin, Myanmar | 136.414 | 88.530 | 97.283 | 75.525 |
-| Punjab & Haryana, India | 313.525 | 246.265 | 262.017 | 291.339 |
+In **Histories**, choose Bangladesh, Nepal, Chin or Punjab–Haryana. Pick a year, move the satellite-switch week, and reveal the real VIIRS observations. The calendar shows the longer seasonal pattern. Estimates, observations and uncertainty remain labeled.
 
-Chin's weekly MAE falls **35.10%** and Punjab–Haryana's **21.45%** against the previous release. Chin's monthly baseline is still better; Bangladesh and Nepal are about 2% worse than before. We keep those outcomes visible.
+**What this tells you** explains the current selection in ordinary words. It follows the country, satellite, day or historical year shown on screen. Open **How to read this** to see its calculation basis and limits. These are fixed calculations from the published data, with no AI-generated scientific claims or external AI service.
 
-<img src="docs/latex/figures/global-transfer.png" alt="Change from the previous release on all 156 original weeks: Chin and Punjab improve, Bangladesh and Nepal worsen slightly" width="800">
-
-For each year Y, point fitting uses 2013 through Y−2 and interval calibration uses Y−1. The app also compares every method on the **same 142 weeks** after flagging long NASA acquisition outages, while retaining raw counts and all-week scores. Partial reference weeks appear as gaps, not as complete zero observations. These are known development replays, not an untouched final holdout or worldwide calibrated accuracy.
-
-[Protocol, all results and limitations](docs/GLOBAL_EVALUATION.md) · [What caused the errors and the rejected experiments](docs/MODEL_OPTIMIZATION_RESEARCH.md) · [Original frozen benchmark](web/public/data/global/v1/)
-
+For a deeper check, the [model card](docs/GLOBAL_EVALUATION.md) gives the complete current-method comparisons, source-quality flags, uncertainty coverage and reproducible inputs. Worldwide recent observations and four evaluated historical areas have different scopes.
 
 ## Run locally
 

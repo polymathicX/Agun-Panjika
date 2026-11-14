@@ -16,7 +16,7 @@ try {
   assert.equal(await page.locator('.area-choice[aria-pressed=true]').count(),1);
   assert.match(await page.locator('.case-verdict').first().innerText(),/lower weekly error/);
   assert.match(await page.locator('.case-facts').innerText(),/142 \/ 156/);
-  if(id==='chin')assert.match(await page.locator('.case-limited').innerText(),/Monthly factors still/);
+  if(id==='chin')assert.match(await page.locator('.case-limited').innerText(),/Monthly factors have lower error/);
   await page.getByRole('button',{name:'Reveal actual VIIRS',exact:true}).click();
   await page.waitForURL(/reveal=1/);
   await page.getByRole('slider').fill('12');await page.waitForURL(/switchWeek=12/);

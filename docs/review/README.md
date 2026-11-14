@@ -1,30 +1,25 @@
-# Application captures and evaluation figures
+# Product and presentation review
 
-Current captures: **15 November 2026**, actual production preview. They are browser recordings, not generated mockups. Earth/cloud textures are static geographic context; each data feed has its own observation window.
+**15 November 2026 | Team KUETaguns**
 
-| View | Capture | What to inspect |
-| --- | --- | --- |
-| Worldwide entry | [Desktop](screenshots/world-hero.png) | Soft Earth layout, clearer points, satellite counts, source dates and tutorial launch |
-| Country | [Brazil](screenshots/world-country.png) | Camera selection, dated country observations and controls |
-| Historical experiment | [Focused](screenshots/global-experiment.png), [full view](screenshots/global-cases.png) | Chin 2023, past-only model, revealable reference, quality gaps and stronger baseline |
-| Phone | [Globe](screenshots/world-phone.png), [report](screenshots/world-phone-report.png) | Responsive discovery and country evidence |
+The public package tells the finished product story. Its seven slides use large type, a satellite pixel-size diagram, actual app captures, a Nepal seasonal figure, a real plain-language reading, and phone help. The 29-second video follows the official introduction, challenge, project, idea and future sequence.
 
-## Change from the previous release
+## App views
 
-![All-week change in reconstruction error](../latex/figures/global-transfer.png)
+![Worldwide Soft Earth interface](screenshots/world-hero.png)
 
-**Weekly MAE change against the previous release, keeping all 156 original weeks.** Chin improves 35.10%; Punjab–Haryana improves 21.45%. Bangladesh worsens 2.08%; Nepal worsens 1.97%. The new annual workflow fits only older labels and uses a strict tree-support guard. This is a known historical replay, not a fresh holdout. Chin's monthly-factor baseline is still better than the updated model. [Vector PDF](../latex/figures/global-transfer.pdf) · [Complete model card](../GLOBAL_EVALUATION.md).
+[Selected country](screenshots/world-country.png) · [Historical comparison](screenshots/global-experiment.png) · [Plain reading](screenshots/plain-reading.png) · [Phone](screenshots/world-phone.png) · [On-demand help](screenshots/help-phone.png).
 
-The app separately reports the same 142 source-comparable weeks for every method. That quality correction does not create the all-week gains above. Raw values, documented outage exclusions and the original frozen benchmark remain accessible.
+## A seasonal comparison
 
-## Why sensor harmonization matters
+![Nepal 2024 connected record and VIIRS observations](../latex/figures/history-story.png)
 
-![Bangladesh raw join and harmonized annual record](../latex/figures/sensor-story.png)
+The connected record uses MODIS-based reconstruction before the selected switch and observed VIIRS afterward. Gaps preserve incomplete references. [Full current-method comparison](../GLOBAL_EVALUATION.md).
 
-**Bangladesh annual detections, 2003–2025.** The raw join uses MODIS before 2012 and VIIRS thereafter; the harmonized line is the separate Bangladesh research record on a VIIRS scale. Real annual variation is present too; the instrument change is not the sole cause. Detections are not unique fires. [Vector PDF](../latex/figures/sensor-story.pdf).
+## What was checked
 
-## Reproduction and verification
+The verification record covers responsive routes, real globe interaction, loading/retry behavior, eight-step introduction, 85 on-demand help topics across all nine pages, English/Bangla, data readings, exports and cached offline access. Presentation review checks the seven-page limit, 29-second duration, readable placement and source credits.
 
-Run `python docs/submission/build.py` with the production preview to regenerate captures, figures, slides and video. [Build instructions](../submission/README.md). AI assisted coding, plotting and assembly; values are project exports and captures show the real application.
+[Verification](../VERIFICATION.md) · [Teammate video brief](../submission/VIDEO_TEAMMATE_HANDOFF.md) · [Presentation build](../submission/README.md).
 
-[15 November verification](../VERIFICATION.md) · [machine record](verification-2026-11-15.json) · [Ponytail review](../PONYTAIL_REVIEW_2026-11-15.md). Earlier captures/figures and the [29 October record](verification-2026-10-29.json) remain historical.
+Physical devices, practitioner usefulness and a fresh locked scientific evaluation remain separate evidence to collect.

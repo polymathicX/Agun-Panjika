@@ -1,14 +1,14 @@
 {
   "reviewed": "2026-11-15",
   "timezone": "Asia/Dhaka",
-  "scope": "Prepublication release checks; deployment is confirmed separately after main publication.",
+  "scope": "Local final-product checks; deployment is verified separately after publishing.",
   "python": {
     "passed": 80,
     "skipped": 0,
     "ruff": "passed"
   },
   "frontend": {
-    "evidence_tests": 4,
+    "evidence_tests": 9,
     "typecheck": "passed",
     "production_build": "passed",
     "npm_audit_vulnerabilities": 0
@@ -48,6 +48,10 @@
         "exitCode": 0
       },
       {
+        "name": "help",
+        "exitCode": 0
+      },
+      {
         "name": "exports",
         "exitCode": 0
       },
@@ -72,444 +76,68 @@
         "exitCode": 0
       }
     ],
-    "views": 54,
+    "responsive_views": 54,
     "overflow": 0,
     "page_errors": 0,
     "console_errors": 0,
     "axe_findings": 0,
-    "matrix": [
-      {
-        "width": 1440,
-        "theme": "light",
-        "lang": "en",
-        "route": "home"
+    "on_demand_help": {
+      "coverage": {
+        "world": 15,
+        "global": 13,
+        "home": 11,
+        "panjika": 7,
+        "map": 8,
+        "sensors": 9,
+        "outlook": 8,
+        "borders": 6,
+        "method": 8
       },
-      {
-        "width": 1440,
-        "theme": "light",
-        "lang": "en",
-        "route": "panjika"
-      },
-      {
-        "width": 1440,
-        "theme": "light",
-        "lang": "en",
-        "route": "sensors"
-      },
-      {
-        "width": 1440,
-        "theme": "light",
-        "lang": "en",
-        "route": "map"
-      },
-      {
-        "width": 1440,
-        "theme": "light",
-        "lang": "en",
-        "route": "outlook"
-      },
-      {
-        "width": 1440,
-        "theme": "light",
-        "lang": "en",
-        "route": "borders"
-      },
-      {
-        "width": 1440,
-        "theme": "light",
-        "lang": "en",
-        "route": "method"
-      },
-      {
-        "width": 1440,
-        "theme": "light",
-        "lang": "en",
-        "route": "global"
-      },
-      {
-        "width": 1440,
-        "theme": "light",
-        "lang": "en",
-        "route": "world"
-      },
-      {
-        "width": 1440,
-        "theme": "dark",
-        "lang": "en",
-        "route": "home"
-      },
-      {
-        "width": 1440,
-        "theme": "dark",
-        "lang": "en",
-        "route": "panjika"
-      },
-      {
-        "width": 1440,
-        "theme": "dark",
-        "lang": "en",
-        "route": "sensors"
-      },
-      {
-        "width": 1440,
-        "theme": "dark",
-        "lang": "en",
-        "route": "map"
-      },
-      {
-        "width": 1440,
-        "theme": "dark",
-        "lang": "en",
-        "route": "outlook"
-      },
-      {
-        "width": 1440,
-        "theme": "dark",
-        "lang": "en",
-        "route": "borders"
-      },
-      {
-        "width": 1440,
-        "theme": "dark",
-        "lang": "en",
-        "route": "method"
-      },
-      {
-        "width": 1440,
-        "theme": "dark",
-        "lang": "en",
-        "route": "global"
-      },
-      {
-        "width": 1440,
-        "theme": "dark",
-        "lang": "en",
-        "route": "world"
-      },
-      {
-        "width": 390,
-        "theme": "light",
-        "lang": "en",
-        "route": "home"
-      },
-      {
-        "width": 390,
-        "theme": "light",
-        "lang": "en",
-        "route": "panjika"
-      },
-      {
-        "width": 390,
-        "theme": "light",
-        "lang": "en",
-        "route": "sensors"
-      },
-      {
-        "width": 390,
-        "theme": "light",
-        "lang": "en",
-        "route": "map"
-      },
-      {
-        "width": 390,
-        "theme": "light",
-        "lang": "en",
-        "route": "outlook"
-      },
-      {
-        "width": 390,
-        "theme": "light",
-        "lang": "en",
-        "route": "borders"
-      },
-      {
-        "width": 390,
-        "theme": "light",
-        "lang": "en",
-        "route": "method"
-      },
-      {
-        "width": 390,
-        "theme": "light",
-        "lang": "en",
-        "route": "global"
-      },
-      {
-        "width": 390,
-        "theme": "light",
-        "lang": "en",
-        "route": "world"
-      },
-      {
-        "width": 360,
-        "theme": "dark",
-        "lang": "bn",
-        "route": "home"
-      },
-      {
-        "width": 360,
-        "theme": "dark",
-        "lang": "bn",
-        "route": "panjika"
-      },
-      {
-        "width": 360,
-        "theme": "dark",
-        "lang": "bn",
-        "route": "sensors"
-      },
-      {
-        "width": 360,
-        "theme": "dark",
-        "lang": "bn",
-        "route": "map"
-      },
-      {
-        "width": 360,
-        "theme": "dark",
-        "lang": "bn",
-        "route": "outlook"
-      },
-      {
-        "width": 360,
-        "theme": "dark",
-        "lang": "bn",
-        "route": "borders"
-      },
-      {
-        "width": 360,
-        "theme": "dark",
-        "lang": "bn",
-        "route": "method"
-      },
-      {
-        "width": 360,
-        "theme": "dark",
-        "lang": "bn",
-        "route": "global"
-      },
-      {
-        "width": 360,
-        "theme": "dark",
-        "lang": "bn",
-        "route": "world"
-      },
-      {
-        "width": 768,
-        "theme": "light",
-        "lang": "bn",
-        "route": "home"
-      },
-      {
-        "width": 768,
-        "theme": "light",
-        "lang": "bn",
-        "route": "panjika"
-      },
-      {
-        "width": 768,
-        "theme": "light",
-        "lang": "bn",
-        "route": "sensors"
-      },
-      {
-        "width": 768,
-        "theme": "light",
-        "lang": "bn",
-        "route": "map"
-      },
-      {
-        "width": 768,
-        "theme": "light",
-        "lang": "bn",
-        "route": "outlook"
-      },
-      {
-        "width": 768,
-        "theme": "light",
-        "lang": "bn",
-        "route": "borders"
-      },
-      {
-        "width": 768,
-        "theme": "light",
-        "lang": "bn",
-        "route": "method"
-      },
-      {
-        "width": 768,
-        "theme": "light",
-        "lang": "bn",
-        "route": "global"
-      },
-      {
-        "width": 768,
-        "theme": "light",
-        "lang": "bn",
-        "route": "world"
-      },
-      {
-        "width": 1280,
-        "theme": "dark",
-        "lang": "en",
-        "route": "home"
-      },
-      {
-        "width": 1280,
-        "theme": "dark",
-        "lang": "en",
-        "route": "panjika"
-      },
-      {
-        "width": 1280,
-        "theme": "dark",
-        "lang": "en",
-        "route": "sensors"
-      },
-      {
-        "width": 1280,
-        "theme": "dark",
-        "lang": "en",
-        "route": "map"
-      },
-      {
-        "width": 1280,
-        "theme": "dark",
-        "lang": "en",
-        "route": "outlook"
-      },
-      {
-        "width": 1280,
-        "theme": "dark",
-        "lang": "en",
-        "route": "borders"
-      },
-      {
-        "width": 1280,
-        "theme": "dark",
-        "lang": "en",
-        "route": "method"
-      },
-      {
-        "width": 1280,
-        "theme": "dark",
-        "lang": "en",
-        "route": "global"
-      },
-      {
-        "width": 1280,
-        "theme": "dark",
-        "lang": "en",
-        "route": "world"
-      }
-    ],
-    "world": {
-      "countries": 242,
-      "globePicking": true,
-      "keyboardSelection": true,
-      "sensors": 3,
-      "timeline": true,
-      "watchlist": true,
-      "installability": {
-        "installabilityErrors": []
-      },
-      "offlineShellAndCases": true,
+      "topics": 85,
+      "readingUpdates": true,
+      "historyReveal": true,
+      "jumpBetweenPages": true,
+      "escape": true,
+      "banglaMobile": true,
+      "axe": 0,
       "errors": []
-    },
-    "tutorial": {
-      "steps": 8,
-      "realActions": true,
-      "firstVisitOffer": true,
-      "completionPersists": true,
-      "escapeRestoresFilters": true,
-      "outsideNavigationResume": true,
-      "mobileBangla": true,
-      "axeViolations": 0,
-      "errors": []
-    },
-    "experience": {
-      "countryHistoryCamera": true,
-      "shapedSkeletons": true,
-      "dayStableWhilePointsLoad": true,
-      "interactiveDailyBars": true,
-      "worldIndependentOfBangladeshManifest": true,
-      "mobileOverflow": false
     },
     "final_targeted": [
-      "tutorial",
-      "earth3d",
+      "help",
+      "global",
       "offline"
     ]
-  },
-  "model": {
-    "version": "portable-rolling-support-v2",
-    "raw_weeks": 156,
-    "common_eligible_weeks": 142,
-    "raw_mae": {
-      "bangladesh": {
-        "previous": 45.97,
-        "updated": 46.926,
-        "comparable": 51.201
-      },
-      "nepal": {
-        "previous": 113.001,
-        "updated": 115.232,
-        "comparable": 125.792
-      },
-      "chin": {
-        "previous": 136.414,
-        "updated": 88.53,
-        "comparable": 97.198
-      },
-      "punjab_haryana": {
-        "previous": 313.525,
-        "updated": 246.265,
-        "comparable": 209.497
-      }
-    },
-    "known_development_replay": true
   },
   "presentation": {
     "brief_pages": 6,
     "roadmap_pages": 5,
     "slides": 7,
     "video_seconds": 29,
-    "audio": "none; English captions",
-    "tex_overflow": 0,
-    "missing_glyphs": 0,
-    "visual_review": "every report and slide page; representative video frames",
-    "final_browser_check": {
-      "presentation": [
-        {
-          "width": 1440,
-          "videoSeconds": 29,
-          "playback": true,
-          "overflow": false,
-          "axe": 0
-        },
-        {
-          "width": 390,
-          "videoSeconds": 29,
-          "playback": true,
-          "overflow": false,
-          "axe": 0
-        }
-      ],
-      "world": true,
-      "tutorial": true,
-      "slides": true,
-      "errors": []
-    },
-    "highlighted_cases": [
-      "Chin, Myanmar",
-      "Punjab and Haryana, India"
+    "scene_seconds": [
+      2,
+      3,
+      5,
+      5,
+      5,
+      9
     ],
+    "audio": "none; English captions",
+    "story": "team, challenge, project, idea, intended benefit",
+    "development_comparisons_in_pitch": false,
+    "visual_review": "Every slide/report page and representative encoded video frames",
     "teammate_handoff": "docs/submission/VIDEO_TEAMMATE_HANDOFF.md"
   },
+  "interpretation": {
+    "method": "Fixed calculations from displayed published data",
+    "external_ai_service": false,
+    "zero_and_missing_distinguished": true,
+    "expired_prediction_withheld": true,
+    "reference_quality_respected": true
+  },
   "limits": [
-    "Physical devices and field comprehension not tested",
-    "Not an untouched final holdout",
-    "Chin monthly baseline still wins; Bangladesh and Nepal regress slightly",
-    "No operational forecast or measured prevention claim"
+    "Physical phones and assistive-technology certification not tested",
+    "Practitioner/comprehension study not completed",
+    "Known historical evaluation, not a fresh locked holdout",
+    "Official judging submission remains a team action"
   ]
 }

@@ -9,7 +9,7 @@ For technical review, read the [model card](GLOBAL_EVALUATION.md) and inspect a 
 ## Feedback we would value most
 
 1. **Evaluation design:** What new locked temporal/geographic test would support a defensible reconstruction claim, given that the current test years were known during development?
-2. **Failure analysis:** How should we test the tree-support guard, annual updating, Chin's stronger monthly baseline and the small Bangladesh/Nepal regressions on a new locked period?
+2. **Failure analysis:** How should we test the tree-support guard, annual updating, Chin's stronger monthly baseline and seasonal and regional interpretation on a new locked period?
 3. **Uncertainty and filtering:** How should we validate interval calibration, observation completeness and industrial-source filtering independently?
 4. **Practical use:** Could a remote-sensing practitioner or land manager help us run a small comprehension/workflow pilot? We have a task protocol but no completed field study.
 

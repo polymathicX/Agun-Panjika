@@ -38,6 +38,7 @@ MODIS and VIIRS have different resolutions and sensitivities. NASA FIRMS provide
 Agun Panjika combines a place-based observation viewer with an inspectable historical sensor correction. It preserves the textured Soft Earth interface while extending the Bangladesh prototype to worldwide recent observations and four historical evaluation areas.
 
 \subsection{A short user journey}
+An optional first visit teaches the main controls. Explain this page offers 85 English/Bangla help topics across all nine views. Short readings explain each selection, with the source basis and interpretation limits available alongside it.
 \begin{enumerate}
 \item \textbf{Choose a place.} Spin and zoom the 3D Earth, then tap a country. A keyboard selector and flat map provide alternatives. Reduced-motion preferences are respected.
 \item \textbf{Read the present.} Select MODIS, NOAA-20 or NOAA-21, compare days and play the timeline. The source window and snapshot date stay visible.
@@ -87,7 +88,7 @@ Early local CHT values include apportioned estimates. Arbitrary polygons cannot 
 
 \ReportPage{Model, evaluation and complete results}{sec:evidence}
 \subsection{Annual past-only reconstruction}
-The detector-only ensemble combines 30\% negative-binomial regression and 70\% five-seed LightGBM. A strict guard replaces the tree contribution by a fitted factor only above the pooled training MODIS maximum, addressing a peak-extrapolation failure in Chin.
+The detector-only ensemble combines 30\% negative-binomial regression and 70\% five-seed LightGBM. A strict guard replaces the tree contribution by a fitted factor only above the pooled training MODIS maximum, supporting estimates beyond the fitted tree range.
 
 For target year \(Y\), fit on 2013 through \(Y-2\), calibrate intervals on \(Y-1\), then evaluate \(Y\). Thus the 2022/2023/2024 fits end in 2020/2021/2022. Each year uses only older labels. Following-week MODIS features make this retrospective reconstruction, not forecasting. The years were known during development: this is not an untouched final holdout.
 
@@ -98,10 +99,10 @@ For target year \(Y\), fit on 2013 through \(Y-2\), calibrate intervals on \(Y-1
 \end{tabularx}
 \caption{MAE uses all 156 original weeks; coverage uses the 142 source-comparable weeks. Lower MAE is better. Absolute MAE cannot rank differently sized areas.}
 \end{table}
-\begin{center}\includegraphics[width=.88\linewidth]{figures/global-transfer.pdf}\end{center}
+\begin{center}\includegraphics[width=.88\linewidth]{figures/history-story.pdf}\end{center}
 
-\subsection{What changed after checking the errors}
-Chin MAE falls from 136.414 to 88.530 (35.10\%); Punjab--Haryana from 313.525 to 246.265 (21.45\%). All 156 weeks remain. Bangladesh and Nepal are about 2\% worse; Chin's monthly baseline still performs better. These trade-offs remain visible.
+\subsection{How to read the seasonal example}
+The Nepal example connects a MODIS-based reconstruction to later VIIRS observations. Revealing the reference makes it possible to inspect the seasonal shape directly. The app also provides a plain-language reading for the selected year and switch week. Detailed tables retain every model and source-quality flag.
 
 NASA acquisition outages make 14 test weeks incomplete. The same quality rule applies to all areas and baselines; raw values and all-week scores remain public. Comparable-week totals are not full annual totals. Earlier historical estimates use the latest vintage, fit 2013--2022/calibrate 2023.
 
@@ -140,7 +141,7 @@ No completed practitioner pilot, agency adoption, fires prevented or lives saved
 \subsection{Where mentorship would help most}
 \begin{enumerate}
 \item \textbf{Evaluation design.} Agree a new locked temporal/geographic test and primary metric, with preprocessing and calibration fitted only on allowed partitions.
-\item \textbf{Failure analysis.} Review the extrapolation guard and annual updating, Chin's stronger monthly baseline, and the small Bangladesh/Nepal regressions. Which ablations and spatial scales should a new evaluation test?
+\item \textbf{Scientific interpretation.} Review the support guard, annual fitting and Chin's stronger monthly baseline. Which seasonal comparisons, ablations and spatial scales should a new evaluation test?
 \item \textbf{Uncertainty and filtering.} Design blind industrial-source labels, retained-fire sensitivity checks and interval assessment across season/activity/sensor regimes.
 \item \textbf{Practical use.} Recruit a remote-sensing practitioner or land manager for a small comprehension/workflow study, using the existing task protocol and observed interpretation errors.
 \end{enumerate}

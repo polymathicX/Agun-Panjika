@@ -2,7 +2,7 @@
 
 The release contains a **seven-slide English PDF** and a **29.00-second captioned MP4**, alternative demo formats. The team must choose one for the official demo field, review its project page and perform the submission. The older local video is too long for the global short demo.
 
-The slide deck highlights the country experience, practical intended benefits and the two largest measured improvements. Its progress chart compares Chin and Punjab–Haryana with the previous release across every original test week. The linked model card and mentor reports contain the complete four-area comparisons and limitations.
+The deck tells the finished product story: why different satellite records need connecting, how people explore a country and season, and how readable explanations and phone access make the data useful. The video follows the 0:00 team, 0:02 challenge, 0:05 project, 0:10 idea and 0:20 future sequence. The linked model card contains the complete scientific comparisons.
 
 - [Public demo page](https://polymathicx.github.io/Agun-Panjika/demo/), including transcript and downloads.
 - [Slide PDF](../pdf/GLOBAL_DEMO_SLIDES.pdf).
