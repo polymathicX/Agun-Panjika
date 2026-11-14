@@ -20,7 +20,7 @@ export function WeekTip({ wk, y, w }: { wk?: Week; y: number; w: number }) {
           <div className="mt-1 text-base font-semibold">
             {num(wk.harm)} <span className="text-xs font-normal">{t("units.detections")}</span>
           </div>
-          {wk.src === "estimated" && wk.lo !== undefined && (
+          {wk.src !== "observed" && wk.lo !== undefined && (
             <div>{t("calendar.interval", { lo: num(wk.lo), hi: num(wk.hi ?? wk.harm) })}</div>
           )}
           <div style={{ opacity: 0.8 }}>{t(`calendar.${wk.src}`)}</div>

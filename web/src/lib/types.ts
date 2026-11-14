@@ -50,6 +50,8 @@ export interface Manifest {
   updated_utc: string;
   data_through: { iso_year: number; iso_week: number; by_sensor: Record<string, string> };
   model_version: string;
+  input_sha256?: string;
+  coverage?: { basis: string; daily_completeness_verified: boolean; note: string };
   naive_factor: number;
   baseline_years: [number, number];
   handover: { snpp_end_utc: string; bridge_overlap_years: [number, number] };
@@ -109,8 +111,31 @@ export interface DistrictYear {
 export interface PointsYear {
   year: number;
   sensor: string;
+  sensor_by_week?: Record<string, string>;
   stride: number;
   pts: number[];
+}
+
+export interface GlobalWeek {
+  y: number; w: number; modis?: number; viirs?: number; model?: number;
+  factor?: number; monthly?: number; fixed?: number; lo?: number; hi?: number;
+}
+export interface CaseScore { mae_week: number; abs_total_pct_err: number; weeks: number }
+export interface GlobalArea {
+  id: string; name_en: string; name_bn: string; iso3: string; setting: string;
+  bbox: [number, number, number, number]; data_through: Record<string, string>;
+  evaluation: {
+    models: Record<string, CaseScore>; per_region: { id: string; ensemble: CaseScore; naive: CaseScore }[];
+    coverage80: number; median_width80: number; improvement_pct: number;
+    calibration_weeks: number; status: "model_advantage" | "baseline_preferred";
+  };
+}
+export interface GlobalCase extends GlobalArea {
+  version: string; built_utc: string; snapshot_sha256: string; filter: string;
+  splits: Record<"fit" | "calibration" | "test", [number, number]>; weeks: GlobalWeek[];
+}
+export interface GlobalCatalog {
+  built_utc: string; version: string; protocol: string; sources: string[]; areas: GlobalArea[];
 }
 
 export const LEVEL_FROM_CODE: Record<string, Level> = { b: "below", n: "normal", a: "above", e: "extreme", q: "quiet" };
@@ -156,6 +181,8 @@ export interface Alert {
   q90: number;
 }
 export interface ForecastDoc {
+  expired?: boolean;
+  valid_until_utc?: string;
   generated_utc: string;
   hindcast_years: [number, number];
   products: Record<"next2" | "rest", { skill: ForecastSkill; outlook: Record<string, Outlook> }>;

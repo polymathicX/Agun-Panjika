@@ -5,6 +5,8 @@ import { ConnectionStatus, RequestStatus } from "./components/RequestStatus";
 import { loadManifest, useAsync } from "./lib/data";
 import { DemoTour } from "./components/DemoTour";
 import { useRoute } from "./lib/router";
+import './screens/Global.css';
+const Global=lazy(()=>import('./screens/Global').then(m=>({default:m.Global})));
 const Home=lazy(()=>import('./screens/Home').then(m=>({default:m.Home})));
 const Borders=lazy(()=>import('./screens/Borders').then(m=>({default:m.Borders})));
 const Method=lazy(()=>import('./screens/Method').then(m=>({default:m.Method})));
@@ -104,12 +106,14 @@ export default function App() {
       <div className="mission-status no-print"><span>NASA SPACE APPS 2026 <span aria-hidden="true">/</span> KUETaguns</span><span>{lang === "bn" ? "উৎস: NASA FIRMS" : "SOURCE: NASA FIRMS"} · {manifest?.updated_utc.slice(0, 10) ?? "…"}</span></div>
       <main id="main" tabIndex={-1} className="app-main mx-auto px-4 py-5">
         {manifest&&<DemoTour go={go} route={route}/>}
+        {manifest && <div className="snapshot-status no-print"><strong>{lang === 'bn' ? 'পর্যবেক্ষণের সংরক্ষিত তথ্য' : 'Dated observation snapshot'}</strong><span>{t('app.dataThrough', { date: Object.values(manifest.data_through.by_sensor).sort().pop() ?? '' })} · {lang === 'bn' ? 'সরাসরি সম্প্রচার নয়' : 'not a live feed'}</span><span>{lang === 'bn' ? 'মেঘ ও পর্যবেক্ষণের ঘাটতি থাকতে পারে' : 'Cloud and overpass completeness is not established'}</span></div>}
         {!online&&<ConnectionStatus/>}
         <RequestStatus error={error} loading={loading} retry={retry}/>
         {manifest && (
           <ErrorBoundary key={`${route}-${screenAttempt}`} fallback={(e) => <RequestStatus error={e} retry={()=>setScreenAttempt(n=>n+1)}/> }>
             <Suspense fallback={<p className="text-muted" role="status">{t('app.loading')}</p>}>
             {route === "home" && <Home manifest={manifest} params={params} setParams={setParams} go={go} />}
+            {route === "global" && <Global params={params} setParams={setParams} />}
             {route === "outlook" && <OutlookScreen manifest={manifest} params={params} setParams={setParams} />}
             {route === "borders" && <Borders />}
             {route === "panjika" && <Panjika manifest={manifest} params={params} setParams={setParams} />}

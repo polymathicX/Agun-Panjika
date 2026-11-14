@@ -32,6 +32,11 @@ export function fetchJson<T>(path: string): Promise<T> {
 }
 
 export const dataUrl = (path: string) => BASE + path;
+export const loadLand = async () => {
+  const r = await fetch(`${import.meta.env.BASE_URL}geo/land.json`);
+  if (!r.ok) throw new Error(`Basemap: HTTP ${r.status}`);
+  return r.json() as Promise<GeoJSON.FeatureCollection>;
+};
 
 export const loadManifest = () => fetchJson<Manifest>("manifest.json");
 export const loadRegion = (id: string) => fetchJson<RegionDoc>(id === "bgd" ? "national.json" : `region/${id}.json`);
@@ -67,8 +72,32 @@ export function useAsync<T>(fn: () => Promise<T>, deps: unknown[]): { data: T | 
   return state.key===key&&state.attempt===attempt ? {...state,retry} : {data:undefined,error:undefined,loading:true,retry};
 }
 
-export const loadForecast = () => fetchJson<import("./types").ForecastDoc>("forecast.json");
+export const loadForecast = async () => {
+  const doc = await fetchJson<import("./types").ForecastDoc>("forecast.json");
+  const { isoWeekStart } = await import("./series");
+  // A cached outlook must expire at the end of its target fortnight, even offline.
+  const products = Object.fromEntries(Object.entries(doc.products).map(([key, product]) => [key, {
+    ...product, outlook: Object.fromEntries(Object.entries(product.outlook).map(([id, o]) => [id, {
+      ...o, active: o.active && !!o.issue_year && Date.now() < isoWeekStart(o.issue_year, o.issue_week).getTime() + 21 * 86400000,
+    }])),
+  }])) as typeof doc.products;
+  const validUntil = Math.max(...Object.values(doc.products.next2.outlook).filter(o => o.issue_year).map(o => isoWeekStart(o.issue_year!, o.issue_week).getTime() + 21 * 86400000));
+  return { ...doc, products, expired: !Number.isFinite(validUntil) || Date.now() >= validUntil, valid_until_utc: Number.isFinite(validUntil) ? new Date(validUntil).toISOString() : undefined };
+};
 export const loadFireWeather = () => fetchJson<import("./types").FireWeatherDoc>("fireweather.json");
 export const loadPartner = () => fetchJson<import("./types").PartnerDoc>("partner.json");
 export const loadNeighbours = () => fetchJson<import("./types").NeighboursDoc>("neighbours.json");
 export const loadLocal = (district: string) => fetchJson<import("./types").LocalDoc>(`local/${district}.json`);
+
+export const GLOBAL_AREAS = ['bangladesh', 'nepal', 'chin', 'punjab_haryana'] as const;
+export const loadGlobalCatalog = async () => {
+  const doc = await fetchJson<import("./types").GlobalCatalog>('global/catalog.json');
+  if (!Array.isArray(doc.areas) || !doc.areas.length || !doc.areas.every(a => GLOBAL_AREAS.includes(a.id as typeof GLOBAL_AREAS[number]))) throw new Error('Invalid area catalog');
+  return doc;
+};
+export const loadGlobalCase = async (id: string) => {
+  if (!GLOBAL_AREAS.includes(id as typeof GLOBAL_AREAS[number])) throw new Error('Unsupported area');
+  const doc = await fetchJson<import("./types").GlobalCase>(`global/${id}.json`);
+  if (doc.id !== id || !doc.splits || !doc.evaluation || !Array.isArray(doc.weeks) || !doc.weeks.every(w => Number.isInteger(w.y) && Number.isInteger(w.w) && w.w >= 1 && w.w <= 53 && [w.modis, w.viirs, w.model, w.factor, w.lo, w.hi].every(n => n === undefined || Number.isFinite(n) && n >= 0))) throw new Error('Invalid area evidence package');
+  return doc;
+};

@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useFmt } from "../i18n";
-import { loadGeo, loadPoints, loadRegion, useAsync } from "../lib/data";
+import { loadGeo, loadLand, loadPoints, loadRegion, useAsync } from "../lib/data";
 import { containsPoint, focusOf, hotspots, selectedFeatures } from "../lib/spatial";
 import { seasonAt } from "../lib/series";
 import type { Route } from "../lib/router";
@@ -10,11 +10,6 @@ import { ObservatoryIcon } from "./ObservatoryIcon";
 import "./Globe.css";
 const EarthCanvas = lazy(() => import('./EarthCanvas'));
 const Earth3D = lazy(() => import('./Earth3D'));
-const loadLand = async () => {
-  const r = await fetch(`${import.meta.env.BASE_URL}geo/land.json`);
-  if (!r.ok) throw new Error(`Basemap: HTTP ${r.status}`);
-  return r.json() as Promise<GeoJSON.FeatureCollection>;
-};
 export function GlobePanel({ manifest, params, setParams, go }: {
   manifest: Manifest; params: URLSearchParams;
   setParams: (p: Record<string, string | number | undefined>) => void;
@@ -74,7 +69,7 @@ export function GlobePanel({ manifest, params, setParams, go }: {
     <div className="observatory-world globe-panel">
       <div className="globe-topline"><span>{bn ? 'বাংলাদেশ ও দক্ষিণ এশিয়া' : 'BANGLADESH & SOUTH ASIA'}</span><button type="button" onClick={() => { if (unavailable) { setUnavailable(false); setFlat(false); } else setFlat(v => !v); }} aria-pressed={flat || unavailable}>{viewLabel}</button></div>
       {error ? <p className="globe-message" role="status">{bn ? 'এই সময়ের অবস্থান তথ্য পাওয়া যাচ্ছে না।' : 'Geographic data unavailable for this period.'} {error.message}</p> : land && geo && pts ? <Suspense fallback={<p className="globe-message" role="status">{bn ? 'পৃথিবী প্রস্তুত হচ্ছে…' : 'Preparing Earth…'}</p>}>{flat || unavailable ? <EarthCanvas land={land} areas={areas} points={visiblePoints} focus={focus} flat onSelect={onSelect} /> : <Earth3D areas={areas} points={visiblePoints} focus={focus} onSelect={onSelect} onUnavailable={() => setUnavailable(true)} />}</Suspense> : <p className="globe-message" role="status">{bn ? 'পর্যবেক্ষণ লোড হচ্ছে…' : 'Loading observations…'}</p>}
-      <div className="globe-provenance"><span>{num(points.length)} {bn ? 'পর্যবেক্ষণ' : 'observations'} · {pts?.sensor.toUpperCase() ?? 'NASA FIRMS'}</span><span>{fy(y)} / W{num(w)}</span></div>
+      <div className="globe-provenance"><span>{num(points.length)} {bn ? 'পর্যবেক্ষণ' : 'observations'} · {(pts?.sensor_by_week?.[String(w)] ?? pts?.sensor)?.toUpperCase() ?? 'NASA FIRMS'}</span><span>{fy(y)} / W{num(w)}</span></div>
       {unavailable && <p className="globe-note" role="status">{bn ? 'এই যন্ত্রে ৩ডি দৃশ্য পাওয়া যাচ্ছে না। ২ডি মানচিত্র দেখানো হচ্ছে।' : '3D imagery is unavailable on this device. Showing the interactive 2D map.'}</p>}
       <p className="globe-note">{bn ? 'স্থির পৃথিবী ও মেঘের চিত্র' : 'Static Earth & cloud imagery'}: <a href="https://www.solarsystemscope.com/textures/" target="_blank" rel="noreferrer">Solar System Scope</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a></p>
       {pts && points.length === 0 && <p className="globe-note">{bn ? 'নির্বাচিত সপ্তাহ ও অঞ্চলে সংরক্ষিত অবস্থান নেই।' : 'No retained coordinates in the selected region and week.'}</p>}

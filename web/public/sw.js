@@ -1,5 +1,5 @@
 // Agun Panjika service worker: network-first for the page, stale-while-revalidate for assets and data.
-const CACHE = "agun-panjika-v1";
+const CACHE = "agun-panjika-global-v3";
 
 self.addEventListener("install", () => self.skipWaiting());
 self.addEventListener("activate", (e) => {
@@ -14,7 +14,7 @@ self.addEventListener("fetch", (e) => {
   const url = new URL(req.url);
   if (url.origin !== location.origin) return; // map tiles and fonts go straight to the network
 
-  if (req.mode === "navigate") {
+  if (req.mode === "navigate" || url.pathname.endsWith('.json') || url.pathname.endsWith('.geojson')) {
     e.respondWith(
       fetch(req)
         .then((res) => {
@@ -22,7 +22,7 @@ self.addEventListener("fetch", (e) => {
           caches.open(CACHE).then((c) => c.put(req, copy));
           return res;
         })
-        .catch(() => caches.match(req).then((r) => r || caches.match("./"))),
+        .catch(() => caches.match(req).then((r) => r || (req.mode === 'navigate' ? caches.match("./") : Response.error()))),
     );
     return;
   }

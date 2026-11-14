@@ -28,6 +28,7 @@ export function Home({ manifest, params, setParams, go }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <GlobePanel manifest={manifest} params={params} setParams={setParams} go={go} />
+      <section className="global-launch no-print"><div><p className="eyebrow">{lang === 'bn' ? 'বিশ্বের পথে' : 'Beyond one border'}</p><strong>{lang === 'bn' ? 'চার ভূদৃশ্যে সমন্বয় পরীক্ষা করুন।' : 'Test the correction in four landscapes.'}</strong><p className="text-sm text-muted mt-1">{lang === 'bn' ? 'পর্যবেক্ষণ দেখুন, ভুল যাচাই করুন, প্রমাণ সঙ্গে রাখুন।' : 'Reveal observations. Inspect failures. Share the evidence.'}</p></div><button className="btn btn-primary" type="button" onClick={() => go('global')}>{lang === 'bn' ? 'গ্লোবাল কেস খুলুন' : 'Explore global cases'} ↗</button></section>
       <div className="season-report-heading no-print"><h2>{lang === "bn" ? t("report.title") : "Your seasonal report"}</h2><p>{lang === "bn" ? t("app.tagline") : "The full record, with context. Explore the season, uncertainty and historical comparisons below."}</p></div>
       {doc ? (
         <SeasonView manifest={manifest} doc={doc} params={params} setParams={setParams} go={go} />
@@ -148,7 +149,7 @@ function SeasonView({ manifest, doc, params, setParams, go }: Props & { doc: Reg
       )}
 
       {isLive&&<RequestStatus error={forecastError} loading={forecastLoading} retry={retryForecast}/>}
-      {isLive && fc && (
+      {isLive && fc && !fc.expired && (
         <div className="grid gap-3 sm:grid-cols-2">
           <OutlookCard o={fc.products.next2.outlook[doc.region.id]} name={areaName} />
           <div className="card p-4">

@@ -65,10 +65,10 @@ export function Method({ manifest }: { manifest: Manifest }) {
           <li>
             <strong>{en ? "Harmonise." : "সমন্বয়।"}</strong>{" "}
             {en
-              ? "Two models learn VIIRS S-NPP weekly counts from MODIS on the 13 years both flew (2012–2024), and we average them: a negative binomial regression with a separate intercept for each region and month, and gradient-boosted trees that also see the Aqua/Terra split, small-fire and night counts, how many districts burned, and the neighbouring weeks:"
-              : "যে ১৩ বছর দুটি সেন্সর একসঙ্গে উড়েছে (২০১২–২০২৪), সেখানে দুটি মডেল MODIS থেকে VIIRS S-NPP-এর সাপ্তাহিক গণনা শেখে, আর আমরা দুটির গড় নিই: অঞ্চল ও মাসভিত্তিক ইন্টারসেপ্টসহ নেগেটিভ বাইনোমিয়াল রিগ্রেশন, এবং গ্রেডিয়েন্ট-বুস্টেড ট্রি, যা Aqua/Terra ভাগ, ছোট ও রাতের আগুন, কতগুলো জেলায় আগুন, আর পাশের সপ্তাহগুলোও দেখে:"}
+              ? "Two models learn VIIRS S-NPP weekly counts from MODIS on the 14 years both flew (2012–2025), and we combine them (30% NB, 70% bagged GBM): a negative binomial regression with a separate intercept for each region and month, and gradient-boosted trees that also see the Aqua/Terra split, small-fire and night counts, how many districts burned, and the neighbouring weeks:"
+              : "যে ১৪ বছর দুটি সেন্সর একসঙ্গে উড়েছে (২০১২–২০২৫), সেখানে দুটি মডেল MODIS থেকে VIIRS S-NPP-এর সাপ্তাহিক গণনা শেখে, আর আমরা দুটির গড় নিই: অঞ্চল ও মাসভিত্তিক ইন্টারসেপ্টসহ নেগেটিভ বাইনোমিয়াল রিগ্রেশন, এবং গ্রেডিয়েন্ট-বুস্টেড ট্রি, যা Aqua/Terra ভাগ, ছোট ও রাতের আগুন, কতগুলো জেলায় আগুন, আর পাশের সপ্তাহগুলোও দেখে:"}
             <pre tabIndex={0} className="mt-2 overflow-x-auto rounded-lg bg-[var(--zero)] p-3 text-xs">
-              V̂ = ½ · NegBin[log μ = a(region, month) + β·log(M+1) + γ·log(F+1)] + ½ · GBM(MODIS features)
+              V̂ = 0.3 · NegBin[log μ = a(region, month) + β·log(M+1) + γ·log(F+1)] + 0.7 · GBM(MODIS features)
             </pre>
             {nb && (
               <span className="text-sm text-muted">
@@ -80,8 +80,8 @@ export function Method({ manifest }: { manifest: Manifest }) {
           <li>
             <strong>{en ? "Validate." : "যাচাই।"}</strong>{" "}
             {s[chosen] && s.naive && (en
-              ? `Leave-one-year-out over 2012–2024. Weekly error ${num1(s[chosen].mae_week)} vs ${num1(s.naive.mae_week)} for the single ×${num1(manifest.naive_factor)} factor (${num(s[chosen].mae_vs_naive_pct)}%); off-season error ${num1(s[chosen].mae_week_offseason)} vs ${num1(s.naive.mae_week_offseason)}; season-total error ${num1(s[chosen].abs_total_pct_err)}% vs ${num1(s.naive.abs_total_pct_err)}%; peak week within ${num1(s[chosen].peak_week_err_days)} days; trend direction right in ${num(s[chosen].direction_match * 100)}% of years vs ${num(s.naive.direction_match * 100)}%.`
-              : `২০১২–২০২৪ সালে এক বছর বাদ রেখে পরীক্ষা। সাপ্তাহিক ভুল ${num1(s[chosen].mae_week)}, একক গুণকে ${num1(s.naive.mae_week)} (${num(s[chosen].mae_vs_naive_pct)}%); অফ-সিজনে ${num1(s[chosen].mae_week_offseason)} বনাম ${num1(s.naive.mae_week_offseason)}; মৌসুমের মোটে ${num1(s[chosen].abs_total_pct_err)}% বনাম ${num1(s.naive.abs_total_pct_err)}%; প্রবণতার দিক ঠিক ${num(s[chosen].direction_match * 100)}% বছরে।`)}
+              ? `Leave-one-year-out over 2012–2025. Weekly error ${num1(s[chosen].mae_week)} vs ${num1(s.naive.mae_week)} for the single ×${num1(manifest.naive_factor)} factor (${num(s[chosen].mae_vs_naive_pct)}%); off-season error ${num1(s[chosen].mae_week_offseason)} vs ${num1(s.naive.mae_week_offseason)}; season-total error ${num1(s[chosen].abs_total_pct_err)}% vs ${num1(s.naive.abs_total_pct_err)}%; peak week within ${num1(s[chosen].peak_week_err_days)} days; trend direction right in ${num(s[chosen].direction_match * 100)}% of years vs ${num(s.naive.direction_match * 100)}%.`
+              : `২০১২–২০২৫ সালে এক বছর বাদ রেখে পরীক্ষা। সাপ্তাহিক ভুল ${num1(s[chosen].mae_week)}, একক গুণকে ${num1(s.naive.mae_week)} (${num(s[chosen].mae_vs_naive_pct)}%); অফ-সিজনে ${num1(s[chosen].mae_week_offseason)} বনাম ${num1(s.naive.mae_week_offseason)}; মৌসুমের মোটে ${num1(s[chosen].abs_total_pct_err)}% বনাম ${num1(s.naive.abs_total_pct_err)}%; প্রবণতার দিক ঠিক ${num(s[chosen].direction_match * 100)}% বছরে।`)}
           </li>
           <li>
             <strong>{en ? "Bridge." : "সেতু।"}</strong>{" "}

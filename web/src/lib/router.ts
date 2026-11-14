@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-export type Route = "home" | "outlook" | "panjika" | "sensors" | "map" | "borders" | "method";
-const ROUTES: Route[] = ["home", "outlook", "panjika", "sensors", "map", "borders", "method"];
-const SHARED = ['r','y','w','s','kilns','from','to'] as const;
+export type Route = "home" | "outlook" | "panjika" | "sensors" | "map" | "borders" | "method" | "global";
+const ROUTES: Route[] = ["home", "outlook", "panjika", "sensors", "map", "borders", "method", "global"];
+const SHARED = ['r','y','w','s','kilns','from','to','area','testYear','switchWeek','reveal'] as const;
 type Params = Record<string, string | number | undefined>;
 function parse(): { route: Route; params: URLSearchParams } {
  const [path,qs]=location.hash.replace(/^#\/?/,'').split('?');

@@ -21,7 +21,7 @@ export function isoWeekOf(d: Date): { y: number; w: number } {
 }
 
 /** Week rows grouped by year, 53 slots each (index = week - 1). */
-export function byYear(doc: RegionDoc): Map<number, (Week | undefined)[]> {
+export function byYear(doc: Pick<RegionDoc, 'weeks'>): Map<number, (Week | undefined)[]> {
   const m = new Map<number, (Week | undefined)[]>();
   for (const wk of doc.weeks) {
     if (!m.has(wk.y)) m.set(wk.y, new Array(53).fill(undefined));
@@ -114,7 +114,7 @@ export function seasonAt(doc: RegionDoc, year: number, week: number): SeasonStat
 }
 
 /** Colour thresholds for weekly harmonised values: quantiles of non-zero weeks, so every region uses its full ramp. */
-export function rampThresholds(doc: RegionDoc): number[] {
+export function rampThresholds(doc: Pick<RegionDoc, 'weeks'>): number[] {
   const vals = doc.weeks.map((w) => w.harm).filter((v) => v >= 0.5).sort((a, b) => a - b);
   if (!vals.length) return [1, 2, 3, 4];
   const qs = [0.35, 0.6, 0.8, 0.93].map((p) => quantile(vals, p) ?? 1);

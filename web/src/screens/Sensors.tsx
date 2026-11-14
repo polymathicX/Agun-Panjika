@@ -123,7 +123,7 @@ function RatioBars({ doc, k }: { doc: RegionDoc; k: number }) {
     const v = new Array(12).fill(0);
     const m = new Array(12).fill(0);
     for (const w of doc.weeks) {
-      if (w.y < 2012 || w.y > 2024 || w.viirs === undefined || w.modis === undefined) continue;
+      if (w.y < 2012 || w.y > 2025 || w.viirs === undefined || w.modis === undefined) continue;
       const mo = new Date(isoWeekStart(w.y, w.w).getTime() + 3 * 86400000).getUTCMonth();
       v[mo] += w.viirs;
       m[mo] += w.modis;
