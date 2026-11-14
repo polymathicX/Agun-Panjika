@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "Agun Panjika · Fire Almanac",
+  "short_name": "Agun Panjika",
+  "description": "Your place in Earth's fire story, using NASA observations and evaluated historical calendars.",
+  "lang": "en",
+  "start_url": "./?source=pwa#/world",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FAF7F2",
+  "theme_color": "#FAF7F2",
+  "categories": ["weather", "education", "utilities"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

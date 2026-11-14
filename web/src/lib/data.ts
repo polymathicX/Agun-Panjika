@@ -101,3 +101,15 @@ export const loadGlobalCase = async (id: string) => {
   if (doc.id !== id || !doc.splits || !doc.evaluation || !Array.isArray(doc.weeks) || !doc.weeks.every(w => Number.isInteger(w.y) && Number.isInteger(w.w) && w.w >= 1 && w.w <= 53 && [w.modis, w.viirs, w.model, w.factor, w.lo, w.hi].every(n => n === undefined || Number.isFinite(n) && n >= 0))) throw new Error('Invalid area evidence package');
   return doc;
 };
+export const loadWorldSummary = async () => {
+  const doc = await fetchJson<import('./types').WorldSummary>('world/summary.json');
+  if (!Array.isArray(doc.countries) || !doc.countries.every(c => /^[a-z0-9]{3}$/.test(c.id)) || !doc.sensors?.noaa20) throw new Error('Invalid world snapshot');
+  return doc;
+};
+export const loadWorldGeo = () => fetchJson<GeoJSON.FeatureCollection>('world/countries.geojson');
+export const loadWorldPoints = async (country: string, sensor: string) => {
+  if (!(country === 'overview' || /^[a-z0-9]{3}$/.test(country)) || !['modis', 'noaa20', 'noaa21'].includes(sensor)) throw new Error('Invalid world selection');
+  const doc = await fetchJson<import('./types').WorldPoints>(`world/${country}-${sensor}.json`);
+  if (doc.stride !== 3 || !Array.isArray(doc.points) || doc.points.length % 3 !== 0 || !doc.points.every(Number.isFinite)) throw new Error('Invalid worldwide observation points');
+  return doc;
+};

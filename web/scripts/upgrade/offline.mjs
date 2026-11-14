@@ -24,7 +24,9 @@ try {
   await page.goto(home);
   await page.locator('.earth-renderer canvas').waitFor();
   await page.waitForFunction(async () => {
-    const cache = await caches.open('agun-panjika-v1');
+    const name = (await caches.keys()).find(k => k.startsWith('agun-panjika-'));
+    if (!name) return false;
+    const cache = await caches.open(name);
     const urls = (await cache.keys()).map(request => request.url);
     return urls.some(url => url.endsWith('/data/national.json')) &&
       urls.some(url => url.endsWith('/geo/land.json')) &&

@@ -137,6 +137,16 @@ export interface GlobalCase extends GlobalArea {
 export interface GlobalCatalog {
   built_utc: string; version: string; protocol: string; sources: string[]; areas: GlobalArea[];
 }
+export interface WorldCountry {
+  id: string; name: string; focus: [number, number];
+  sensors: Record<string, { total: number; last24h: number; latest_utc: string | null; daily: number[] }>;
+}
+export interface WorldSummary {
+  built_utc: string; boundary_source: string; boundary_version: string; note: string;
+  countries: WorldCountry[];
+  sensors: Record<string, { url: string; sha256: string; from_utc: string; through_utc: string; dates: string[]; total: number; unassigned: number }>;
+}
+export interface WorldPoints { stride: number; dates: string[]; total: number; sampled: boolean; points: number[] }
 
 export const LEVEL_FROM_CODE: Record<string, Level> = { b: "below", n: "normal", a: "above", e: "extreme", q: "quiet" };
 

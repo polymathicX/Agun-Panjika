@@ -7,6 +7,10 @@ import type { Hotspot } from '../lib/spatial';
 interface Props {
   areas: GeoJSON.Feature[]; points: Hotspot[]; focus: [number, number];
   onSelect: (point: Hotspot) => void; onUnavailable: () => void;
+  onGlobeSelect?: (lon: number, lat: number) => void;
+  onViewSettled?: (lon: number, lat: number, distance: number) => void;
+  animatedFocus?: boolean; focusDistance?: number; hint?: string;
+  pointLabel?: (point: Hotspot) => string;
 }
 
 // SphereGeometry UVs: Greenwich is +X, east is -Z, north is +Y.
@@ -39,12 +43,12 @@ export default function Earth3D(props: Props) {
     if (!context) { latest.current.onUnavailable(); return; }
     try { renderer = new THREE.WebGLRenderer({ canvas, context, alpha: true, antialias: true, preserveDrawingBuffer: true, powerPreference: 'low-power' }); }
     catch { latest.current.onUnavailable(); return; }
-    let disposed = false, frame = 0;
+    let disposed = false, frame = 0, animation = 0;
     const textures: THREE.Texture[] = [];
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(40, 1, .01, 30);
     const controls = new OrbitControls(camera, canvas);
-    controls.enablePan = false; controls.enableDamping = false;
+    controls.enablePan = false; controls.enableDamping = !!props.animatedFocus; controls.dampingFactor = .14;
     controls.minDistance = 1.12; controls.maxDistance = 5;
     controls.rotateSpeed = .5; controls.zoomSpeed = .65;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, window.innerWidth < 640 ? 1.5 : 2));
@@ -53,11 +57,25 @@ export default function Earth3D(props: Props) {
     element.appendChild(canvas);
     const render = () => {
       if (disposed || frame) return;
-      frame = requestAnimationFrame(() => { frame = 0; if (!disposed) renderer.render(scene, camera); });
+      frame = requestAnimationFrame(() => { frame = 0; if (!disposed) { if(latest.current.animatedFocus) controls.update(); renderer.render(scene, camera); } });
     };
     const focus = (distance: number) => {
-      camera.position.copy(earthPosition(...latest.current.focus, distance));
-      camera.up.set(0, 1, 0); controls.target.set(0, 0, 0); controls.update(); render();
+      cancelAnimationFrame(animation);
+      const target = earthPosition(...latest.current.focus, distance);
+      const update = () => { camera.up.set(0, 1, 0); controls.target.set(0, 0, 0); controls.update(); render(); };
+      if (!latest.current.animatedFocus || window.matchMedia('(prefers-reduced-motion: reduce)').matches || camera.position.length() < .1) {
+        camera.position.copy(target); update(); return;
+      }
+      const start = camera.position.clone(), unit = start.clone().normalize();
+      const rotation = new THREE.Quaternion().setFromUnitVectors(unit, target.clone().normalize());
+      const begun = performance.now();
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - begun) / 950), eased = t * t * (3 - 2 * t);
+        camera.position.copy(unit).applyQuaternion(new THREE.Quaternion().slerp(rotation, eased))
+          .multiplyScalar(THREE.MathUtils.lerp(start.length(), distance, eased));
+        update(); if (t < 1 && !disposed) animation = requestAnimationFrame(tick);
+      };
+      animation = requestAnimationFrame(tick);
     };
     scene.add(new THREE.AmbientLight(0xffffff, 1.05));
     const sun = new THREE.DirectionalLight(0xfff2dd, 2.3);
@@ -91,6 +109,11 @@ export default function Earth3D(props: Props) {
       renderer.setSize(width, height); camera.aspect = width / height; camera.updateProjectionMatrix(); render();
     }); resize.observe(element);
     controls.addEventListener('change', render);
+    const stopAnimation = () => cancelAnimationFrame(animation);
+    controls.addEventListener('start', stopAnimation);
+    let settled = 0;
+    const notifyView = () => {const p=camera.position.clone().normalize();latest.current.onViewSettled?.(THREE.MathUtils.radToDeg(Math.atan2(-p.z,p.x)),THREE.MathUtils.radToDeg(Math.asin(p.y)),camera.position.length());};
+    controls.addEventListener('end', () => {clearTimeout(settled);settled=window.setTimeout(notifyView,450);});
     const loader = new THREE.TextureLoader();
     const day = loader.load(`${import.meta.env.BASE_URL}earth/2k_earth_daymap.jpg`, texture => {
       if (disposed) { texture.dispose(); return; }
@@ -123,13 +146,18 @@ export default function Earth3D(props: Props) {
     const end = (e: PointerEvent) => {
       if (down && Math.hypot(down.x - e.clientX, down.y - e.clientY) < 5) {
         const result = hit(e); const point = result?.index !== undefined ? latest.current.points[result.index] : null;
-        setSelected(point); if (point) latest.current.onSelect(point);
+        setSelected(point);
+        if (point) latest.current.onSelect(point);
+        else if (latest.current.onGlobeSelect) {
+          const surface = ray.intersectObject(earth)[0]?.point.clone().normalize();
+          if (surface) latest.current.onGlobeSelect(THREE.MathUtils.radToDeg(Math.atan2(-surface.z, surface.x)), THREE.MathUtils.radToDeg(Math.asin(surface.y)));
+        }
       } down = null;
     };
     const leave = () => setSelected(null);
     canvas.addEventListener('pointermove', move); canvas.addEventListener('pointerdown', start); canvas.addEventListener('pointerup', end); canvas.addEventListener('pointerleave', leave);
     return () => {
-      disposed = true; cancelAnimationFrame(frame); resize.disconnect(); controls.dispose();
+      disposed = true; clearTimeout(settled); cancelAnimationFrame(frame); cancelAnimationFrame(animation); resize.disconnect(); controls.dispose();
       canvas.removeEventListener('webglcontextlost', lost);
       canvas.removeEventListener('pointermove', move); canvas.removeEventListener('pointerdown', start); canvas.removeEventListener('pointerup', end); canvas.removeEventListener('pointerleave', leave);
       geometry.dispose(); surface.dispose(); cloudMaterial.dispose(); atmosphereMaterial.dispose();
@@ -164,7 +192,7 @@ export default function Earth3D(props: Props) {
     const geometry = new THREE.BufferGeometry(); geometry.setAttribute('position', new THREE.Float32BufferAttribute(segments, 3));
     handle.boundary.geometry.dispose(); handle.boundary.geometry = geometry; handle.render();
   }, [props.areas]);
-  useEffect(() => { sceneRef.current?.focus(3.15); setSelected(null); }, [props.focus[0], props.focus[1]]);
+  useEffect(() => { sceneRef.current?.focus(props.focusDistance ?? 3.15); setSelected(null); }, [props.focus[0], props.focus[1], props.focusDistance]);
 
   const zoom = (factor: number) => {
     const h = sceneRef.current; if (!h) return;
@@ -183,6 +211,6 @@ export default function Earth3D(props: Props) {
     }} />
     {!ready && <p className="earth-loading" role="status">{lang === 'bn' ? 'পৃথিবীর চিত্র লোড হচ্ছে…' : 'Loading Earth imagery…'}</p>}
     <div className="earth-tools"><button onClick={() => zoom(.8)} aria-label={lang === 'bn' ? 'জুম বাড়ান' : 'Zoom in'}>+</button><button onClick={() => zoom(1.25)} aria-label={lang === 'bn' ? 'জুম কমান' : 'Zoom out'}>−</button><button onClick={() => sceneRef.current?.focus(1.3)}>{lang === 'bn' ? 'কেন্দ্র' : 'Focus'}</button><button onClick={() => sceneRef.current?.focus(3.15)}>{lang === 'bn' ? 'পৃথিবী' : 'Reset view'}</button></div>
-    <p className="earth-detail" aria-live="polite">{selected ? `${selected.lon.toFixed(3)}° E · ${selected.lat.toFixed(3)}° N · ${lang === 'bn' ? 'সপ্তাহ' : 'Week'} ${num(selected.week)} · ${selected.status === 2 ? (lang === 'bn' ? 'স্থির উৎস' : 'Static source') : (lang === 'bn' ? 'শনাক্ত আগুন' : 'Retained detection')}` : (lang === 'bn' ? 'টেনে ঘোরান · আগুনে ক্লিক করে জেলা নির্বাচন করুন' : 'Drag to rotate · Select a detection to explore its district')}</p>
+    <p className="earth-detail" aria-live="polite">{selected ? (props.pointLabel?.(selected) ?? `${selected.lon.toFixed(3)}° E · ${selected.lat.toFixed(3)}° N · ${lang === 'bn' ? 'সপ্তাহ' : 'Week'} ${num(selected.week)} · ${selected.status === 2 ? (lang === 'bn' ? 'স্থির উৎস' : 'Static source') : (lang === 'bn' ? 'শনাক্ত আগুন' : 'Retained detection')}`) : (props.hint ?? (lang === 'bn' ? 'টেনে ঘোরান · আগুনে ক্লিক করে জেলা নির্বাচন করুন' : 'Drag to rotate · Select a detection to explore its district'))}</p>
   </div>;
 }
