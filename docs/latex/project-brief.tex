@@ -1,4 +1,5 @@
 \input{report-style.tex}
+\input{../submission/numbers.tex}
 \newcommand{\ReportShortTitle}{Project brief for academic review}
 \hypersetup{pdftitle={Agun Panjika: Global Project Brief}}
 \begin{document}
@@ -85,25 +86,24 @@ Early local CHT values include apportioned estimates. Arbitrary polygons cannot 
 \SourceNote{Data acknowledgement: NASA FIRMS, part of LANCE and ESDIS. Full products, map/image credits and terms: \RepoLink{docs/SOURCES_AND_SUBMISSION.md}{sources and credits}. No NASA endorsement is implied.}
 
 \ReportPage{Model, evaluation and complete results}{sec:evidence}
-\subsection{A fixed portable experiment}
-The detector-only ensemble is 30\% negative-binomial regression and 70\% five-seed LightGBM. Inputs describe MODIS counts, FRP, season, geometry, observation mix and neighbouring weeks. Weather is excluded. Features are constructed within each year; following-week information makes this retrospective reconstruction, not an issue-time forecast.
+\subsection{Annual past-only reconstruction}
+The detector-only ensemble combines 30\% negative-binomial regression and 70\% five-seed LightGBM. A strict guard replaces the tree contribution by a fitted factor only above the pooled training MODIS maximum, addressing a peak-extrapolation failure in Chin.
 
-Each area is fitted separately: \textbf{fit 2013--2018; calibrate 2019--2021; test 2022--2024}. National nominal-80\% bands use the separate 157-week calibration period. Every case has 156 test weeks. The test years were known during development: this is a disjoint temporal replay, not an untouched final holdout or unseen-country transfer.
+For target year \(Y\), fit on 2013 through \(Y-2\), calibrate intervals on \(Y-1\), then evaluate \(Y\). Thus the 2022/2023/2024 fits end in 2020/2021/2022. Each year uses only older labels. Following-week MODIS features make this retrospective reconstruction, not forecasting. The years were known during development: this is not an untouched final holdout.
 
 \begin{table}[H]\small
 \begin{tabularx}{\linewidth}{@{}Yrrr@{}}
 \toprule\textbf{Area} & \textbf{Model MAE} & \textbf{Factor MAE} & \textbf{Coverage}\\\midrule
-Bangladesh &45.970&61.571&81.4\%\\
-Nepal &113.001&158.019&75.6\%\\
-Chin, Myanmar &136.414&101.030&73.7\%\\
-Punjab--Haryana &313.525&271.623&76.3\%\\\bottomrule
+\CaseTableRows
 \end{tabularx}
-\caption{Weekly absolute error against VIIRS counts; coverage is measured for nominal 80\% intervals. Lower MAE is better. Differently sized areas should not be ranked by absolute MAE.}
+\caption{MAE uses all 156 original weeks; coverage uses the 142 source-comparable weeks. Lower MAE is better. Absolute MAE cannot rank differently sized areas.}
 \end{table}
 \begin{center}\includegraphics[width=.88\linewidth]{figures/global-transfer.pdf}\end{center}
 
-\subsection{What the failures change}
-Where the ensemble loses to the fitted factor, the app withholds reconstructed pre-VIIRS rows and retains observed calendars and the failed experiment. Nepal's factor is also better on annual totals. Fixed-4.4\(\times\), monthly and regional results are published; no claim is made that one method wins every metric.
+\subsection{What changed after checking the errors}
+Chin MAE falls from 136.414 to 88.530 (35.10\%); Punjab--Haryana from 313.525 to 246.265 (21.45\%). All 156 weeks remain. Bangladesh and Nepal are about 2\% worse; Chin's monthly baseline still performs better. These trade-offs remain visible.
+
+NASA acquisition outages make 14 test weeks incomplete. The same quality rule applies to all areas and baselines; raw values and all-week scores remain public. Comparable-week totals are not full annual totals. Earlier historical estimates use the latest vintage, fit 2013--2022/calibrate 2023.
 
 \SourceNote{The older Bangladesh weather-assisted LOYO model is separate and retains independence/calibration concerns. Full protocol, input hashes and limitations: \RepoLink{docs/GLOBAL_EVALUATION.md}{model card}; original concerns: \RepoLink{docs/SCIENTIFIC_REVIEW.md}{scientific audit}.}
 
@@ -120,7 +120,7 @@ React/TypeScript, Three.js, D3 and MapLibre render versioned exports. The servic
 The browser receives no FIRMS secret. Optional API keys stay in the ignored root environment or CI secrets. A watchlist stays on the device. Original code is Apache 2.0; third-party maps, textures and software retain their terms. Dependency notices are generated at build time.
 
 \subsection{Verification and its limits}
-The release checks cover Python scientific/unit/export behavior, TypeScript/build, frontend evidence tests, and 13 browser groups including globe controls, country selection, exports, failure recovery and offline behavior. The responsive matrix covers nine routes in six viewport/theme/language combinations: 54 views. Current counts, CI evidence and reproduction commands are recorded in the linked verification report.
+The release checks cover 80 Python scientific/unit/export cases, TypeScript/build, frontend evidence tests, and 14 browser groups including globe controls, country selection, exports, failure recovery and offline behavior. The responsive matrix covers nine routes in six viewport/theme/language combinations: 54 views. Current counts, CI evidence and reproduction commands are recorded in the linked verification report.
 
 Chromium installability and emulated phones are checked. These do not establish physical iPhone/Android behavior, complete accessibility certification, measured field usefulness or prospective forecast skill. Zero dependency advisories reflects the release audit, not a general security guarantee.
 
@@ -140,7 +140,7 @@ No completed practitioner pilot, agency adoption, fires prevented or lives saved
 \subsection{Where mentorship would help most}
 \begin{enumerate}
 \item \textbf{Evaluation design.} Agree a new locked temporal/geographic test and primary metric, with preprocessing and calibration fitted only on allowed partitions.
-\item \textbf{Failure analysis.} Investigate why the model helps in Bangladesh/Nepal and loses in Chin/Punjab--Haryana. Review simple baselines, feature ablations and spatial scale.
+\item \textbf{Failure analysis.} Review the extrapolation guard and annual updating, Chin's stronger monthly baseline, and the small Bangladesh/Nepal regressions. Which ablations and spatial scales should a new evaluation test?
 \item \textbf{Uncertainty and filtering.} Design blind industrial-source labels, retained-fire sensitivity checks and interval assessment across season/activity/sensor regimes.
 \item \textbf{Practical use.} Recruit a remote-sensing practitioner or land manager for a small comprehension/workflow study, using the existing task protocol and observed interpretation errors.
 \end{enumerate}

@@ -1,6 +1,6 @@
 # Data, derived outputs and development assistance
 
-Team KUETaguns · 14 November 2026
+Team KUETaguns · 15 November 2026
 
 **The project concept and competition responsibility belong to KUETaguns.** OpenAI Codex assisted this release's implementation, debugging, review, documentation, plotting and demo assembly. Instructions covered the team's requested global globe, PWA, reproducible evaluation and mentor/submission materials; inputs included repository code, public NASA observations and cited guides. This records the current release assistance, not an independently verified tool history for the earlier local prototype. The team should review the final materials before making the official submission.
 

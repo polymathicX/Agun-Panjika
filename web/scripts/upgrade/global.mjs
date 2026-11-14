@@ -14,11 +14,9 @@ try {
   await page.goto(`${base}/?lang=en&theme=light#/global?area=${id}&testYear=2024&switchWeek=26`);
   await page.locator('#evidence-h').waitFor();await page.getByRole('grid').waitFor();
   assert.equal(await page.locator('.area-choice[aria-pressed=true]').count(),1);
-  if(['chin','punjab_haryana'].includes(id)) {
-   assert.match(await page.locator('.case-verdict').innerText(),/Insufficient evidence/);
-   assert.equal(await page.getByRole('gridcell').filter({hasText:'2011'}).count(),0);
-   assert.equal(await page.locator('[role=row] text').filter({hasText:'2011'}).count(),0);
-  }
+  assert.match(await page.locator('.case-verdict').first().innerText(),/lower weekly error/);
+  assert.match(await page.locator('.case-facts').innerText(),/142 \/ 156/);
+  if(id==='chin')assert.match(await page.locator('.case-limited').innerText(),/Monthly factors still/);
   await page.getByRole('button',{name:'Reveal actual VIIRS',exact:true}).click();
   await page.waitForURL(/reveal=1/);
   await page.getByRole('slider').fill('12');await page.waitForURL(/switchWeek=12/);
@@ -29,7 +27,7 @@ try {
  const download=page.waitForEvent('download');await page.getByRole('button',{name:'Download evidence JSON'}).click();
  const file=await download;await file.saveAs(path.join(out,'evidence.json'));
  const evidence=JSON.parse(await fs.readFile(path.join(out,'evidence.json'),'utf8'));
- assert.equal(evidence.area,'punjab_haryana');assert.equal(evidence.view.switchWeek,12);assert.ok(evidence.snapshot_sha256);
+ assert.equal(evidence.area,'punjab_haryana');assert.equal(evidence.folds['2024'].fit[1],2022);assert.equal(evidence.evaluation.models.ensemble.weeks,142);assert.equal(evidence.evaluation.all_weeks.ensemble.weeks,156);assert.equal(evidence.view.switchWeek,12);assert.ok(evidence.snapshot_sha256);
  const csvPromise=page.waitForEvent('download');await page.getByRole('button',{name:'Download experiment CSV'}).click();
  await (await csvPromise).saveAs(path.join(out,'experiment.csv'));
  assert.match(await fs.readFile(path.join(out,'experiment.csv'),'utf8'),/model_version,input_sha256/);
@@ -52,6 +50,6 @@ try {
  await stale.goto(`${base}/?lang=en#/outlook`);await stale.getByText(/The saved outlook has expired/).waitFor();
  assert.equal(await stale.locator('#ol-h').count(),0);assert.equal(await stale.locator('#al-h').count(),0);
  assert.deepEqual(errors,[]);
- await fs.writeFile(path.join(out,'global.json'),JSON.stringify({areas:4,transitions:true,abstention:true,exports:true,staleOutlooks:true,mobileBangla:true,errors},null,2));
- console.log('PASS: four areas, switch/reveal, abstention, accessible desktop/mobile, evidence exports and expired outlook suppression');
+ await fs.writeFile(path.join(out,'global.json'),JSON.stringify({areas:4,transitions:true,referenceQuality:true,exports:true,staleOutlooks:true,mobileBangla:true,errors},null,2));
+ console.log('PASS: four areas, switch/reveal, source-quality flags, accessible desktop/mobile, evidence exports and expired outlook suppression');
 } finally {await browser.close();}

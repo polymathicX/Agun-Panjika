@@ -14,6 +14,8 @@ try {
  await page.getByRole('button',{name:'Show me around',exact:true}).click();
  const coach=page.getByRole('dialog');const next=coach.getByRole('button',{name:'Continue',exact:false});
  await coach.waitFor();assert.equal(await next.isDisabled(),true);
+ await page.locator('.primary-desktop').getByRole('button',{name:'Histories',exact:true}).click();
+ await coach.getByRole('button',{name:'Return to this step'}).click();await page.waitForURL(/#\/world/);
  await coach.getByRole('button',{name:'Use the keyboard instead'}).click();
  await page.locator('#world-country').selectOption('bra');await next.click();
  assert.match(await page.locator('#tutorial-heading').innerText(),/Read the sightings/);await next.click();
@@ -37,6 +39,6 @@ try {
  assert.deepEqual((await new AxeBuilder({page:mobile}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations.map(v=>v.id),[]);
  await mobile.screenshot({path:path.join(out,'tutorial-phone-bn.png')});await mobile.keyboard.press('Escape');
  assert.deepEqual(errors,[]);
- await fs.writeFile(path.join(out,'tutorial.json'),JSON.stringify({steps:8,realActions:true,firstVisitOffer:true,completionPersists:true,escapeRestoresFilters:true,mobileBangla:true,axeViolations:0,errors},null,2));
+ await fs.writeFile(path.join(out,'tutorial.json'),JSON.stringify({steps:8,realActions:true,firstVisitOffer:true,completionPersists:true,escapeRestoresFilters:true,outsideNavigationResume:true,mobileBangla:true,axeViolations:0,errors},null,2));
  console.log('PASS: eight action-led tutorial steps, first visit/replay, skip/escape, saved completion, original filters, mobile Bangla and accessibility');
 } finally {await browser.close();}

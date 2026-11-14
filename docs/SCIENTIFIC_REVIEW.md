@@ -1,6 +1,6 @@
 # Scientific review: implementation, evidence and open questions
 
-> **Historical audit — 29 October 2026.** The 14 November release adds four separate temporal experiments, shared successor continuity, explicit retrieval failures, refreshed data and public deployment. Read the [current model card](GLOBAL_EVALUATION.md), [delivery status](IMPLEMENTATION_STATUS.md) and [verification](VERIFICATION.md) before treating the dated observations below as current. The older LOYO independence, filtering and prospective-forecast concerns remain relevant; this audit has not been rewritten to erase them.
+> **Historical audit — 29 October 2026.** The November releases add four temporal experiments, shared successor continuity, explicit retrieval failures, refreshed data and public deployment. The 15 November update adds annual past-only vintages, a fitted-support guard and source-quality flags. Read the [current model card](GLOBAL_EVALUATION.md), [delivery status](IMPLEMENTATION_STATUS.md) and [verification](VERIFICATION.md) before treating the dated observations below as current. The older LOYO independence, filtering and prospective-forecast concerns remain relevant; this audit has not been rewritten to erase them.
 
 Reviewed 29 October 2026 (Asia/Dhaka). This is a source and committed-export review, not a rerun of scientific training or source downloads. The figures below describe the checked-in results, not a fresh estimate of model performance. Current software verification is recorded in [VERIFICATION.md](VERIFICATION.md).
 

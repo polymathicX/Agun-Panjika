@@ -1,6 +1,6 @@
 # Agun Panjika: project brief for academic review
 
-**Team KUETaguns · 14 November 2026**
+**Team KUETaguns · 15 November 2026**
 
 [Live app](https://polymathicx.github.io/Agun-Panjika/) · [Typeset PDF](pdf/PROJECT_BRIEF.pdf) · [29-second demo](https://polymathicx.github.io/Agun-Panjika/demo/) · [Seven slides](pdf/GLOBAL_DEMO_SLIDES.pdf) · [Source](https://github.com/polymathicX/Agun-Panjika)
 
@@ -10,17 +10,17 @@ Satellite hotspot counts are useful, but instruments observe differently. MODIS 
 
 Agun Panjika, the Fire Almanac, combines an inspectable sensor correction with a place-based interface. A person can explore recent NASA observations worldwide, then examine a supported historical calendar and compare its reconstruction with withheld VIIRS. Source dates, uncertainty and failure results travel with exports. The project addresses NASA Space Apps' [Harmonization of MODIS and VIIRS Hot Spots](https://www.spaceappschallenge.org/2026/challenges/modis-and-viirs-hot-spots/) challenge.
 
-The existing Bangladesh prototype has been extended with worldwide recent observations, four reproducible temporal experiments, a sensor-switch workbench and a mobile PWA. These additions preserve the textured Soft Earth design. They do not establish universal historical accuracy.
+The existing Bangladesh prototype has been extended with worldwide recent observations, four reproducible annual temporal experiments, a sensor-switch workbench and a mobile PWA. These additions preserve the textured Soft Earth design. They do not establish universal historical accuracy.
 
 ![Actual worldwide interface](review/screenshots/world-hero.png)
 
 ## Product and user experience
 
-The entry view is an interactive 3D Earth. A user spins, zooms and taps a country; the view animates to the selection and displays recent counts. A daily slider/playback, satellite controls and local watchlist support returning visits. A keyboard country selector and flat-map alternative sit alongside the globe. Reduced-motion settings are respected.
+The entry view is an interactive 3D Earth. A first-visit offer starts an optional eight-step tutorial that teaches actual controls. Skeleton placeholders reserve space, and route/date selections stay consistent while data loads. A user spins, zooms and taps a country; the view animates to the selection and displays recent counts. A daily slider/playback, satellite controls and local watchlist support returning visits. A keyboard country selector and flat-map alternative sit alongside the globe. Reduced-motion settings are respected.
 
 The recent-data viewer covers 242 countries/territories defined by Natural Earth. MODIS, NOAA-20 and NOAA-21 totals remain separate: adding them would double-count repeat observations. Point rendering is capped/sampled, while summary counts use all retained source rows. Generalized boundaries leave some coastal/offshore points unassigned, which are reported separately. Confidence filtering does not remove every industrial source. Each feed retains its own observation window and SHA-256.
 
-The historical workbench contains Bangladesh, Nepal, Chin in Myanmar and Punjab–Haryana in India. Choose a test year and switch week. Compare a raw sensor join, fitted factor and model; reveal the actual VIIRS reference and inspect error/bounds. Changing the switch does not refit the model. Reconstructed pre-VIIRS calendars are withheld where the ensemble loses to the fitted factor. Observed data and failed experiments remain visible.
+The historical workbench contains Bangladesh, Nepal, Chin in Myanmar and Punjab–Haryana in India. Choose a test year and switch week. Compare a raw sensor join, fitted factor and model; reveal the actual VIIRS reference and inspect error/bounds. Changing the switch does not refit the model. Each test year has its own precomputed past-only model. The updated workflow beats a same-workflow fitted factor in these four cases, while Chin’s monthly baseline remains better. A failed future case would still withhold unsupported reconstruction. Raw and comparable-week results remain visible.
 
 The Bangladesh almanac retains history from 2001, five analysis regions, 64 districts, cumulative seasonal comparisons, interactive calendars and sensor/point maps. Local CHT calendars cover 25 upazilas and 124 unions; their early small-area values include apportioned estimates, not independently measured local reconstructions. Cross-border/aerosol and experimental outlook screens remain research views. Expired outlooks are suppressed.
 
@@ -43,29 +43,43 @@ Requested API failures raise errors rather than becoming silent zero chunks. His
 
 ## Models and evaluation
 
-The portable detector-only model fixes a 30% negative-binomial / 70% five-seed LightGBM ensemble. Inputs describe MODIS counts, FRP, season, neighbouring weeks, observation mix and geometry. Weather columns are excluded. Features are constructed separately within each year; following-week information is appropriate to retrospective reconstruction, not an issue-time forecast.
+The portable model is 30% negative-binomial regression and 70% five-seed LightGBM. A strict guard replaces the tree component with a fitted factor only above the pooled training MODIS maximum. This addresses a documented Chin extrapolation failure. Inputs are detector-only; following-week features support retrospective reconstruction, not issue-time forecasting.
 
-Each area is fitted locally. Fit years are 2013–2018, calibration 2019–2021 and test 2022–2024. National nominal 80% intervals use the separate calibration period. Every area has 157 calibration weeks and 156 test weeks. The periods were known during development, so this is a disjoint temporal replay, not a final untouched holdout or spatial transfer to unseen countries.
+For target year Y, fit on 2013 through Y−2 and calibrate intervals on Y−1. The 2022/2023/2024 point fits therefore end in 2020/2021/2022. Calibration has 51/49/50 eligible weeks. Every fit precedes its calibration and target labels. The latest vintage supplies earlier historical estimates; each test-year chart uses its own chronological vintage.
 
-| Area | Ensemble weekly MAE | Fitted-factor MAE | Error change | 80% interval coverage |
+The years were already known during development and several alternatives were explored. This is a known annual walk-forward replay, not an untouched final holdout or unseen-country transfer.
+
+**All 156 original weeks, weekly MAE:**
+
+| Area | Previous release | Updated model | Same-workflow factor | Monthly factors |
 | --- | ---: | ---: | ---: | ---: |
-| Bangladesh | 45.970 | 61.571 | 25.34% lower | 81.4% |
-| Nepal | 113.001 | 158.019 | 28.49% lower | 75.6% |
-| Chin, Myanmar | 136.414 | 101.030 | 35.02% higher | 73.7% |
-| Punjab & Haryana, India | 313.525 | 271.623 | 15.43% higher | 76.3% |
+| Bangladesh | 45.970 | 46.926 | 58.316 | 49.839 |
+| Nepal | 113.001 | 115.232 | 158.516 | 131.390 |
+| Chin, Myanmar | 136.414 | 88.530 | 97.283 | 75.525 |
+| Punjab & Haryana, India | 313.525 | 246.265 | 262.017 | 291.339 |
 
-![Published error comparison, including unsuccessful cases](latex/figures/global-transfer.png)
+Chin improves 35.10% and Punjab–Haryana 21.45% against the previous release. Bangladesh and Nepal are about 2% worse. Chin’s monthly factor still wins; no method is claimed to win every setting or metric.
 
-The fixed 4.4× and monthly baselines, annual-total errors, regional results and interval widths are published too. Nepal's fitted factor has lower annual-total error despite higher weekly MAE. These results argue for comparing models per setting and purpose. Absolute MAE cannot rank differently sized areas. The original Bangladesh weather-assisted LOYO model and its calibration concerns remain a separate benchmark. [Full model card](GLOBAL_EVALUATION.md) · [earlier scientific audit](SCIENTIFIC_REVIEW.md).
+**Matched comparable reference weeks:**
 
-Public checksum-verified feature files allow refitting without raw downloads or an API key:
+| Area | Updated model | Fitted factor | Monthly factors | Measured 80% coverage |
+| --- | ---: | ---: | ---: | ---: |
+| Bangladesh | 51.201 | 63.785 | 54.523 | 78.2% |
+| Nepal | 125.792 | 173.297 | 143.696 | 79.6% |
+| Chin, Myanmar | 97.198 | 106.860 | 82.957 | 74.6% |
+| Punjab & Haryana, India | 209.497 | 237.311 | 260.711 | 82.4% |
+
+NASA documents a 2–6 November 2024 GPS acquisition outage during a major Punjab error. Raw timestamps corroborate missing S-NPP observations. A globally fixed long-outage rule flags 14 test weeks, equally for every area and baseline. All raw counts and 156-week scores remain available. The comparable 142-week scores correct reference quality; they are not advertised as prediction improvements. Totals over eligible weeks are not complete annual totals.
+
+The app marks incomplete references as gaps. Its measured nominal-80% interval coverage ranges from 74.6% to 82.4%; 49–51 calibration weeks provide limited evidence, not a guarantee. The [model card](GLOBAL_EVALUATION.md) includes source hashes, guard usage, every baseline, per-year/regional results, original benchmark links and reproduction. The [research note](MODEL_OPTIMIZATION_RESEARCH.md) preserves failed alternatives.
 
 ```powershell
 python -m pip install -e ".[dev]"
 python -m pipeline.global_cases --from-packages
 ```
 
-This reproduces fitting, calibration and scoring from released features; it does not independently audit their raw-to-feature preparation. Full raw inputs remain reproducible through the pipeline and documented sources, subject to upstream availability. Cross-version numerical variation is possible.
+Public feature inputs and the NASA quality manifest refit the workflow without a key. They do not independently audit the raw-to-feature preparation; library/platform variation is possible. The older weather-assisted Bangladesh LOYO audit remains separate.
+
 
 ## Architecture and maintenance
 

@@ -1,6 +1,6 @@
 # Typeset mentor reports
 
-The 14 November 2026 PDFs are XeLaTeX editions of the [project brief](../PROJECT_BRIEF.md) and [global roadmap](../GLOBAL_EXTENSION_PLAN.md). They use A4 pages, Cambria body type, Calibri headings, vector data figures, selectable text, embedded fonts and clickable links. They replace the older Bangladesh-only editions.
+The 15 November 2026 PDFs are XeLaTeX editions of the [project brief](../PROJECT_BRIEF.md) and [global roadmap](../GLOBAL_EXTENSION_PLAN.md). They use A4 pages, Cambria body type, Calibri headings, vector data figures, selectable text, embedded fonts and clickable links. They replace the older Bangladesh-only editions.
 
 - `project-brief.tex`: six-page complete project/research overview.
 - `global-extension-plan.tex`: five-page delivered-extension and research roadmap.

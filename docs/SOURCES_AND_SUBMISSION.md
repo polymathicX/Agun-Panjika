@@ -1,6 +1,6 @@
 # Sources, credits and submission
 
-**14 November 2026 · Team KUETaguns**
+**15 November 2026 · Team KUETaguns**
 
 [Live project](https://polymathicx.github.io/Agun-Panjika/) · [Source](https://github.com/polymathicX/Agun-Panjika) · [29-second demo](https://polymathicx.github.io/Agun-Panjika/demo/) · [Seven slides](pdf/GLOBAL_DEMO_SLIDES.pdf).
 
@@ -58,3 +58,7 @@ The [official judging guide](https://www.spaceappschallenge.org/resources/judgin
 The user-supplied [Bangladesh participant guide](https://docs.google.com/document/d/1mSOxplyht5kii8GcCnFaGA-vMHIAVypjl4N6PobnaYQ/edit?usp=sharing) is additional local context. Its earlier conflicts do not supersede final official guidance. The [NotebookLM FAQ](https://notebook.google.com/notebook/44e5e9a3-5387-4191-8687-b44766aee09e) required login and the [Claude artifact](https://claude.ai/artifact/PUnJNpKuEXRbvKafSgU6fA) did not expose content; neither was used to invent requirements.
 
 The code includes an existing local prototype plus new global work. The team should represent that history honestly, review all claims and perform the official submission. An award, final eligibility or global nomination is not implied by this repository.
+
+## Reference-quality update
+
+[NASA MODAPS acquisition outages](https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html) and [FIRMS outage notices](https://firms2.modaps.eosdis.nasa.gov/content/notifications/firms/outages.html) support the versioned long-outage flags. Actual acquisition loss is distinguished from production latency/backfill. The [model card](GLOBAL_EVALUATION.md) and [research record](MODEL_OPTIMIZATION_RESEARCH.md) preserve full raw and matched comparisons.

@@ -1,0 +1,1624 @@
+{
+  "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+  "source_html_sha256": "57e9c3a7ea82dbc2fdde5caf907c43f51aa0523063d6cc7f3ff3348ca7a2d8d3",
+  "retrieved_date": "2026-11-15",
+  "scope": [
+    2013,
+    2024
+  ],
+  "rule": "For all areas and all point-fit/calibration/test partitions, mask V labels for every ISO week overlapping a listed S-NPP acquisition/data-quality outage lasting at least24hours. Preserve rawV and predictionrows. Same eligibleweeks for every model.",
+  "threshold_rationale": "At least one full day of global sensor loss cannot be treated as fullweek reference count. Short localgranule gaps need geospatial overpass coverage, unavailable from counts alone. This conservative long-outage sensitivity is not completecoveragecertification.",
+  "intervals": [
+    {
+      "end_utc": "2024-12-11T12:42:00+00:00",
+      "hours": 0.3,
+      "reason": "LRM outage: 12:24 - 12:36 (inclusive).",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2024-12-11T12:24:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2024-346"
+    },
+    {
+      "end_utc": "2024-11-20T18:30:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU 42 outage: 18:12 through 18:24 grans.",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2024-11-20T18:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2024-325"
+    },
+    {
+      "end_utc": "2024-11-12T03:24:00+00:00",
+      "hours": 0.2,
+      "reason": "LRM outage 03:12 & 03:18 granules",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2024-11-12T03:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2024-317"
+    },
+    {
+      "end_utc": "2024-11-06T17:36:00+00:00",
+      "hours": 91.4,
+      "reason": "GPS Anomaly outage (11/2/24 22:12 - 11/6/24 17:30, inclusive)",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2024-11-02T22:12:00+00:00",
+      "used_by_rule": true,
+      "year_day": "2024-307 - 2024-311"
+    },
+    {
+      "end_utc": "2024-10-09T16:40:00+00:00",
+      "hours": 0.267,
+      "reason": "DMU 041 outage 16:24 through 16:36 grans.",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2024-10-09T16:24:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2024-283"
+    },
+    {
+      "end_utc": "2024-09-27T17:36:00+00:00",
+      "hours": 41.6,
+      "reason": "GPS Anomaly Outage",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2024-09-26T00:00:00+00:00",
+      "used_by_rule": true,
+      "year_day": "2024-270 - 2024-271"
+    },
+    {
+      "end_utc": "2024-07-29T15:24:00+00:00",
+      "hours": 130.0,
+      "reason": "CDP Reset Anomaly",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2024-07-24T05:24:00+00:00",
+      "used_by_rule": true,
+      "year_day": "2024-206 - 2024-211"
+    },
+    {
+      "end_utc": "2024-07-16T17:42:00+00:00",
+      "hours": 164.0,
+      "reason": "GPS Anomaly Outage",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2024-07-09T21:42:00+00:00",
+      "used_by_rule": true,
+      "year_day": "2024-191 - 2024-198"
+    },
+    {
+      "end_utc": "2024-06-20T18:18:00+00:00",
+      "hours": 0.4,
+      "reason": "DMU outage No. 40 18:12 through 18:12 grans.",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2024-06-20T17:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2024-172"
+    },
+    {
+      "end_utc": "2024-06-04T00:00:00+00:00",
+      "hours": 120.0,
+      "reason": "GPS Anomaly Outage (C2) 5/30/24 through 6/3/24",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2024-05-30T00:00:00+00:00",
+      "used_by_rule": true,
+      "year_day": "2024-151 - 2024-156"
+    },
+    {
+      "end_utc": "2024-04-24T20:24:00+00:00",
+      "hours": 2.3,
+      "reason": "Anomaly outage (data missing from 18:04:42 to 20:28:05)",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2024-04-24T18:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2024-115"
+    },
+    {
+      "end_utc": "2024-04-19T06:18:00+00:00",
+      "hours": 0.1,
+      "reason": "LRM outage: 06:12 granule",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2024-04-19T06:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2024-110"
+    },
+    {
+      "end_utc": "2024-03-06T17:54:00+00:00",
+      "hours": 0.5,
+      "reason": "IAM impact 17:24 through 17:48 granules",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2024-03-06T17:24:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2024-066"
+    },
+    {
+      "end_utc": "2024-01-31T16:00:00+00:00",
+      "hours": 16.6,
+      "reason": "SMD outage 23:21 - 16:00",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2024-01-30T23:24:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2024-030 - 2024-031"
+    },
+    {
+      "end_utc": "2023-12-20T18:30:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU outage No. 39 outage 18:12 through 18:24 grans",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2023-12-20T18:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2023-354"
+    },
+    {
+      "end_utc": "2023-11-23T09:24:00+00:00",
+      "hours": 0.2,
+      "reason": "Maneuver outage: 09:12 & 09:18 granules.",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2023-11-23T09:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2023-327"
+    },
+    {
+      "end_utc": "2023-11-02T14:54:00+00:00",
+      "hours": 24.9,
+      "reason": "CDP Reset L0 outage",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2023-11-01T14:00:00+00:00",
+      "used_by_rule": true,
+      "year_day": "2023-305 - 2023-306"
+    },
+    {
+      "end_utc": "2023-10-11T17:06:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU outage No. 38",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2023-10-11T16:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2023-284"
+    },
+    {
+      "end_utc": "2023-07-27T19:54:00+00:00",
+      "hours": 41.9,
+      "reason": "SNPP Lock-up outage",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2023-07-26T02:00:00+00:00",
+      "used_by_rule": true,
+      "year_day": "2023-207 - 2023-208"
+    },
+    {
+      "end_utc": "2023-06-21T17:18:00+00:00",
+      "hours": 0.3,
+      "reason": "LRM outage: 17:00, 17:06 and 17:12 granules.",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2023-06-21T17:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2023-172"
+    },
+    {
+      "end_utc": "2023-05-31T01:00:00+00:00",
+      "hours": 0.2,
+      "reason": "Maneuver outage, LDOPE & GEO confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2023-05-31T00:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2023-151"
+    },
+    {
+      "end_utc": "2023-05-08T09:18:00+00:00",
+      "hours": 0.3,
+      "reason": "RMM outage: 09:00, 09:06 and 09:12 granules - LDOPE and GEO confirmed.",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2023-05-08T09:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2023-128"
+    },
+    {
+      "end_utc": "2023-05-01T08:36:00+00:00",
+      "hours": 0.1,
+      "reason": "LRM outage: 08:30 granule",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2023-05-01T08:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2023-121"
+    },
+    {
+      "end_utc": "2023-04-13T17:12:00+00:00",
+      "hours": 0.7,
+      "reason": "IAM outage: 1630 through 1706 granules.",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2023-04-13T16:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2023-103"
+    },
+    {
+      "end_utc": "2023-03-01T17:12:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU outage: 1654, 1700 & 17:06 granules",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2023-03-01T16:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2023-060"
+    },
+    {
+      "end_utc": "2023-01-02T05:36:00+00:00",
+      "hours": 0.1,
+      "reason": "LRM outage: 05:30 granule",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2023-01-02T05:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2023-002"
+    },
+    {
+      "end_utc": "2022-12-03T17:00:00+00:00",
+      "hours": 0.1,
+      "reason": "Calibration outage 16:54 granule (C1 had 17:00 hidden as well)",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2022-12-03T16:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2022-337"
+    },
+    {
+      "end_utc": "2022-12-02T16:36:00+00:00",
+      "hours": 0.4,
+      "reason": "RMM outage(16:12 through 16:30 g ranules) LDOPE and GEO confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2022-12-02T16:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2022-336"
+    },
+    {
+      "end_utc": "2022-08-11T00:00:00+00:00",
+      "hours": 344.2,
+      "reason": "SNPP Lock-up",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2022-07-27T15:48:00+00:00",
+      "used_by_rule": true,
+      "year_day": "2022-208 - 2022-223"
+    },
+    {
+      "end_utc": "2022-07-27T15:48:00+00:00",
+      "hours": 23.8,
+      "reason": "L0 Outage - SNPP Lock-Up",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2022-07-26T16:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2022-207 - 2022-208"
+    },
+    {
+      "end_utc": "2022-06-28T18:24:00+00:00",
+      "hours": 14.9,
+      "reason": "VIIRS Lock-up",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2022-06-28T03:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2022-179"
+    },
+    {
+      "end_utc": "2022-06-01T17:36:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU Outage (17:18 through 17:30 granules) LDOPE & GEO confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2022-06-01T17:18:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2022-152"
+    },
+    {
+      "end_utc": "2022-05-12T05:54:00+00:00",
+      "hours": 0.1,
+      "reason": "LRM outage: 05:48 granule",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2022-05-12T05:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2022-132"
+    },
+    {
+      "end_utc": "2022-02-02T18:00:00+00:00",
+      "hours": 0.4,
+      "reason": "DMU Outage (17:36 through 17:54 granules) LDOPE & GEO confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2022-02-02T17:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2022-033"
+    },
+    {
+      "end_utc": "2022-01-13T04:30:00+00:00",
+      "hours": 0.1,
+      "reason": "LRM (granule failes due to all fill in geo)",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2022-01-13T04:24:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2022-013"
+    },
+    {
+      "end_utc": "2021-12-14T09:06:00+00:00",
+      "hours": 0.1,
+      "reason": "LRM (granule fails due to all fill in geo)",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2021-12-14T09:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2021-348"
+    },
+    {
+      "end_utc": "2021-11-28T00:12:00+00:00",
+      "hours": 0.2,
+      "reason": "Hiding 00:00 and 00:06 granules due to corrupted times caused by GPS system",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2021-11-28T00:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2021-332"
+    },
+    {
+      "end_utc": "2021-11-18T19:24:00+00:00",
+      "hours": 1.6,
+      "reason": "Maneuver outage, LDOPE & GEO confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2021-11-18T17:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2021-322"
+    },
+    {
+      "end_utc": "2021-10-14T02:42:00+00:00",
+      "hours": 0.1,
+      "reason": "Maneuver outage, LDOPE & GEO confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2021-10-14T02:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2021-287"
+    },
+    {
+      "end_utc": "2021-08-04T15:48:00+00:00",
+      "hours": 27.0,
+      "reason": "Safe-Mode outage",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2021-08-03T12:48:00+00:00",
+      "used_by_rule": true,
+      "year_day": "2021-215 - 2021-216"
+    },
+    {
+      "end_utc": "2021-06-12T01:18:00+00:00",
+      "hours": 0.3,
+      "reason": "RMM Outage for 01:00 through 01:12 granules",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2021-06-12T01:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2021-163"
+    },
+    {
+      "end_utc": "2021-04-29T16:54:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU Outage",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2021-04-29T16:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2021-119"
+    },
+    {
+      "end_utc": "2021-01-24T08:30:00+00:00",
+      "hours": 0.1,
+      "reason": "Maneuver, LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2021-01-24T08:24:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2021-024"
+    },
+    {
+      "end_utc": "2020-12-25T11:24:00+00:00",
+      "hours": 0.1,
+      "reason": "LRM (granule fails due to all fill in geo)",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2020-12-25T11:18:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2020-360"
+    },
+    {
+      "end_utc": "2020-12-10T17:12:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2020-12-10T16:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2020-345"
+    },
+    {
+      "end_utc": "2020-11-25T16:00:00+00:00",
+      "hours": 0.1,
+      "reason": "Outage",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2020-11-25T15:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2020-330"
+    },
+    {
+      "end_utc": "2020-09-24T19:00:00+00:00",
+      "hours": 1.5,
+      "reason": "IAM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2020-09-24T17:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2020-268"
+    },
+    {
+      "end_utc": "2020-06-24T16:54:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2020-06-24T16:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2020-176"
+    },
+    {
+      "end_utc": "2020-01-22T16:24:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2020-01-22T16:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2020-022"
+    },
+    {
+      "end_utc": "2020-01-08T17:00:00+00:00",
+      "hours": 0.2,
+      "reason": "Flight Software Update impact - per LDOPE 16:48 - 16:54 granules",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2020-01-08T16:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2020-008"
+    },
+    {
+      "end_utc": "2020-01-08T15:48:00+00:00",
+      "hours": 0.5,
+      "reason": "Flight Software Update impact - per LDOPE 15:18 - 15:42 granules",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2020-01-08T15:18:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2020-008"
+    },
+    {
+      "end_utc": "2020-01-06T15:24:00+00:00",
+      "hours": 0.2,
+      "reason": "LRM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2020-01-06T15:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2020-006"
+    },
+    {
+      "end_utc": "2019-12-07T20:00:00+00:00",
+      "hours": 0.1,
+      "reason": "LRM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-12-07T19:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-341"
+    },
+    {
+      "end_utc": "2019-10-31T15:00:00+00:00",
+      "hours": 0.1,
+      "reason": "Petulant Mode Impact - corrupt geolocation",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-10-31T14:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-304"
+    },
+    {
+      "end_utc": "2019-10-31T14:12:00+00:00",
+      "hours": 0.9,
+      "reason": "Petulant Mode Impact - wrong DNB flag per LDOPE",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-10-31T13:18:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-304"
+    },
+    {
+      "end_utc": "2019-10-31T12:30:00+00:00",
+      "hours": 0.9,
+      "reason": "Petulant Mode Impact - wrong DNB flag per LDOPE",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-10-31T11:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-304"
+    },
+    {
+      "end_utc": "2019-10-31T10:54:00+00:00",
+      "hours": 1.0,
+      "reason": "Petulant Mode Impact - wrong DNB flag per LDOPE",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-10-31T09:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-304"
+    },
+    {
+      "end_utc": "2019-10-31T09:12:00+00:00",
+      "hours": 1.4,
+      "reason": "Petulant Mode Impact; corrupt or wrong DNB per LDOPE",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-10-31T07:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-304"
+    },
+    {
+      "end_utc": "2019-10-31T07:48:00+00:00",
+      "hours": 1.1,
+      "reason": "Outade due to Petulant Mode",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-10-31T06:42:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-304"
+    },
+    {
+      "end_utc": "2019-10-31T06:42:00+00:00",
+      "hours": 0.1,
+      "reason": "Petulant Mode Impact - corrupt data per LDOPE",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-10-31T06:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-304"
+    },
+    {
+      "end_utc": "2019-10-31T06:36:00+00:00",
+      "hours": 2.7,
+      "reason": "Outage due to Petulant Mode",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-10-31T03:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-304"
+    },
+    {
+      "end_utc": "2019-10-31T03:54:00+00:00",
+      "hours": 0.1,
+      "reason": "Petulant Mode Impact - corrupt data per LDOPE",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-10-31T03:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-304"
+    },
+    {
+      "end_utc": "2019-09-26T16:54:00+00:00",
+      "hours": 0.7,
+      "reason": "IAM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-09-26T16:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-269"
+    },
+    {
+      "end_utc": "2019-05-14T21:24:00+00:00",
+      "hours": 0.2,
+      "reason": "Maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-05-14T21:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-134"
+    },
+    {
+      "end_utc": "2019-04-10T16:18:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-04-10T16:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-100"
+    },
+    {
+      "end_utc": "2019-02-01T15:06:00+00:00",
+      "hours": 0.5,
+      "reason": "SC Outage for Pet Mode fix: 14:36-15:00 granules hidden",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-02-01T14:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-032"
+    },
+    {
+      "end_utc": "2019-01-21T23:48:00+00:00",
+      "hours": 0.3,
+      "reason": "SyncLoss, 2330 bad DNB; 2336-2342 corrupt per LDOPE",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-01-21T23:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-021"
+    },
+    {
+      "end_utc": "2019-01-21T22:48:00+00:00",
+      "hours": 1.0,
+      "reason": "SyncLoss, bad DNB (21:48 through 22:42) per LDOPE",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-01-21T21:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-021"
+    },
+    {
+      "end_utc": "2019-01-21T21:06:00+00:00",
+      "hours": 4.0,
+      "reason": "SyncLoss, 1706-2012 lost, 2018 bad, 2024-2100 bad dnb per LDOPE",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-01-21T17:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-021"
+    },
+    {
+      "end_utc": "2019-01-17T09:12:00+00:00",
+      "hours": 0.1,
+      "reason": "Maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2019-01-17T09:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2019-017"
+    },
+    {
+      "end_utc": "2018-12-18T18:54:00+00:00",
+      "hours": 0.1,
+      "reason": "Maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2018-12-18T18:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2018-352"
+    },
+    {
+      "end_utc": "2018-11-19T01:12:00+00:00",
+      "hours": 0.2,
+      "reason": "Maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2018-11-19T01:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2018-323"
+    },
+    {
+      "end_utc": "2018-10-28T19:18:00+00:00",
+      "hours": 0.2,
+      "reason": "RMM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2018-10-28T19:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2018-301"
+    },
+    {
+      "end_utc": "2018-09-27T17:12:00+00:00",
+      "hours": 0.6,
+      "reason": "IAM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2018-09-27T16:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2018-270"
+    },
+    {
+      "end_utc": "2018-07-17T16:24:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2018-07-17T16:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2018-198"
+    },
+    {
+      "end_utc": "2018-07-05T22:54:00+00:00",
+      "hours": 0.1,
+      "reason": "Maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2018-07-05T22:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2018-186"
+    },
+    {
+      "end_utc": "2018-07-05T15:36:00+00:00",
+      "hours": 0.1,
+      "reason": "Maneuver, LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2018-07-05T15:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2018-186"
+    },
+    {
+      "end_utc": "2018-05-25T05:06:00+00:00",
+      "hours": 0.1,
+      "reason": "Maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2018-05-25T05:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2018-145"
+    },
+    {
+      "end_utc": "2018-04-25T19:36:00+00:00",
+      "hours": 0.1,
+      "reason": "Maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2018-04-25T19:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2018-115"
+    },
+    {
+      "end_utc": "2018-02-28T18:06:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2018-02-28T17:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2018-059"
+    },
+    {
+      "end_utc": "2018-02-13T12:47:00+00:00",
+      "hours": 3.083,
+      "reason": "s/c anomaly, SBC Lockup mode",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2018-02-13T09:42:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2018-044"
+    },
+    {
+      "end_utc": "2018-01-29T20:12:00+00:00",
+      "hours": 0.1,
+      "reason": "s/c anomaly, LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2018-01-29T20:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2018-029"
+    },
+    {
+      "end_utc": "2018-01-29T19:12:00+00:00",
+      "hours": 0.8,
+      "reason": "s/c anomaly, LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2018-01-29T18:24:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2018-029"
+    },
+    {
+      "end_utc": "2018-01-29T18:24:00+00:00",
+      "hours": 2.0,
+      "reason": "s/c anomaly, confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2018-01-29T16:24:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2018-029"
+    },
+    {
+      "end_utc": "2018-01-27T20:18:00+00:00",
+      "hours": 0.1,
+      "reason": "maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2018-01-27T20:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2018-027"
+    },
+    {
+      "end_utc": "2017-12-29T09:18:00+00:00",
+      "hours": 0.1,
+      "reason": "maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2017-12-29T09:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2017-363"
+    },
+    {
+      "end_utc": "2017-11-29T20:42:00+00:00",
+      "hours": 0.2,
+      "reason": "maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2017-11-29T20:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2017-333"
+    },
+    {
+      "end_utc": "2017-09-29T22:30:00+00:00",
+      "hours": 9.4,
+      "reason": "s/c systems outage, LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2017-09-29T13:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2017-272"
+    },
+    {
+      "end_utc": "2017-09-28T17:36:00+00:00",
+      "hours": 0.6,
+      "reason": "IAM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2017-09-28T17:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2017-271"
+    },
+    {
+      "end_utc": "2017-08-27T22:06:00+00:00",
+      "hours": 0.1,
+      "reason": "SBC lockout, LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2017-08-27T22:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2017-239"
+    },
+    {
+      "end_utc": "2017-08-27T21:06:00+00:00",
+      "hours": 0.8,
+      "reason": "SBC lockout, LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2017-08-27T20:18:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2017-239"
+    },
+    {
+      "end_utc": "2017-08-27T20:18:00+00:00",
+      "hours": 2.2,
+      "reason": "SBC lockout, LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2017-08-27T18:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2017-239"
+    },
+    {
+      "end_utc": "2017-07-19T16:30:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2017-07-19T16:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2017-200"
+    },
+    {
+      "end_utc": "2017-05-06T06:48:00+00:00",
+      "hours": 0.2,
+      "reason": "Maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2017-05-06T06:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2017-126"
+    },
+    {
+      "end_utc": "2017-04-06T19:30:00+00:00",
+      "hours": 0.1,
+      "reason": "Maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2017-04-06T19:24:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2017-096"
+    },
+    {
+      "end_utc": "2017-03-28T18:24:00+00:00",
+      "hours": 0.1,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2017-03-28T18:18:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2017-087"
+    },
+    {
+      "end_utc": "2017-03-08T10:06:00+00:00",
+      "hours": 0.2,
+      "reason": "Maneuver, LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2017-03-08T09:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2017-067"
+    },
+    {
+      "end_utc": "2017-02-07T00:36:00+00:00",
+      "hours": 0.1,
+      "reason": "Maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2017-02-07T00:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2017-038"
+    },
+    {
+      "end_utc": "2017-01-08T18:42:00+00:00",
+      "hours": 0.2,
+      "reason": "Maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2017-01-08T18:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2017-008"
+    },
+    {
+      "end_utc": "2017-01-01T00:06:00+00:00",
+      "hours": 0.1,
+      "reason": "LSI",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2017-01-01T00:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2017-001"
+    },
+    {
+      "end_utc": "2016-12-20T21:42:00+00:00",
+      "hours": 3.2,
+      "reason": "SBC Lock Up mode anomaly",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-12-20T18:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-355"
+    },
+    {
+      "end_utc": "2016-12-10T07:42:00+00:00",
+      "hours": 0.1,
+      "reason": "Maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-12-10T07:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-345"
+    },
+    {
+      "end_utc": "2016-11-10T20:42:00+00:00",
+      "hours": 0.1,
+      "reason": "Maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-11-10T20:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-315"
+    },
+    {
+      "end_utc": "2016-09-29T19:12:00+00:00",
+      "hours": 1.7,
+      "reason": "IAM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-09-29T17:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-273"
+    },
+    {
+      "end_utc": "2016-09-13T16:24:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-09-13T16:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-257"
+    },
+    {
+      "end_utc": "2016-09-08T16:06:00+00:00",
+      "hours": 0.2,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-09-08T15:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-252"
+    },
+    {
+      "end_utc": "2016-08-13T23:54:00+00:00",
+      "hours": 5.8,
+      "reason": "Safe Mode, LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-08-13T18:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-226"
+    },
+    {
+      "end_utc": "2016-05-17T04:06:00+00:00",
+      "hours": 0.1,
+      "reason": "Maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-05-17T04:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-138"
+    },
+    {
+      "end_utc": "2016-04-19T21:42:00+00:00",
+      "hours": 0.1,
+      "reason": "Outage - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-04-19T21:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-110"
+    },
+    {
+      "end_utc": "2016-04-19T13:12:00+00:00",
+      "hours": 0.1,
+      "reason": "Outage - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-04-19T13:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-110"
+    },
+    {
+      "end_utc": "2016-04-17T11:48:00+00:00",
+      "hours": 0.1,
+      "reason": "Outage - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-04-17T11:42:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-108"
+    },
+    {
+      "end_utc": "2016-03-24T17:06:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-03-24T16:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-084"
+    },
+    {
+      "end_utc": "2016-03-18T21:12:00+00:00",
+      "hours": 0.1,
+      "reason": "Outage - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-03-18T21:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-078"
+    },
+    {
+      "end_utc": "2016-02-24T17:48:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-02-24T17:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-055"
+    },
+    {
+      "end_utc": "2016-02-18T08:24:00+00:00",
+      "hours": 0.1,
+      "reason": "LRM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-02-18T08:18:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-049"
+    },
+    {
+      "end_utc": "2016-01-19T23:00:00+00:00",
+      "hours": 0.1,
+      "reason": "Outage - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2016-01-19T22:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2016-019"
+    },
+    {
+      "end_utc": "2015-12-21T13:42:00+00:00",
+      "hours": 0.1,
+      "reason": "Outage - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2015-12-21T13:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2015-355"
+    },
+    {
+      "end_utc": "2015-11-22T04:24:00+00:00",
+      "hours": 0.1,
+      "reason": "LRM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2015-11-22T04:18:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2015-326"
+    },
+    {
+      "end_utc": "2015-11-05T23:54:00+00:00",
+      "hours": 0.3,
+      "reason": "RMM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2015-11-05T23:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2015-309"
+    },
+    {
+      "end_utc": "2015-10-02T02:18:00+00:00",
+      "hours": 0.2,
+      "reason": "Svalbard outage",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2015-10-02T02:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2015-275"
+    },
+    {
+      "end_utc": "2015-09-23T18:54:00+00:00",
+      "hours": 1.8,
+      "reason": "IAM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2015-09-23T17:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2015-266"
+    },
+    {
+      "end_utc": "2015-07-01T00:06:00+00:00",
+      "hours": 0.1,
+      "reason": "LSI",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2015-07-01T00:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2015-182"
+    },
+    {
+      "end_utc": "2015-04-30T18:24:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2015-04-30T18:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2015-120"
+    },
+    {
+      "end_utc": "2015-04-29T12:36:00+00:00",
+      "hours": 0.2,
+      "reason": "maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2015-04-29T12:24:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2015-119"
+    },
+    {
+      "end_utc": "2015-03-30T16:54:00+00:00",
+      "hours": 0.1,
+      "reason": "Outage - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2015-03-30T16:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2015-089"
+    },
+    {
+      "end_utc": "2015-03-01T00:42:00+00:00",
+      "hours": 0.2,
+      "reason": "maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2015-03-01T00:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2015-060"
+    },
+    {
+      "end_utc": "2015-02-04T18:06:00+00:00",
+      "hours": 0.2,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2015-02-04T17:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2015-035"
+    },
+    {
+      "end_utc": "2015-01-30T08:24:00+00:00",
+      "hours": 0.1,
+      "reason": "LCM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2015-01-30T08:18:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2015-030"
+    },
+    {
+      "end_utc": "2014-12-31T19:42:00+00:00",
+      "hours": 0.1,
+      "reason": "Outage - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-12-31T19:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-365"
+    },
+    {
+      "end_utc": "2014-12-10T21:48:00+00:00",
+      "hours": 0.1,
+      "reason": "flight software upgrade",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-12-10T21:42:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-344"
+    },
+    {
+      "end_utc": "2014-12-10T20:12:00+00:00",
+      "hours": 0.2,
+      "reason": "flight software upgrade",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-12-10T20:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-344"
+    },
+    {
+      "end_utc": "2014-12-10T18:24:00+00:00",
+      "hours": 0.1,
+      "reason": "flight software upgrade",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-12-10T18:18:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-344"
+    },
+    {
+      "end_utc": "2014-12-10T16:42:00+00:00",
+      "hours": 0.1,
+      "reason": "flight software upgrade",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-12-10T16:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-344"
+    },
+    {
+      "end_utc": "2014-12-10T15:00:00+00:00",
+      "hours": 0.1,
+      "reason": "flight software upgrade",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-12-10T14:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-344"
+    },
+    {
+      "end_utc": "2014-12-10T13:12:00+00:00",
+      "hours": 0.1,
+      "reason": "flight software upgrade",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-12-10T13:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-344"
+    },
+    {
+      "end_utc": "2014-12-02T08:48:00+00:00",
+      "hours": 0.1,
+      "reason": "maneuver outage",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-12-02T08:42:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-336"
+    },
+    {
+      "end_utc": "2014-11-12T18:54:00+00:00",
+      "hours": 1.7,
+      "reason": "IAM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-11-12T17:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-316"
+    },
+    {
+      "end_utc": "2014-11-03T01:12:00+00:00",
+      "hours": 0.1,
+      "reason": "Outage - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-11-03T01:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-307"
+    },
+    {
+      "end_utc": "2014-10-30T16:48:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-10-30T16:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-303"
+    },
+    {
+      "end_utc": "2014-10-15T20:18:00+00:00",
+      "hours": 2.7,
+      "reason": "IAM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-10-15T17:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-288"
+    },
+    {
+      "end_utc": "2014-10-09T23:00:00+00:00",
+      "hours": 0.2,
+      "reason": "Petulant Mode LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-10-09T22:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-282"
+    },
+    {
+      "end_utc": "2014-10-09T21:18:00+00:00",
+      "hours": 0.2,
+      "reason": "Petulant Mode LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-10-09T21:06:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-282"
+    },
+    {
+      "end_utc": "2014-10-09T19:30:00+00:00",
+      "hours": 2.2,
+      "reason": "Petulant Mode LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-10-09T17:18:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-282"
+    },
+    {
+      "end_utc": "2014-10-03T10:42:00+00:00",
+      "hours": 0.1,
+      "reason": "Bad RDR",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-10-03T10:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-276"
+    },
+    {
+      "end_utc": "2014-09-30T07:00:00+00:00",
+      "hours": 0.1,
+      "reason": "Bad RDR",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-09-30T06:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-273"
+    },
+    {
+      "end_utc": "2014-09-29T21:36:00+00:00",
+      "hours": 0.3,
+      "reason": "RMM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-09-29T21:18:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-272"
+    },
+    {
+      "end_utc": "2014-09-26T22:06:00+00:00",
+      "hours": 0.3,
+      "reason": "Petulant Mode",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-09-26T21:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-269"
+    },
+    {
+      "end_utc": "2014-09-26T18:36:00+00:00",
+      "hours": 2.3,
+      "reason": "Petulant Mode",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-09-26T16:18:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-269"
+    },
+    {
+      "end_utc": "2014-09-10T20:30:00+00:00",
+      "hours": 1.9,
+      "reason": "IAM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-09-10T18:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-253"
+    },
+    {
+      "end_utc": "2014-08-08T18:48:00+00:00",
+      "hours": 4.6,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-08-08T14:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-220"
+    },
+    {
+      "end_utc": "2014-07-30T23:42:00+00:00",
+      "hours": 1.8,
+      "reason": "IAM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-07-30T21:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-211"
+    },
+    {
+      "end_utc": "2014-07-30T19:00:00+00:00",
+      "hours": 0.5,
+      "reason": "VIIRS Lunar Calibration roll",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-07-30T18:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-211"
+    },
+    {
+      "end_utc": "2014-07-01T18:00:00+00:00",
+      "hours": 0.4,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-07-01T17:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-182"
+    },
+    {
+      "end_utc": "2014-05-10T13:18:00+00:00",
+      "hours": 0.1,
+      "reason": "Outage - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-05-10T13:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-130"
+    },
+    {
+      "end_utc": "2014-04-10T21:00:00+00:00",
+      "hours": 0.2,
+      "reason": "LCM - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-04-10T20:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-100"
+    },
+    {
+      "end_utc": "2014-03-12T17:36:00+00:00",
+      "hours": 0.2,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-03-12T17:24:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-071"
+    },
+    {
+      "end_utc": "2014-03-12T01:18:00+00:00",
+      "hours": 0.1,
+      "reason": "Outage - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-03-12T01:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-071"
+    },
+    {
+      "end_utc": "2014-02-10T05:36:00+00:00",
+      "hours": 0.1,
+      "reason": "Outage - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-02-10T05:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-041"
+    },
+    {
+      "end_utc": "2014-02-04T23:24:00+00:00",
+      "hours": 0.2,
+      "reason": "Petulant mode",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-02-04T23:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-035"
+    },
+    {
+      "end_utc": "2014-02-04T21:42:00+00:00",
+      "hours": 4.1,
+      "reason": "Petulant mode",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-02-04T17:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-035"
+    },
+    {
+      "end_utc": "2014-01-21T19:54:00+00:00",
+      "hours": 0.3,
+      "reason": "RMM",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-01-21T19:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-021"
+    },
+    {
+      "end_utc": "2014-01-11T10:06:00+00:00",
+      "hours": 0.1,
+      "reason": "Missing RDR",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2014-01-11T10:00:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2014-011"
+    },
+    {
+      "end_utc": "2013-12-12T19:42:00+00:00",
+      "hours": 0.1,
+      "reason": "DAS Load impact",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2013-12-12T19:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2013-346"
+    },
+    {
+      "end_utc": "2013-11-19T17:48:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2013-11-19T17:30:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2013-323"
+    },
+    {
+      "end_utc": "2013-11-13T07:00:00+00:00",
+      "hours": 0.1,
+      "reason": "Outage - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2013-11-13T06:54:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2013-317"
+    },
+    {
+      "end_utc": "2013-10-14T21:42:00+00:00",
+      "hours": 0.1,
+      "reason": "Outage - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2013-10-14T21:36:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2013-287"
+    },
+    {
+      "end_utc": "2013-07-16T19:06:00+00:00",
+      "hours": 0.3,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2013-07-16T18:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2013-197"
+    },
+    {
+      "end_utc": "2013-04-21T19:54:00+00:00",
+      "hours": 0.1,
+      "reason": "confirmed outage;",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2013-04-21T19:48:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2013-111"
+    },
+    {
+      "end_utc": "2013-03-23T03:36:00+00:00",
+      "hours": 0.2,
+      "reason": "Maneuver outage - LDOPE confirmed",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2013-03-23T03:24:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2013-082"
+    },
+    {
+      "end_utc": "2013-02-24T11:24:00+00:00",
+      "hours": 0.2,
+      "reason": "NPP Risk Mitigation Maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2013-02-24T11:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2013-055"
+    },
+    {
+      "end_utc": "2013-01-22T12:18:00+00:00",
+      "hours": 0.1,
+      "reason": "confirmed LDOPE outage;VCST outage;Roll maneuver",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2013-01-22T12:12:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2013-022"
+    },
+    {
+      "end_utc": "2013-01-15T15:30:00+00:00",
+      "hours": 0.2,
+      "reason": "DMU",
+      "source": "https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html",
+      "start_utc": "2013-01-15T15:18:00+00:00",
+      "used_by_rule": false,
+      "year_day": "2013-015"
+    }
+  ],
+  "excluded_iso_weeks": [
+    [
+      2021,
+      31
+    ],
+    [
+      2022,
+      30
+    ],
+    [
+      2022,
+      31
+    ],
+    [
+      2022,
+      32
+    ],
+    [
+      2023,
+      30
+    ],
+    [
+      2023,
+      44
+    ],
+    [
+      2024,
+      22
+    ],
+    [
+      2024,
+      23
+    ],
+    [
+      2024,
+      28
+    ],
+    [
+      2024,
+      29
+    ],
+    [
+      2024,
+      30
+    ],
+    [
+      2024,
+      31
+    ],
+    [
+      2024,
+      39
+    ],
+    [
+      2024,
+      44
+    ],
+    [
+      2024,
+      45
+    ]
+  ],
+  "research_manifest_sha256": "f289664f31cdf39d94e13010aece6df6240aff063efdaa6b5e5715ad2928a790"
+}

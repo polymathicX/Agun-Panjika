@@ -32,8 +32,8 @@ The Bangladesh prototype now includes worldwide recent observations, four histor
 \begin{tabularx}{\linewidth}{@{}L{36mm}Y@{}}
 \toprule\textbf{Priority} & \textbf{Delivered extension}\\\midrule
 Public dated product & GitHub Pages and separate six-hour global refresh; per-source dates, stale notices and expired-outlook suppression.\\
-Contrasting evidence & Bangladesh, Nepal, Chin and Punjab--Haryana; separated fit/calibration/test periods and full baseline/failure reporting.\\
-Sensor explanation & Year/week controls, raw/factor/model curves and revealable frozen VIIRS reference with interval/error display.\\
+Contrasting evidence & Bangladesh, Nepal, Chin and Punjab--Haryana; chronological annual fits, independent calibration, source-quality flags and complete baseline reporting.\\
+Sensor explanation & Year/week controls, raw/factor/model curves and revealable VIIRS reference with interval/error display.\\
 Continuity integrity & Shared national/local/neighbour source rules, weekly point provenance and bridge bounds; zero/missing/outage tests.\\
 Global discovery & Spin, zoom and tap the Earth; daily playback; keyboard/flat-map alternatives and sampled-point disclosure.\\
 Repeat mobile access & Local country watchlist, installable PWA, offline reference packages and country points cached on visit.\\
@@ -49,19 +49,19 @@ Tests establish software behavior, not scientific validity. Chromium installatio
 
 \ReportPage{What the new evidence changes}{sec:results}
 \includegraphics[width=\linewidth]{figures/global-transfer.pdf}
-\SourceNote{Weekly MAE relative to the training-fitted factor; 156 test weeks per area, 2022--2024. Lower is better. Each area has its own fit.}
+\SourceNote{Change in weekly MAE against the previous release, keeping all 156 original weeks per area. Lower is better. This is a known historical replay.}
 
-The ensemble helps in Bangladesh and Nepal but loses in Chin and Punjab--Haryana. Nominal-80\% interval coverage ranges from 73.7\% to 81.4\%. Nepal's factor is also better on annual totals. Those are reasons to compare method and metric per setting, not to hide unsuccessful cases.
+The updated workflow improves Chin from 136.414 to 88.530 weekly MAE (35.10\%) and Punjab--Haryana from 313.525 to 246.265 (21.45\%), retaining all 156 original weeks. A strict support guard addresses tree saturation; annual past-only fitting adapts the observation relationship.
 
-\begin{keypoint}{A product decision tied to evidence}
-The app withholds reconstructed pre-VIIRS calendar rows where the ensemble loses to the fitted factor. Observed calendars, baseline results and failed experiments remain available for inspection.
+\begin{keypoint}{Keep the comparison honest}
+Chin's monthly baseline remains better. Bangladesh and Nepal worsen by about 2\%. No per-area method is chosen after inspecting these results. The chart reports those trade-offs.
 \end{keypoint}
 
-\subsection{What this evaluation cannot establish}
-Fit 2013--2018, calibration 2019--2021 and test 2022--2024 are disjoint. However, those periods were already known during development. This is a temporal replay, not an untouched final holdout. Models are trained locally, not transferred to unseen countries. Absolute MAE cannot rank differently sized areas.
+\subsection{Reference quality is a separate correction}
+NASA documents a 2--6 November 2024 acquisition outage during a major Punjab error. Raw timestamps corroborate the gap. A fixed global long-outage rule flags 14 test weeks identically for every method. The app publishes both the 142-week comparable scores and every raw observation/all-week score. Quality filtering is not advertised as a prediction improvement.
 
-\subsection{Immediate scientific decision}
-Agree one primary claim and metric, review the failure cases and lock a new evaluation before further choices. Keep simple fitted and seasonal baselines. The older weather-assisted Bangladesh LOYO result is separate and still needs its own independence/calibration review.
+\subsection{What remains unproven}
+Each target year fits only labels through two years earlier and calibrates on the preceding year. Its 49--51 calibration weeks give limited interval evidence. The historical years were known during development and alternatives were explored. This is a walk-forward replay, not an untouched final holdout. Wider independent evaluation and practitioner testing remain necessary.
 
 \SourceNote{Complete baselines, regional results, hashes, public feature files and reproduction: \RepoLink{docs/GLOBAL_EVALUATION.md}{model card}. Refit command: \texttt{python -m pipeline.global\_cases --from-packages}.}
 

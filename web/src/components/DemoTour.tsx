@@ -57,6 +57,7 @@ export function DemoTour({ go, route, params }: { route: Route; params: URLSearc
   }, [step]);
   useEffect(() => {
     if (step === null) return;
+    setReady(false);
     const selector = step === 0 && keyboard ? '.world-controls details' : STEPS[step].target;
     let target: HTMLElement | null = null;
     const check = () => {
@@ -85,16 +86,18 @@ export function DemoTour({ go, route, params }: { route: Route; params: URLSearc
     {phase === 'welcome' && <button type="button" className="tutorial-text-button" onClick={() => { mark('dismissed'); setPhase('idle'); }}>{bn ? 'নিজে দেখব' : 'I’ll explore'}</button>}
   </div>;
   const copy = bn ? STEPS[step].bn : STEPS[step].en;
+  const onPage = route === (step < 5 ? 'world' : 'global');
   return <aside className={`demo-tour tutorial-coach no-print ${step >= 2 && step <= 4 ? 'coach-left' : ''}`} role="dialog" aria-modal="false" aria-labelledby="tutorial-heading" aria-describedby="tutorial-copy">
     <div className="demo-caption"><span>{bn ? 'করে শিখুন' : 'LEARN BY DOING'} · {step + 1} / {STEPS.length}</span><button type="button" className="tutorial-close" onClick={() => exit()} aria-label={bn ? 'নির্দেশনা বন্ধ করুন' : 'Exit tutorial'}>×</button></div>
     <div className="tutorial-progress" aria-hidden="true">{STEPS.map((_, i) => <i key={i} className={i <= step ? 'is-done' : ''}/>)}</div>
     <h2 id="tutorial-heading" ref={heading} tabIndex={-1}>{copy[0]}</h2><p id="tutorial-copy">{copy[1]}</p>
-    {step === 0 && <button type="button" className="tutorial-text-button" onClick={() => {
+    {onPage && step === 0 && <button type="button" className="tutorial-text-button" onClick={() => {
       setKeyboard(true); const details = document.querySelector<HTMLDetailsElement>('.world-controls details'); if (details) details.open = true;
       requestAnimationFrame(() => document.getElementById('world-country')?.focus());
     }}>{bn ? 'কিবোর্ড ব্যবহার করুন' : 'Use the keyboard instead'}</button>}
-    <p className="tutorial-feedback" aria-live="polite">{!ready ? (bn ? 'দৃশ্য প্রস্তুত হচ্ছে…' : 'Getting this view ready…') : STEPS[step].task ? (done ? (bn ? '✓ হয়েছে! এবার এগোন।' : '✓ Got it. You can continue.') : (bn ? 'উপরের কাজটি করে দেখুন।' : 'Try the action above to continue.')) : ''}</p>
-    <div className="demo-actions"><button type="button" className="btn" disabled={step === 0} onClick={() => move(step - 1)}>{bn ? 'পেছনে' : 'Back'}</button><button type="button" className="btn btn-primary" disabled={!ready || !done} onClick={() => step === STEPS.length - 1 ? exit(true) : move(step + 1)}>{step === STEPS.length - 1 ? (bn ? 'নিজে দেখুন' : 'Explore on my own') : (bn ? 'এগিয়ে যান' : 'Continue')} <span aria-hidden="true">→</span></button></div>
+    <p className="tutorial-feedback" aria-live="polite">{!onPage ? (bn ? 'অন্য দৃশ্যে গেছেন। এই ধাপে ফিরে এসে শিখতে পারেন।' : 'You opened another view. Return to this step when you’re ready.') : !ready ? (bn ? 'দৃশ্য প্রস্তুত হচ্ছে…' : 'Getting this view ready…') : STEPS[step].task ? (done ? (bn ? '✓ হয়েছে! এবার এগোন।' : '✓ Got it. You can continue.') : (bn ? 'উপরের কাজটি করে দেখুন।' : 'Try the action above to continue.')) : ''}</p>
+    {!onPage && <button type="button" className="btn mt-2" onClick={()=>move(step)}>{bn?'এই ধাপে ফিরে যান':'Return to this step'}</button>}
+    <div className="demo-actions"><button type="button" className="btn" disabled={step === 0} onClick={() => move(step - 1)}>{bn ? 'পেছনে' : 'Back'}</button><button type="button" className="btn btn-primary" disabled={!onPage || !ready || !done} onClick={() => step === STEPS.length - 1 ? exit(true) : move(step + 1)}>{step === STEPS.length - 1 ? (bn ? 'নিজে দেখুন' : 'Explore on my own') : (bn ? 'এগিয়ে যান' : 'Continue')} <span aria-hidden="true">→</span></button></div>
     <button type="button" className="tutorial-skip" onClick={() => step === STEPS.length - 1 ? exit() : move(step + 1)}>{bn ? 'এই ধাপ বাদ দিন' : 'Skip this step'}</button>
   </aside>;
 }

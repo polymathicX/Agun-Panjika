@@ -158,7 +158,7 @@ export default function Earth3D(props: Props) {
         }
       } down = null;
     };
-    const leave = () => setSelected(null);
+    const leave = () => { cancelAnimationFrame(hoverFrame); hoverFrame = 0; setSelected(null); };
     canvas.addEventListener('pointermove', move); canvas.addEventListener('pointerdown', start); canvas.addEventListener('pointerup', end); canvas.addEventListener('pointerleave', leave);
     return () => {
       disposed = true; clearTimeout(settled); cancelAnimationFrame(frame); cancelAnimationFrame(animation); cancelAnimationFrame(hoverFrame); resize.disconnect(); controls.dispose();
