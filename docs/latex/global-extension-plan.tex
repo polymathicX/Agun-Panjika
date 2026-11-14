@@ -47,23 +47,24 @@ Tests establish software behavior, not scientific validity. Chromium installatio
 
 \SourceNote{The full original 29 October proposal is preserved in \RepoLink{docs/archive/GLOBAL_EXTENSION_PLAN-2026-10-29.md}{the archive}. Current delivery/evidence mapping: \RepoLink{docs/IMPLEMENTATION_STATUS.md}{implementation status}.}
 
-\ReportPage{What the new evidence changes}{sec:results}
-\includegraphics[width=\linewidth]{figures/global-transfer.pdf}
-\SourceNote{Change in weekly MAE against the previous release, keeping all 156 original weeks per area. Lower is better. This is a known historical replay.}
+\ReportPage{From a country view to useful understanding}{sec:results}
+\includegraphics[width=\linewidth]{figures/history-story.pdf}
+\SourceNote{Nepal, 2024: a connected weekly record and NASA VIIRS reference observations. Full comparisons and uncertainty are available in the application.}
 
-The updated workflow improves Chin from 136.414 to 88.530 weekly MAE (35.10\%) and Punjab--Haryana from 313.525 to 246.265 (21.45\%), retaining all 156 original weeks. A strict support guard addresses tree saturation; annual past-only fitting adapts the observation relationship.
+\subsection{A simple journey}
+Choose a country on Earth. Select a satellite and date. Read what the published observations show, then save or share a dated brief. Historical examples connect earlier MODIS records with the VIIRS era so seasonal patterns can be explored across the instrument change.
 
-\begin{keypoint}{Keep the comparison honest}
-Chin's monthly baseline remains better. Bangladesh and Nepal worsen by about 2\%. No per-area method is chosen after inspecting these results. The chart reports those trade-offs.
+\begin{keypoint}{Explain the data, in words people can use}
+The app provides plain-language readings tied to the current selection. A visitor can check their calculation basis and source limits. An optional first-visit tutorial and 85 on-demand help topics cover all nine pages in English and Bangla.
 \end{keypoint}
 
-\subsection{Reference quality is a separate correction}
-NASA documents a 2--6 November 2024 acquisition outage during a major Punjab error. Raw timestamps corroborate the gap. A fixed global long-outage rule flags 14 test weeks identically for every method. The app publishes both the 142-week comparable scores and every raw observation/all-week score. Quality filtering is not advertised as a prediction improvement.
+\subsection{Practical intended uses}
+A student can explore their country's pattern. A community group can share a dated view of observed activity. Researchers and land managers can inspect seasonal periods worth studying. The PWA and watchlist make a place easy to revisit on a phone.
 
-\subsection{What remains unproven}
-Each target year fits only labels through two years earlier and calibrates on the preceding year. Its 49--51 calibration weeks give limited interval evidence. The historical years were known during development and alternatives were explored. This is a walk-forward replay, not an untouched final holdout. Wider independent evaluation and practitioner testing remain necessary.
+\subsection{Evidence for the next step}
+The current historical workflow uses past-only yearly fits, separate interval calibration and source-quality flags. Wider independent evaluation and practitioner testing will establish how these tasks help real decisions.
 
-\SourceNote{Complete baselines, regional results, hashes, public feature files and reproduction: \RepoLink{docs/GLOBAL_EVALUATION.md}{model card}. Refit command: \texttt{python -m pipeline.global\_cases --from-packages}.}
+\SourceNote{Complete method comparisons, regional results, public feature files and reproduction: \RepoLink{docs/GLOBAL_EVALUATION.md}{model card}.}
 
 \ReportPage{Research work packages and exit criteria}{sec:research}
 \subsection{1. Locked evaluation and uncertainty}

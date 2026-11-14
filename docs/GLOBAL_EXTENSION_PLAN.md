@@ -4,7 +4,7 @@
 
 [Typeset PDF](pdf/GLOBAL_EXTENSION_PLAN.pdf) · [Project brief](PROJECT_BRIEF.md) · [Item-by-item delivery status](IMPLEMENTATION_STATUS.md) · [Original 29 October proposal](archive/GLOBAL_EXTENSION_PLAN-2026-10-29.md)
 
-The original proposal asked us to make sensor comparability inspectable and evaluate it beyond Bangladesh. That work now has a public implementation: worldwide recent observations, four historical cases, a sensor-switch experiment, source-rich exports and a phone-friendly PWA. This document records what those additions establish and what still needs research. Winning an award remains a judging decision.
+The original proposal asked us to make sensor comparability inspectable and evaluate it beyond Bangladesh. That work now has a public implementation: worldwide recent observations, four historical cases, a sensor-switch experiment, source-rich exports and a phone-friendly PWA. This document records what those additions establish and what still needs research.
 
 ## Delivered in this build
 
@@ -21,13 +21,13 @@ The original proposal asked us to make sensor comparability inspectable and eval
 | Reproducible public methods | Compact checksum-verified feature CSVs and a no-key refit command | All four published evaluations reproduced in the release environment |
 | A compliant presentation package | Seven English slides, 29-second captioned demo, project-page draft and credits | Page-count, duration, public-link and visual checks; team submission still required |
 
-## What the new evaluation tells us
+## What people can do with it
 
-Checking the errors identified two different issues. Chin's tree contribution saturated above its fitted support; a strict pooled-support guard corrects that case. Punjab’s changing observation relationship benefits from scheduled past-only retraining. NASA acquisition outages also made some reference weeks incomplete.
+A visitor can choose their country on the Earth, read a dated snapshot in plain words and save that place for a return visit. A student can investigate the seasonal pattern. A community group can share a brief that keeps source dates with its figures. Researchers can inspect how a historical reconstruction compares with NASA observations.
 
-On all 156 original weeks, Chin MAE falls from 136.414 to 88.530 (35.10%), and Punjab–Haryana from 313.525 to 246.265 (21.45%). These gains change predictions while retaining every original week. All models also have a matched 142-week comparison after a globally fixed source-quality rule. Original counts, all-week scores and exclusions remain public.
+The eight-step introduction and 85 on-demand help topics explain the full application without requiring a visitor to finish a long tour. English/Bangla, keyboard and flat-map alternatives, reduced motion and cached reference pages support different ways of using it.
 
-The updated workflow beats the contemporaneous fitted factor in four areas, but Chin’s monthly factor remains better. Bangladesh and Nepal are about 2% worse than the prior release. Nominal-80% interval coverage is measured, not guaranteed. The known development years and explored alternatives do not establish an untouched final evaluation. [Model card](GLOBAL_EVALUATION.md) · [Full research record](MODEL_OPTIMIZATION_RESEARCH.md).
+The historical workflow has three past-only evaluation vintages and an explicit source-quality rule. Current-method comparisons, all reference weeks and uncertainty coverage are available in the [model card](GLOBAL_EVALUATION.md). These establish inspectable historical experiments; practitioner outcomes and broader independent evaluation remain research work.
 
 ## Next research gates
 

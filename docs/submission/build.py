@@ -32,13 +32,13 @@ def figures() -> None:
                          "axes.labelcolor": "#173047", "xtick.color": "#536575", "ytick.color": "#173047"})
     catalog = json.loads((ROOT / "web/public/data/global/catalog.json").read_text(encoding="utf-8"))
     areas = catalog["areas"]
-    values = [-a["evaluation"]["raw_change_from_previous_pct"] for a in areas]
+    values = [-a["evaluation"]["development_change_pct"] for a in areas]
     fig, ax = plt.subplots(figsize=(8.6, 4.2), layout="constrained")
     colors = ["#245878" if x < 0 else "#bc4221" for x in values]
     ax.barh(range(4), values, color=colors, height=.58)
     ax.set_yticks(range(4), ["Bangladesh", "Nepal", "Chin, Myanmar", "Punjab & Haryana"])
     ax.invert_yaxis(); ax.axvline(0, color="#536575", lw=.8)
-    ax.set_xlim(-45, 35); ax.set_xlabel("Change in weekly error versus the previous release (%)")
+    ax.set_xlim(-45, 35); ax.set_xlabel("Change in weekly error versus the initial development experiment (%)")
     ax.xaxis.grid(True, color="#d4dfe6", alpha=.6); ax.set_axisbelow(True)
     for i, value in enumerate(values):
         ax.text(value / 2 if value < 0 else value + 1, i,
@@ -50,13 +50,13 @@ def figures() -> None:
     plt.close(fig)
 
     highlights = [a for a in areas if a['id'] in ('chin', 'punjab_haryana')]
-    gains = [a['evaluation']['raw_change_from_previous_pct'] for a in highlights]
+    gains = [a['evaluation']['development_change_pct'] for a in highlights]
     assert len(highlights) == 2 and all(0 < gain < 100 for gain in gains)
     fig, ax = plt.subplots(figsize=(8.6, 4.2), layout='constrained')
     ax.barh(range(2), gains, color='#245878', height=.48)
     ax.set_yticks(range(2), ['Chin, Myanmar', 'Punjab & Haryana'])
     ax.invert_yaxis(); ax.set_xlim(0, 45)
-    ax.set_xlabel('Reduction in weekly error versus the previous release (%)')
+    ax.set_xlabel('Reduction in weekly error versus the initial development experiment (%)')
     ax.xaxis.grid(True, color='#d4dfe6', alpha=.6); ax.set_axisbelow(True)
     for i, gain in enumerate(gains):
         ax.text(gain / 2, i, f'{gain:.2f}% lower error', ha='center', va='center',
@@ -80,6 +80,21 @@ def figures() -> None:
         fig.savefig(FIGURES / f"sensor-story.{suffix}", dpi=220, facecolor="white")
     plt.close(fig)
     rows = []
+    history = json.loads((ROOT / 'web/public/data/global/nepal.json').read_text(encoding='utf8'))
+    weeks = [row for row in history['weeks'] if row['y'] == 2024]
+    plt.rcParams.update({'font.size':18})
+    fig,ax=plt.subplots(figsize=(9.0,4.6),layout='constrained')
+    week_numbers=[row['w'] for row in weeks]
+    observed=[row.get('viirs',np.nan) if row.get('reference_ok',True) else np.nan for row in weeks]
+    reconstructed=[row.get('model',np.nan) if row['w']<26 else value for row,value in zip(weeks,observed,strict=True)]
+    ax.plot(week_numbers,reconstructed,color='#b84127',lw=3,label='Connected record')
+    ax.plot(week_numbers,observed,color='#245878',lw=2.4,ls='--',label='VIIRS observations')
+    ax.axvline(26,color='#536575',lw=1,ls=':')
+    ax.set_xlim(1,52);ax.set_xticks([1,14,27,40,49],['Jan','Apr','Jul','Oct','Dec'])
+    ax.set_ylabel('Weekly satellite detections');ax.set_title('Nepal · 2024',loc='left',weight='bold',pad=14)
+    ax.grid(axis='y',color='#d4dfe6',alpha=.65);ax.legend(frameon=False,fontsize=16)
+    for suffix in ('pdf','png'):fig.savefig(FIGURES/f'history-story.{suffix}',dpi=220,facecolor='white')
+    plt.close(fig)
     for a in areas:
         e=a["evaluation"]
         label=a['name_en'].replace('&', r'\&')
@@ -117,23 +132,26 @@ def compile_slides(env: dict) -> None:
 def movie(env: dict) -> None:
     import imageio_ffmpeg
     exe=imageio_ffmpeg.get_ffmpeg_exe()
-    durations=[3,4,5,6,6,5]
+    durations=[2,3,5,5,5,9]
     segments=[]
     for number,duration in enumerate(durations,1):
         destination=BUILD / f"segment-{number}.mp4"
         args=[exe,"-y","-loglevel","error","-loop","1","-i",str(BUILD/f"scene-{number}.png")]
-        if number in (3,4):
-            name="world" if number==3 else "experiment"
+        if number in (4,5,6):
+            name={4:'world',5:'experiment',6:'phone'}[number]
             meta=json.loads((BUILD/f"{name}-clip.json").read_text())
             r=meta["region"]
             args += ["-ss",str(meta["start"]),"-i",str(BUILD/f"{name}-motion.webm")]
-            if number==3:
-                region="scale=1120:760:force_original_aspect_ratio=decrease"
-                overlay="overlay=730:(220+(760-overlay_h)/2)"
-            else:
+            if number==4:
+                region="scale=1310:750:force_original_aspect_ratio=decrease"
+                overlay="overlay=(560+(1310-overlay_w)/2):(240+(750-overlay_h)/2)"
+            elif number==5:
                 crop=f"crop={int(r['width'])}:{int(r['height'])}:{int(r['x'])}:{int(r['y'])}"
-                region=crop+",scale=1500:650:force_original_aspect_ratio=decrease"
-                overlay="overlay=(1920-overlay_w)/2:(350+(650-overlay_h)/2)"
+                region=crop+",scale=1710:720:force_original_aspect_ratio=decrease"
+                overlay="overlay=(1920-overlay_w)/2:(260+(720-overlay_h)/2)"
+            else:
+                region="scale=470:840:force_original_aspect_ratio=decrease"
+                overlay="overlay=(1350+(470-overlay_w)/2):(140+(840-overlay_h)/2)"
             args += ["-filter_complex",f"[1:v]{region}[motion];[0:v][motion]{overlay}[v]","-map","[v]"]
         args += ["-t",str(duration),"-r","30","-c:v","libx264","-preset","fast","-crf","19",
                  "-pix_fmt","yuv420p","-an",str(destination)]

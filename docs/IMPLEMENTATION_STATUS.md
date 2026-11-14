@@ -1,6 +1,6 @@
 # Global roadmap: delivery and evidence
 
-15 November 2026. This is the acceptance record for the [original global plan](GLOBAL_EXTENSION_PLAN.md). It separates software delivered in this hackathon build from evidence that needs people or future observations. An award is a judging decision; adding features cannot guarantee one.
+15 November 2026. This is the acceptance record for the [original global plan](GLOBAL_EXTENSION_PLAN.md). It separates software delivered in this hackathon build from evidence that needs people or future observations.
 
 | Original plan item | Current delivery | Evidence / remaining condition |
 | --- | --- | --- |
@@ -11,7 +11,7 @@
 | Consistent successor handover | Shared factor/source selection in main, local and neighbour records; weekly point provenance; exported bridge bounds; zero/outage tests | [Continuity tests](../tests/test_continuity.py). Coarse sensor-span coverage assumptions remain explicit. |
 | Supported-area selection | Country selection by spinning/tapping/zooming the 3D Earth; keyboard/flat-map alternatives; four historical area packages | Recent observations cover 242 Natural Earth countries/territories. Custom polygon reconstruction remains unsupported: the region-trained model has not been validated at arbitrary scales. The official challenge makes drawn AOI optional. |
 | Shareable dated evidence | Historical case PNG/JSON/CSV/print briefs with raw values, acquisition-quality flags and model vintages; recent-country PNG/JSON/daily CSV; source windows, uncertainty/limits and reproducible links | Scientific exports distinguish observed counts and model outputs. Country assignment uses generalized boundaries; unassigned points are reported. |
-| Useful mobile experience | Optional eight-step action-led tutorial, shaped skeletons, reliable history/retry behavior, responsive globe, reduced-motion behavior, bounded point rendering, local watchlist, installable PWA and offline reference packages | Chromium installation criteria and emulated mobile checks. Physical Android/iPhone and assistive-technology testing are still needed; no push-notification delivery is claimed. |
+| Useful mobile experience | Optional eight-step introduction, 85 on-demand help topics across all nine pages, plain-language data readings, shaped skeletons, reliable history/retry behavior, responsive globe, reduced-motion behavior, bounded point rendering, local watchlist, installable PWA and offline reference packages | Chromium installation criteria and emulated mobile checks. Physical Android/iPhone and assistive-technology testing are still needed; no push-notification delivery is claimed. |
 | Stakeholder/comprehension pilot | Existing task protocol and acceptance questions retained, with uncertainty/source interpretation now directly testable in the product | **Not completed.** Real participants/practitioners must supply responses. No adoption, comprehension score, fires prevented or lives saved is invented. |
 | Industrial-filter validation | Current heuristic documented; portable replay avoids learned static-cell decisions | **Not independently validated.** New blind positive/negative/uncertain labels and retained-fire sensitivity are needed. |
 | Operational warning integration | Experimental outlooks identified and expired products withheld | **Not operationally established.** Need issue-time forecasts, prospective evaluation, domain partnership and delivery monitoring. |
@@ -21,7 +21,7 @@
 
 Worldwide observations are useful without pretending every location has a calibrated historical model. The current product lets a person inspect their country, revisit a watchlist, compare days, and share a dated source. The historical work adds something more demanding: a record whose sensor correction can be checked. Both are visible, with their different limits.
 
-Arbitrary-polygon precision, independently verified field impact, blind labels and future forecast performance cannot be created by a UI change. Those remain concrete research tasks for the mentor and team. Their absence is disclosed in the presentation and model card.
+Arbitrary-polygon precision, independently verified field impact, blind labels and future forecast performance cannot be created by a UI change. Those remain concrete research tasks for the mentor and team. The evidence scope is documented in the model card and research roadmap.
 
 ## Pilot to run with real people
 

@@ -34,7 +34,7 @@ try {
  const original='/home?r=d_rangamati&y=2024&w=17&s=harm%2Cviirs&kilns=1';await page.goto(`${base}/?lang=en&theme=dark#${original}`);
  await page.getByRole('button',{name:'Show me around',exact:true}).click();await coach.waitFor();await page.keyboard.press('Escape');await page.waitForURL(url=>url.hash===`#${original}`);
  const mobile=await context.newPage();await mobile.setViewportSize({width:390,height:844});await mobile.goto(`${base}/?lang=bn&theme=dark#/world`);
- await mobile.locator('.demo-launch>.btn').click();await mobile.getByRole('dialog').waitFor();await mobile.locator('.tutorial-target').waitFor();
+ await mobile.getByRole('button',{name:'ঘুরে দেখান',exact:true}).click();await mobile.getByRole('dialog').waitFor();await mobile.locator('.tutorial-target').waitFor();
  assert.equal(await mobile.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  assert.deepEqual((await new AxeBuilder({page:mobile}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations.map(v=>v.id),[]);
  await mobile.screenshot({path:path.join(out,'tutorial-phone-bn.png')});await mobile.keyboard.press('Escape');

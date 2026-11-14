@@ -12,6 +12,8 @@ import { loadForecast, loadRegion, useAsync } from "../lib/data";
 import type { Route } from "../lib/router";
 import { byYear, isoWeekStart, LEVEL_COLOR, seasonAt } from "../lib/series";
 import type { Manifest, RegionDoc } from "../lib/types";
+import { DataReading } from '../components/DataReading';
+import { seasonReading } from '../lib/readings';
 
 interface Props {
   manifest: Manifest;
@@ -28,7 +30,7 @@ export function Home({ manifest, params, setParams, go }: Props) {
   return (
     <div className="flex flex-col gap-4">
       <GlobePanel manifest={manifest} params={params} setParams={setParams} go={go} />
-      <section className="global-launch no-print"><div><p className="eyebrow">{lang === 'bn' ? 'বিশ্বের পথে' : 'Beyond one border'}</p><strong>{lang === 'bn' ? 'চার ভূদৃশ্যে সমন্বয় পরীক্ষা করুন।' : 'Test the correction in four landscapes.'}</strong><p className="text-sm text-muted mt-1">{lang === 'bn' ? 'পর্যবেক্ষণ দেখুন, ভুল যাচাই করুন, প্রমাণ সঙ্গে রাখুন।' : 'Reveal observations. Inspect failures. Share the evidence.'}</p></div><button className="btn btn-primary" type="button" onClick={() => go('global')}>{lang === 'bn' ? 'গ্লোবাল কেস খুলুন' : 'Explore global cases'} ↗</button></section>
+      <section className="global-launch no-print"><div><p className="eyebrow">{lang === 'bn' ? 'বিশ্বের পথে' : 'Beyond one border'}</p><strong>{lang === 'bn' ? 'চার ভূদৃশ্যে সমন্বয় পরীক্ষা করুন।' : 'Test the correction in four landscapes.'}</strong><p className="text-sm text-muted mt-1">{lang === 'bn' ? 'উপগ্রহের রেকর্ড তুলনা করুন, মৌসুম দেখুন, প্রমাণসহ শেয়ার করুন।' : 'Compare satellite records, explore seasons, and share what you find.'}</p></div><button className="btn btn-primary" type="button" onClick={() => go('global')}>{lang === 'bn' ? 'গ্লোবাল কেস খুলুন' : 'Explore global cases'} ↗</button></section>
       <div className="season-report-heading no-print"><h2>{lang === "bn" ? t("report.title") : "Your seasonal report"}</h2><p>{lang === "bn" ? t("app.tagline") : "The full record, with context. Explore the season, uncertainty and historical comparisons below."}</p></div>
       {doc ? (
         <SeasonView manifest={manifest} doc={doc} params={params} setParams={setParams} go={go} />
@@ -70,7 +72,7 @@ function SeasonView({ manifest, doc, params, setParams, go }: Props & { doc: Reg
         </h1>
         <p className="text-xs">{t("app.tagline")}</p>
       </div>
-      <div className="no-print grid grid-cols-2 gap-3 sm:grid-cols-[2fr_1fr_2fr]">
+      <div data-help="season-controls" className="no-print grid grid-cols-2 gap-3 sm:grid-cols-[2fr_1fr_2fr]">
         <div className="col-span-2 sm:col-span-1">
           <RegionPicker manifest={manifest} value={doc.region.id} onChange={(r) => setParams({ r })} />
         </div>
@@ -102,7 +104,7 @@ function SeasonView({ manifest, doc, params, setParams, go }: Props & { doc: Reg
       </div>
 
       {s && hasYear && (
-        <div ref={cardRef} className="card flex flex-col gap-4 p-4 sm:p-6" style={{ borderTop: `5px solid ${LEVEL_COLOR[s.level]}` }}>
+        <div data-help="season-report" ref={cardRef} className="card flex flex-col gap-4 p-4 sm:p-6" style={{ borderTop: `5px solid ${LEVEL_COLOR[s.level]}` }}>
           <div className="flex items-start justify-between gap-3">
             <div>
               <div className="eyebrow">
@@ -159,7 +161,8 @@ function SeasonView({ manifest, doc, params, setParams, go }: Props & { doc: Reg
         </div>
       )}
 
-      <div className="no-print flex flex-wrap gap-2">
+      <DataReading reading={seasonReading(doc.weeks,areaName,year,week,lang==='bn')} />
+      <div data-help="season-share" className="no-print flex flex-wrap gap-2">
         <ShareButton target={cardRef} filename={`agun-panjika-${doc.region.id}-${year}-w${week}.png`} title={t("home.shareTitle", { area: areaName })} />
         <button type="button" className="btn" onClick={() => window.print()}>
           {t("report.print")}

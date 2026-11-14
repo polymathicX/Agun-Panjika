@@ -47,6 +47,8 @@ def test_published_case_reproduces_its_test_metrics(area):
         assert len(included) == scores['ensemble']['weeks']
     old = json.loads((ROOT / f'web/public/data/global/v1/{area}.json').read_text(encoding='utf-8'))
     old_values = {(r['y'], r['w']): r['viirs'] for r in old['weeks'] if 'viirs' in r}
+    assert doc['evaluation']['development_reference_mae'] == old['evaluation']['models']['ensemble']['mae_week']
+    assert 'previous_release_mae' not in doc['evaluation']
     assert all(r['viirs'] == old_values[r['y'], r['w']] for r in rows)
     assert len(doc["snapshot_sha256"]) == 64
     assert all("fixed" in r and r["lo"] <= r["model"] <= r["hi"] for r in rows)

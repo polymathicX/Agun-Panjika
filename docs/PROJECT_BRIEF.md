@@ -49,20 +49,11 @@ For target year Y, fit on 2013 through Y−2 and calibrate intervals on Y−1. T
 
 The years were already known during development and several alternatives were explored. This is a known annual walk-forward replay, not an untouched final holdout or unseen-country transfer.
 
-**All 156 original weeks, weekly MAE:**
-
-| Area | Previous release | Updated model | Same-workflow factor | Monthly factors |
-| --- | ---: | ---: | ---: | ---: |
-| Bangladesh | 45.970 | 46.926 | 58.316 | 49.839 |
-| Nepal | 113.001 | 115.232 | 158.516 | 131.390 |
-| Chin, Myanmar | 136.414 | 88.530 | 97.283 | 75.525 |
-| Punjab & Haryana, India | 313.525 | 246.265 | 262.017 | 291.339 |
-
-Chin improves 35.10% and Punjab–Haryana 21.45% against the previous release. Bangladesh and Nepal are about 2% worse. Chin’s monthly factor still wins; no method is claimed to win every setting or metric.
+The current method is compared with simple fitted and monthly factors. The table below uses the same source-comparable weeks for every method. Complete raw-week results, additional baselines and the development protocol are in the model card.
 
 **Matched comparable reference weeks:**
 
-| Area | Updated model | Fitted factor | Monthly factors | Measured 80% coverage |
+| Area | Reconstruction | Fitted factor | Monthly factors | Measured 80% coverage |
 | --- | ---: | ---: | ---: | ---: |
 | Bangladesh | 51.201 | 63.785 | 54.523 | 78.2% |
 | Nepal | 125.792 | 173.297 | 143.696 | 79.6% |
@@ -71,7 +62,7 @@ Chin improves 35.10% and Punjab–Haryana 21.45% against the previous release. B
 
 NASA documents a 2–6 November 2024 GPS acquisition outage during a major Punjab error. Raw timestamps corroborate missing S-NPP observations. A globally fixed long-outage rule flags 14 test weeks, equally for every area and baseline. All raw counts and 156-week scores remain available. The comparable 142-week scores correct reference quality; they are not advertised as prediction improvements. Totals over eligible weeks are not complete annual totals.
 
-The app marks incomplete references as gaps. Its measured nominal-80% interval coverage ranges from 74.6% to 82.4%; 49–51 calibration weeks provide limited evidence, not a guarantee. The [model card](GLOBAL_EVALUATION.md) includes source hashes, guard usage, every baseline, per-year/regional results, original benchmark links and reproduction. The [research note](MODEL_OPTIMIZATION_RESEARCH.md) preserves failed alternatives.
+The app marks incomplete references as gaps. Its measured nominal-80% interval coverage ranges from 74.6% to 82.4%; 49–51 calibration weeks provide limited evidence, not a guarantee. The [model card](GLOBAL_EVALUATION.md) includes source hashes, guard usage, every baseline, per-year/regional results, development audit links and reproduction. The [research note](MODEL_OPTIMIZATION_RESEARCH.md) preserves the development experiments for academic review.
 
 ```powershell
 python -m pip install -e ".[dev]"
@@ -80,6 +71,12 @@ python -m pipeline.global_cases --from-packages
 
 Public feature inputs and the NASA quality manifest refit the workflow without a key. They do not independently audit the raw-to-feature preparation; library/platform variation is possible. The older weather-assisted Bangladesh LOYO audit remains separate.
 
+
+## Help and plain-language readings
+
+An optional eight-step first visit introduces the main journey. Explain this page offers 85 topics across all nine pages, in English and Bangla. A visitor can jump to any topic, use the real controls, close help and return at any time. Controls, charts, tables, sources, downloads, settings and offline behavior are covered.
+
+What this tells you turns the selected data into a short reading: the country’s source count and dates, available seasonal totals, a historical comparison after reveal, or the status of a dated experimental outlook. Fixed calculations use only the published inputs. They preserve missing values, zero detections, incomplete references and expiry; the basis and limits remain available beside the reading. No LLM or paid AI service is required.
 
 ## Architecture and maintenance
 

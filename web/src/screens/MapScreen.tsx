@@ -1,3 +1,4 @@
+import { DataReading } from "../components/DataReading";
 import { RequestStatus } from "../components/RequestStatus";
 import * as maplibregl from "maplibre-gl";
 import type { GeoJSONSource, Map as MLMap } from "maplibre-gl";
@@ -226,7 +227,7 @@ export default function MapScreen({ manifest, params, setParams }: { manifest: M
       <RequestStatus error={ptsError} loading={ptsLoading} retry={retrypts}/>
       <RequestStatus error={geoError} loading={geoLoading} retry={retrygeo}/>
       <RegionPicker manifest={manifest} value={region} onChange={r=>setParams({r})} id="map-region"/>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-[1fr_3fr]">
+      <div data-help="map-controls" className="grid grid-cols-2 gap-3 sm:grid-cols-[1fr_3fr]">
         <label className="flex flex-col gap-1">
           <span className="eyebrow">{t("map.year")}</span>
           <select className="select" value={year} onChange={(e) => setParams({ y: e.target.value })}>
@@ -245,7 +246,7 @@ export default function MapScreen({ manifest, params, setParams }: { manifest: M
           <input type="range" min={1} max={maxWeek} value={week} onChange={(e) => setParams({ w: e.target.value })} className="mt-2 w-full accent-[var(--accent)]" aria-valuetext={date(weekEnd)} />
         </label>
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div data-help="map-layers" className="flex flex-wrap gap-2">
         <button type="button" className="chip" aria-pressed={showDistricts} onClick={()=>setShowDistricts(v=>!v)}>{lang==='bn'?'জেলার স্তর':'District layer'}</button>
         <button type="button" className="chip" aria-pressed={showPoints} onClick={()=>setShowPoints(v=>!v)}>{lang==='bn'?'অগ্নি শনাক্তকরণ':'Hotspot layer'}</button>
         <button type="button" className="chip" aria-pressed={hideKilns} onClick={() => setHideKilns((v) => !v)}>
@@ -255,13 +256,13 @@ export default function MapScreen({ manifest, params, setParams }: { manifest: M
           {t("map.tableView")}
         </button>
       </div>
-      <div className="card relative overflow-hidden" style={{ height: "min(70vh, 560px)" }}>
+      <div data-help="map-canvas" className="card relative overflow-hidden" style={{ height: "min(70vh, 560px)" }}>
         {/* maplibre sets position: relative on its container, so size it with height, not inset */}
         <div ref={mapDiv} style={{ width: "100%", height: "100%" }} aria-label={t("map.title")} role="region" />
         {!ready && !mapError && <div className="absolute inset-0 grid place-items-center text-muted">{t("map.loadingMap")}</div>}
         {mapError && <div className="absolute bottom-3 left-3 right-3 rounded-lg bg-[var(--card)] p-3 text-sm" role="status">{mapError} <button type="button" className="btn ml-2" onClick={()=>setMapAttempt(n=>n+1)}>{lang==='bn'?'আবার চেষ্টা':'Retry map'}</button></div>}
       </div>
-      <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted">
+      <div data-help="map-key" className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted">
         <span>{t("map.colour")}:</span>
         {LEVELS.map((l) => (
           <span key={l} className="inline-flex items-center gap-1">
@@ -274,6 +275,7 @@ export default function MapScreen({ manifest, params, setParams }: { manifest: M
         {weekPoints.removed > 0 && <> · {t("map.removed", { n: num(weekPoints.removed) })}</>}
       </div>
       <p className="text-xs text-muted">{lang==='bn'?'সংরক্ষিত সাপ্তাহিক পর্যবেক্ষণ। VIIRS: মাঝারি/উচ্চ আস্থা; MODIS: ≥৩০। প্রতিটি বিন্দুর আস্থা ও সময় এই রপ্তানিতে নেই।':'Archived weekly observations. VIIRS: nominal/high confidence; MODIS: ≥30. Individual confidence and acquisition times are not present in this export.'}</p>
+      {dy && pts && geo && <DataReading reading={{text:lang==='bn'?`${year}-এর ${num(week)} নম্বর সপ্তাহের বাছা এলাকায় ${num(weekPoints.kept)}টি রক্ষিত পর্যবেক্ষণের স্থানাঙ্ক আছে। উৎস: ${sensorName}।`:`The selected area contains ${num(weekPoints.kept)} retained observation coordinates for week ${week} of ${year}, from ${sensorName}.`,basis:lang==='bn'?'মানচিত্রের বাছা এলাকা, সপ্তাহ ও উৎসের বিন্দু থেকে গণনা। স্তরের বোতাম শুধু দৃশ্যমানতা বদলায়।':'Counted from the archived point set for this area and week. Layer buttons change visibility.',note:lang==='bn'?'মানচিত্রের বিন্দু ও জেলার সমন্বিত মোট আলাদা তথ্য। বিন্দুতে আলাদা আস্থা বা সঠিক সময় নেই; এটি সরাসরি আগুনের সংবাদ নয়।':'Mapped points and harmonized district totals are separate products. Individual acquisition times and confidence values are absent here; these are archived observations.'}}/>}
       {(table || mapError) && (
         <div tabIndex={0} className="card overflow-x-auto p-3">
           <table className="data-table">

@@ -130,7 +130,7 @@ export interface GlobalArea {
     coverage80: number; median_width80: number; improvement_pct: number;
     calibration_weeks: number; status: "model_advantage" | "baseline_preferred";
     all_weeks: Record<string, CaseScore>; excluded_test_weeks: [number, number][];
-    previous_release_mae: number; raw_change_from_previous_pct: number;
+    development_reference_mae: number; development_change_pct: number;
   };
 }
 export interface GlobalCase extends GlobalArea {

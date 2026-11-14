@@ -1,3 +1,5 @@
+import { DataReading } from "../components/DataReading";
+import { seriesReading } from "../lib/readings";
 import { RequestStatus } from "../components/RequestStatus";
 import { scaleBand, scaleLinear } from "d3-scale";
 import { useMemo } from "react";
@@ -14,7 +16,7 @@ import { useWidth } from "../lib/useWidth";
 const ALL: SeriesKey[] = ["modis", "viirs", "naive", "harm"];
 
 export function Sensors({ manifest, params, setParams }: { manifest: Manifest; params: URLSearchParams; setParams: (p: Record<string, string | number | undefined>) => void }) {
-  const { t, num, num1, year: fy } = useFmt();
+  const { t, num, num1, year: fy, lang } = useFmt();
   const regionId = params.get("r") ?? "bgd";
   const { data: doc,error,loading,retry } = useAsync(() => loadRegion(regionId), [regionId]);
   const { data: val,error:valError,loading:valLoading,retry:retryVal } = useAsync(loadValidation, []);
@@ -38,6 +40,8 @@ export function Sensors({ manifest, params, setParams }: { manifest: Manifest; p
     naive: t("sensors.naive", { k: num1(k) }),
     harm: t("sensors.harmonised"),
   };
+  const readingSeries = on.includes("harm")?"harm":on[0];
+  const readingRows = readingSeries ? rows.filter(row=>row.y>=from && row.y<=to && row[readingSeries]!==undefined).map(row=>({label:String(row.y),value:row[readingSeries]!})) : [];
   const r2011 = rows.find((r) => r.y === 2011);
   const r2012 = rows.find((r) => r.y === 2012);
 
@@ -105,6 +109,7 @@ export function Sensors({ manifest, params, setParams }: { manifest: Manifest; p
         )}
       </section>
 
+      {doc && <DataReading reading={seriesReading(readingRows,lang==='bn'?`${lang==='bn'?doc.region.name_bn:doc.region.name_en}: ${from} থেকে ${to}, ${readingSeries?labels[readingSeries]:'কোনো রেখা বাছা হয়নি'}`:`Reading the ${readingSeries?labels[readingSeries]:'unselected'} line for ${doc.region.name_en}, ${from} to ${to}`,lang==='bn'?'বাছা রেখা ও সময়ের চার্টে থাকা পূর্ণ বছরের মোট থেকে গণনা।':'Calculated from complete-year totals for the named visible series and selected range.',lang==='bn'?'শিল্পের উৎসের বোতাম সমন্বিত রেখার ফিল্টার বদলায়। ভিন্ন উপগ্রহের মূল সংখ্যা সরাসরি সমান নয়।':'The industrial-source toggle changes the harmonized line. Different satellites have different detection sensitivities; raw counts are not directly equivalent.',lang==='bn')}/>}
       <RequestStatus error={error} loading={loading} retry={retry}/>
       <RequestStatus error={valError} loading={valLoading} retry={retryVal}/>
       {doc && <RatioBars doc={doc} k={k} />}

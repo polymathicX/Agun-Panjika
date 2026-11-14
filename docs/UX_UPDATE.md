@@ -11,6 +11,14 @@ The Soft Earth design remains the visual basis. This update concentrates on lear
 
 No tour framework, animation library or new runtime dependency was added. Existing routing, request handling, exports and scientific distinctions are retained. The tour stores only its seen/completed state locally; it creates no account or tracking service.
 
+## Help at your own pace
+
+**Explain this page** opens help on every view. Its 85 topics cover all nine pages, including controls, charts, tables, interpretation, source dates, exports, settings and offline use. A visitor can select any topic or page, keep interacting with the actual controls, and close or reopen help at any time. English/Bangla, Escape, visible focus and phone layouts are supported. Details opened by help are restored when it closes; keyboard topic selection keeps focus on the selector.
+
+**What this tells you** adds a short reading to data views. Fixed calculations follow the current country, satellite, day, year or historical reveal. Notes explain the input period, missing values, reference quality and uncertainty. A dated experimental outlook is described only when it is available and valid. No external AI service supplies scientific claims. The reading does not announce a full paragraph repeatedly while a timeline plays.
+
+The public presentation explains the finished product through country discovery, seasonal understanding, readable evidence and phone access. Its seven slides and 29-second video use actual application captures and a current seasonal example.
+
 ## Review and verification
 
 Ponytail review covered the affected callers, data loading, tutorial state, cleanup, keyboard behavior and bounded rendering. Native controls and the existing components were reused. The browser checks exercise the complete tutorial, persistence, restoration, slow requests, history and globe picking. The final release verification records the responsive matrix and combined scientific/frontend checks.
