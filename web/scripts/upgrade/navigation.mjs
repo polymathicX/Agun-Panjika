@@ -4,7 +4,7 @@ const browser=await chromium.launch();const page=await browser.newPage({viewport
 const base=process.argv[2]??'http://127.0.0.1:5273';
 await page.goto(`${base}/?theme=dark&lang=en#/home?r=d_band arban&y=2024&w=14`.replace('band arban','bandarban'));
 await page.locator('main h1').first().waitFor();
-await page.locator('.primary-desktop').getByRole('button',{name:'Compare'}).click();
+await page.locator('.primary-desktop').getByRole('button',{name:'Sensors',exact:true}).click();
 await page.waitForURL(/sensors/);assert.match(page.url(),/r=d_bandarban/);assert.match(page.url(),/y=2024/);assert.match(page.url(),/w=14/);
 const harm=page.locator('button[aria-pressed]').filter({hasText:/^Harmonised$/});await harm.click();assert.equal(await harm.getAttribute('aria-pressed'),'true');
 await page.locator('.primary-desktop').getByRole('button',{name:'World',exact:true}).click();await page.waitForURL(/world/);

@@ -21,6 +21,7 @@ function AnimatedNumber({ value }: { value: number }) {
 export function World({ params, setParams, go }: { params: URLSearchParams; setParams: (p: Record<string, string | number | undefined>, replace?: boolean) => void; go: (r: Route, p?: Record<string, string | number | undefined>) => void }) {
   const { lang, num } = useFmt(); const bn = lang === 'bn';
   const reportRef = useRef<HTMLDivElement>(null);
+  const focusedCountry = useRef<string | null>(null);
   const { data: world, error, loading, retry } = useAsync(loadWorldSummary, []);
   const { data: geo, error: geoError, loading: geoLoading, retry: retryGeo } = useAsync(loadWorldGeo, []);
   const selected = world?.countries.find(c => c.id === params.get('country'));
@@ -31,17 +32,23 @@ export function World({ params, setParams, go }: { params: URLSearchParams; setP
   const [view, setView] = useState<{focus:[number,number];distance:number} | null>(null);
   const [watched, setWatched] = useState<string[]>(() => { try { const saved=JSON.parse(localStorage.getItem('ap-watchlist-v1') ?? '[]'); return Array.isArray(saved) ? saved.filter(x => typeof x === 'string' && /^[a-z0-9]{3}$/.test(x)).slice(0,10) : []; } catch { return []; } });
   const day = Number.isInteger(Number(params.get('day'))) && params.has('day') ? Number(params.get('day')) : -1;
-  const days = observations?.dates ?? [];
+  const days = world?.sensors[sensor].dates ?? [];
   const validDay = day >= 0 && day < days.length ? day : -1;
   const points = useMemo<Hotspot[]>(() => {
     const out: Hotspot[] = []; if (!observations) return out;
-    for(let i=0;i<observations.points.length;i+=3) { const [lon,lat,index]=observations.points.slice(i,i+3); if(validDay===-1 || index===validDay) out.push({lon,lat,week:index,status:1}); }
+    for(let i=0;i<observations.points.length;i+=3) { const lon=observations.points[i],lat=observations.points[i+1],index=observations.points[i+2]; if(validDay===-1 || index===validDay) out.push({lon,lat,week:index,status:1}); }
     return out;
   }, [observations, validDay]);
   const areas = useMemo(() => geo ? (selected ? geo.features.filter(f => f.properties?.id === selected.id) : geo.features) : [], [geo, selected?.id]);
   const focus = view?.focus ?? selected?.focus ?? [30,15] as [number,number];
-  const choose = (country?: string, fly=true) => { const next=world?.countries.find(c=>c.id===country); if(fly)setView({focus:next?.focus ?? [30,15],distance:next ? 1.85 : 3.15}); setParams({country,day:undefined});setPlaying(false); };
-  useEffect(()=>{if(world && !view)setView({focus:selected?.focus ?? [30,15],distance:selected ? 1.85 : 3.15});},[!!world]);
+  const choose = (country?: string, fly=true) => { const next=world?.countries.find(c=>c.id===country); focusedCountry.current=country ?? ''; if(fly)setView({focus:next?.focus ?? [30,15],distance:next ? 1.85 : 3.15}); setParams({country,day:undefined});setPlaying(false); };
+  useEffect(()=>{
+    const country = selected?.id ?? '';
+    if (world && focusedCountry.current !== country) {
+      focusedCountry.current = country;
+      setView({focus:selected?.focus ?? [30,15],distance:selected ? 1.85 : 3.15});
+    }
+  },[world,selected?.id]);
   const pick = (lon: number, lat: number) => {const country=geo?.features.find(f=>containsPoint(f,lon,lat));if(country)choose(country.properties?.id);};
   useEffect(() => {
     if (!playing || !days.length) return;
@@ -49,7 +56,7 @@ export function World({ params, setParams, go }: { params: URLSearchParams; setP
     return () => clearInterval(timer);
   }, [playing, validDay, days.length, setParams]);
   const toggleWatch = () => { if (!selected) return; const next = watched.includes(id) ? watched.filter(x => x !== id) : [...watched.slice(-9), id]; setWatched(next); try {localStorage.setItem('ap-watchlist-v1', JSON.stringify(next));} catch {/* browsing works when storage is blocked */} };
-  if (!world) return <RequestStatus error={error} loading={loading} retry={retry} />;
+  if (!world) return <RequestStatus error={error} loading={loading} retry={retry} variant="world" />;
   const feed = world.sensors[sensor];
   const stats = selected?.sensors[sensor];
   const daily = stats?.daily ?? feed.dates.map((_, i) => world.countries.reduce((s, c) => s + (c.sensors[sensor].daily[i] ?? 0), 0));
@@ -77,16 +84,16 @@ export function World({ params, setParams, go }: { params: URLSearchParams; setP
         <button type="button" className="btn btn-primary hero-cta mt-4" onClick={() => go('global', { area: caseId ?? 'bangladesh' })}>{bn ? 'ইতিহাসের সমন্বয় পরীক্ষা করুন' : 'Can the history be trusted?'} ↗</button>
       </div>
       <div className="world-globe"><div className="globe-topline"><span>{bn ? 'টেনে ঘোরান · দেশ বেছে নিন' : 'DRAG TO EXPLORE · SELECT A COUNTRY'}</span><button type="button" onClick={() => setFlat(v => !v)}>{flat ? (bn ? 'থ্রিডি পৃথিবী' : '3D globe') : (bn ? 'সমতল মানচিত্র' : 'Flat map')}</button></div>
-        <RequestStatus error={geoError} loading={geoLoading} retry={retryGeo} />
-        {geo && (flat ? <FlatWorld geo={geo} selected={id} onPick={pick} /> : <Suspense fallback={<p role="status">{bn ? 'পৃথিবী লোড হচ্ছে…' : 'Preparing Earth…'}</p>}><Earth3D areas={areas} points={points} focus={focus} focusDistance={view?.distance ?? (selected ? 1.85 : 3.15)} onViewSettled={(lon,lat,distance)=>{ if(distance<2.5)choose(geo?.features.find(f=>containsPoint(f,lon,lat))?.properties?.id,false); }} animatedFocus onUnavailable={() => setFlat(true)} onGlobeSelect={pick} onSelect={p => pick(p.lon,p.lat)} pointLabel={p => `${observations?.dates[p.week] ?? ''} UTC · ${p.lat.toFixed(3)}°, ${p.lon.toFixed(3)}° · ${SENSORS[sensor]}`} hint={bn ? 'দেশে ক্লিক করুন · চিমটি বা +/− দিয়ে জুম করুন' : 'Select a country on Earth · pinch or use +/− to zoom'} /></Suspense>)}
-        <RequestStatus error={pointError} loading={pointsLoading} retry={retryPoints} />
-        <p className="globe-note">{observations?.sampled ? (bn ? `সুবিধার জন্য ${num(points.length)}টি নমুনা বিন্দু দেখানো হয়েছে; সংখ্যায় সব শনাক্তকরণ আছে।` : `${num(points.length)} sampled points shown for speed; totals use every retained detection.`) : (bn ? `${num(points.length)}টি বিন্দু দেখানো হচ্ছে।` : `${num(points.length)} points shown.`)}</p>
+        <RequestStatus error={geoError} loading={geoLoading} retry={retryGeo} variant="globe" />
+        {geo && (flat ? <FlatWorld geo={geo} selected={id} onPick={pick} /> : <Suspense fallback={<RequestStatus loading variant="globe"/>}><Earth3D areas={areas} points={points} focus={focus} focusDistance={view?.distance ?? (selected ? 1.85 : 3.15)} onViewSettled={(lon,lat,distance)=>{ if(distance<2.5)choose(geo?.features.find(f=>containsPoint(f,lon,lat))?.properties?.id,false); }} animatedFocus onUnavailable={() => setFlat(true)} onGlobeSelect={pick} onSelect={p => pick(p.lon,p.lat)} pointLabel={p => `${observations?.dates[p.week] ?? ''} UTC · ${p.lat.toFixed(3)}°, ${p.lon.toFixed(3)}° · ${SENSORS[sensor]}`} hint={bn ? 'দেশে ক্লিক করুন · চিমটি বা +/− দিয়ে জুম করুন' : 'Select a country on Earth · pinch or use +/− to zoom'} /></Suspense>)}
+        <div className="world-points-status"><RequestStatus error={pointError} loading={pointsLoading} retry={retryPoints} variant="compact" /></div>
+        <p className="globe-note">{!observations ? (bn ? "\u09aa\u09b0\u09cd\u09af\u09ac\u09c7\u0995\u09cd\u09b7\u09a3 \u0986\u09b8\u099b\u09c7?" : "Loading observations?") : observations.sampled ? (bn ? `সুবিধার জন্য ${num(points.length)}টি নমুনা বিন্দু দেখানো হয়েছে; সংখ্যায় সব শনাক্তকরণ আছে।` : `${num(points.length)} sampled points shown for speed; totals use every retained detection.`) : (bn ? `${num(points.length)}টি বিন্দু দেখানো হচ্ছে।` : `${num(points.length)} points shown.`)}</p>
       </div>
       <aside className="world-controls card p-4"><p className="eyebrow">{bn ? 'পৃথিবী আপনার হাতে' : 'Your Earth. Your perspective.'}</p><p className="text-sm text-muted mt-2">{bn ? 'ঘোরান, জুম করুন, দেশে ট্যাপ করুন।' : 'Spin, zoom, and tap a country. Its observations follow your view.'}</p><details className="mt-3"><summary className="text-xs">{bn ? 'কিবোর্ডে দেশ বেছে নিন' : 'Choose a country with the keyboard'}</summary><label htmlFor="world-country" className="sr-only">Country or territory</label><select id="world-country" className="select mt-2 w-full" value={selected?.id ?? ''} onChange={e => choose(e.target.value || undefined)}><option value="">{bn ? 'সমগ্র পৃথিবী' : 'Entire Earth'}</option>{world.countries.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}</select></details>
-        <label className="block mt-5 text-sm">{bn ? 'উপগ্রহ' : 'Satellite'}<select id="world-sensor" aria-label="Satellite" className="select w-full mt-2" value={sensor} onChange={e => {setParams({sensor:e.target.value,day:undefined});setPlaying(false);}}>{Object.entries(SENSORS).map(([s,n]) => <option key={s} value={s}>{n}</option>)}</select></label>
+        <label data-tour="satellite" className="block mt-5 text-sm">{bn ? 'উপগ্রহ' : 'Satellite'}<select id="world-sensor" aria-label="Satellite" className="select w-full mt-2" value={sensor} onChange={e => {setParams({sensor:e.target.value,day:undefined});setPlaying(false);}}>{Object.entries(SENSORS).map(([s,n]) => <option key={s} value={s}>{n}</option>)}</select></label>
         <p className="text-xs text-muted mt-2">{bn ? 'ভিন্ন সেন্সরের সংখ্যা যোগ করবেন না; একই আগুন বারবার দেখা যায়।' : 'Keep sensors separate. The same fire can be detected more than once.'}</p>
         <div className="world-time"><label htmlFor="world-day">{bn ? 'দিন অনুসরণ করুন' : 'Follow the days'}</label><strong>{validDay < 0 ? (bn ? 'সব দিন' : 'All days') : days[validDay]}</strong><input id="world-day" type="range" min="-1" max={Math.max(0,days.length - 1)} value={validDay} onChange={e => {setPlaying(false);setParams({day:e.target.value});}} /><button type="button" className="btn" aria-pressed={playing} onClick={() => setPlaying(p => !p)}>{playing ? (bn ? 'বিরতি' : 'Pause timeline') : (bn ? 'দিনগুলো চালান' : 'Play timeline')} <span aria-hidden="true">{playing ? 'Ⅱ' : '▷'}</span></button></div>
-        {selected && <button type="button" className="btn mt-4 w-full" aria-pressed={watched.includes(id)} onClick={toggleWatch}><span aria-hidden="true">{watched.includes(id) ? '★' : '☆'}</span> {bn ? 'এই দেশ মনে রাখুন' : 'Watch this country'}</button>}
+        {selected && <button data-tour="watch" type="button" className="btn mt-4 w-full" aria-pressed={watched.includes(id)} onClick={toggleWatch}><span aria-hidden="true">{watched.includes(id) ? '★' : '☆'}</span> {bn ? 'এই দেশ মনে রাখুন' : 'Watch this country'}</button>}
         <p className="text-xs text-muted mt-3">{bn ? 'সংরক্ষিত দেশ এই যন্ত্রেই থাকবে। নতুন তথ্য দেখতে আবার খুলুন; পুশ সতর্কতা পাঠানো হয় না।' : 'Saved on this device. Reopen to check the latest published snapshot; no push alerts.'}</p>
       </aside>
     </section>
@@ -94,7 +101,7 @@ export function World({ params, setParams, go }: { params: URLSearchParams; setP
     {watched.length > 0 && <section className="world-watchlist"><h2 className="eyebrow">{bn ? 'আপনার সংরক্ষিত দেশ' : 'Your watchlist'}</h2><div className="flex flex-wrap gap-2 mt-2">{watched.map(w => world.countries.find(c => c.id === w)).filter(Boolean).map(c => <button key={c!.id} className="chip" type="button" onClick={() => choose(c!.id)}>{c!.name} <strong>{num(c!.sensors[sensor].total)}</strong></button>)}</div></section>}
     <div className="flex flex-wrap gap-2 no-print mt-4"><ShareButton target={reportRef} filename={`agun-panjika-${id}-${sensor}.png`} title={`${title} NASA observation brief`} /><button type="button" className="btn" onClick={()=>exportReport(false)}>{bn ? 'দেশের তথ্য JSON' : 'Download country evidence'}</button><button type="button" className="btn" onClick={()=>exportReport(true)}>{bn ? 'দৈনিক তথ্য CSV' : 'Download daily CSV'}</button></div>
     <InstallApp />
-    <section className="world-results" key={`${id}-${sensor}`}><div className="card p-5"><p className="eyebrow">{title} / {bn ? 'সাম্প্রতিক পর্যবেক্ষণ' : 'Recent observations'}</p><h2 className="text-xl font-bold mt-2">{bn ? 'কোন দিনে কত শনাক্তকরণ?' : 'How does activity vary by day?'}</h2><DailyBars daily={daily} dates={feed.dates} /><p className="text-xs text-muted">{bn ? 'প্রথম ও শেষ দিন অসম্পূর্ণ হতে পারে। দেশভিত্তিক যোগফলে উপকূলের বাইরের বিন্দু নেই।' : 'First and last dates may be partial. Country-assigned totals exclude unassigned coastal/offshore points.'}</p></div>
+    <section className="world-results" key={`${id}-${sensor}`}><div className="card p-5"><p className="eyebrow">{title} / {bn ? 'সাম্প্রতিক পর্যবেক্ষণ' : 'Recent observations'}</p><h2 className="text-xl font-bold mt-2">{bn ? 'কোন দিনে কত শনাক্তকরণ?' : 'How does activity vary by day?'}</h2><DailyBars daily={daily} dates={feed.dates} selected={validDay} onPick={index=>{setPlaying(false);setParams({day:index===validDay?-1:index});}} /><p className="text-xs text-muted">{bn ? 'প্রথম ও শেষ দিন অসম্পূর্ণ হতে পারে। দেশভিত্তিক যোগফলে উপকূলের বাইরের বিন্দু নেই।' : 'First and last dates may be partial. Country-assigned totals exclude unassigned coastal/offshore points.'}</p></div>
       <div className="card p-5"><p className="eyebrow">{bn ? 'সংখ্যার অর্থ' : 'What the numbers mean'}</p><div className="world-small-number"><AnimatedNumber value={last24} /></div><p>{bn ? 'এই ফিডের শেষ পর্যবেক্ষণ পর্যন্ত গত ২৪ ঘণ্টায় দেশে শনাক্তকরণ।' : 'country-assigned detections in the 24 hours ending at this feed’s latest observation.'}</p><p className="text-sm text-muted mt-4">{total === 0 ? (bn ? 'কোনো শনাক্তকরণ রেকর্ড হয়নি। এতে আগুন নেই বা এলাকা নিরাপদ—এমন প্রমাণ হয় না।' : 'No retained detections were recorded. This does not establish absence of fire or safety.') : (bn ? 'এগুলো অনন্য আগুন বা পোড়া জমি নয়। মেঘ, সেন্সর ও উপগ্রহের সময় ফল বদলাতে পারে; শিল্পের তাপও থাকতে পারে।' : 'These are not unique fires or burned area. Clouds, sensor sensitivity and overpass timing affect detection; industrial heat may remain.')}</p><a className="btn mt-4" href="https://firms.modaps.eosdis.nasa.gov/map/" target="_blank" rel="noreferrer">{bn ? 'NASA FIRMS খুলুন' : 'Inspect in NASA FIRMS'} ↗</a></div>
     </section>
     <section className="global-launch"><div><p className="eyebrow">{bn ? 'আজকের বাইরে' : 'Beyond the latest observations'}</p><strong>{!selected ? (bn ? 'চারটি এলাকায় ইতিহাস যাচাই করুন।' : 'Inspect evaluated histories in four areas.') : caseId ? (bn ? 'এই অঞ্চলের পরীক্ষিত ইতিহাস আছে।' : 'An evaluated historical case is available in this region.') : (bn ? 'এই দেশের সমন্বিত ইতিহাস এখনো যাচাই করা হয়নি।' : 'This country does not yet have an evaluated harmonized history.')}</strong><p className="text-sm text-muted mt-1">{bn ? 'সাম্প্রতিক বিন্দু ইতিহাসের তুলনাযোগ্যতা প্রমাণ করে না। চারটি কেসে পদ্ধতি ও ব্যর্থতা দেখুন।' : 'Recent points do not establish comparable history. Inspect four cases, their uncertainty and their failures.'}</p></div><button className="btn btn-primary" type="button" onClick={() => go('global',{area:caseId ?? 'bangladesh'})}>{bn ? 'ঐতিহাসিক কেস' : 'Explore historical cases'} ↗</button></section>
@@ -103,9 +110,9 @@ export function World({ params, setParams, go }: { params: URLSearchParams; setP
   </div>;
 }
 
-function DailyBars({daily,dates}:{daily:number[];dates:string[]}) {
- const {num}=useFmt();const max=Math.max(1,...daily);
- return <div className="daily-bars" role="img" aria-label={daily.map((n,i)=>`${dates[i]}: ${n} detections`).join('; ')}>{daily.map((n,i)=><div key={dates[i]}><span>{num(n)}</span><i style={{height:`${Math.max(1,n/max*125)}px`,animationDelay:`${i*45}ms`}}/><small>{dates[i]?.slice(5)}</small></div>)}</div>;
+function DailyBars({daily,dates,selected,onPick}:{daily:number[];dates:string[];selected:number;onPick:(index:number)=>void}) {
+ const {num,lang}=useFmt();const max=Math.max(1,...daily);
+ return <div className="daily-bars" role="group" aria-label={lang==='bn'?'Daily observations':'Daily observations'}>{daily.map((n,i)=><button type="button" key={dates[i]} aria-pressed={selected===i} aria-label={`${dates[i]}: ${num(n)} detections`} onClick={()=>onPick(i)}><span>{num(n)}</span><i style={{height:`${Math.max(2,n/max*125)}px`,animationDelay:`${i*35}ms`}}/><small>{dates[i]?.slice(5)}</small></button>)}</div>;
 }
 function FlatWorld({geo,selected,onPick}:{geo:GeoJSON.FeatureCollection;selected:string;onPick:(lon:number,lat:number)=>void}) {
  const projection=geoEquirectangular().fitExtent([[10,10],[690,350]],geo);const path=geoPath(projection);

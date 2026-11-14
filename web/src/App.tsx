@@ -37,6 +37,7 @@ function useTheme() {
 export default function App() {
   const { t, lang } = useFmt();
   const { route, params, go, setParams } = useRoute();
+  const needsManifest = route !== "world" && route !== "global";
   const { data: manifest, error, loading,retry } = useAsync(loadManifest, []);
   const [online,setOnline]=useState(navigator.onLine);
   const [screenAttempt,setScreenAttempt]=useState(0);
@@ -106,31 +107,31 @@ export default function App() {
 
       <div className="mission-status no-print"><span>NASA SPACE APPS 2026 <span aria-hidden="true">/</span> KUETaguns</span><span>{lang === "bn" ? "উৎস: NASA FIRMS" : "SOURCE: NASA FIRMS"} · {manifest?.updated_utc.slice(0, 10) ?? "…"}</span></div>
       <main id="main" tabIndex={-1} className="app-main mx-auto px-4 py-5">
-        {manifest&&<DemoTour go={go} route={route}/>}
-        {manifest && <div className="snapshot-status no-print"><strong>{lang === 'bn' ? 'পর্যবেক্ষণের সংরক্ষিত তথ্য' : 'Dated observation snapshot'}</strong><span>{t('app.dataThrough', { date: Object.values(manifest.data_through.by_sensor).sort().pop() ?? '' })} · {lang === 'bn' ? 'সরাসরি সম্প্রচার নয়' : 'not a live feed'}</span><span>{lang === 'bn' ? 'মেঘ ও পর্যবেক্ষণের ঘাটতি থাকতে পারে' : 'Cloud and overpass completeness is not established'}</span></div>}
+        <DemoTour go={go} route={route} params={params}/>
+        {manifest && <div className="snapshot-status no-print"><strong>{lang === 'bn' ? 'পর্যবেক্ষণের সংরক্ষিত তথ্য' : 'Dated observation snapshot'}</strong><span>{t('app.dataThrough', { date: Object.values(manifest?.data_through.by_sensor ?? {}).sort().pop() ?? '' })} · {lang === 'bn' ? 'সরাসরি সম্প্রচার নয়' : 'not a live feed'}</span><span>{lang === 'bn' ? 'মেঘ ও পর্যবেক্ষণের ঘাটতি থাকতে পারে' : 'Cloud and overpass completeness is not established'}</span></div>}
         {!online&&<ConnectionStatus/>}
-        <RequestStatus error={error} loading={loading} retry={retry}/>
-        {manifest && (
+        {needsManifest && <RequestStatus error={error} loading={loading} retry={retry} variant="page"/>}
+        {(manifest || !needsManifest) && (
           <ErrorBoundary key={`${route}-${screenAttempt}`} fallback={(e) => <RequestStatus error={e} retry={()=>setScreenAttempt(n=>n+1)}/> }>
-            <Suspense fallback={<p className="text-muted" role="status">{t('app.loading')}</p>}>
-            {route === "home" && <Home manifest={manifest} params={params} setParams={setParams} go={go} />}
+            <Suspense fallback={<RequestStatus loading variant={route==='world'?'world':'page'}/>}>
+            {manifest && route === "home" && <Home manifest={manifest} params={params} setParams={setParams} go={go} />}
             {route === "world" && <World params={params} setParams={setParams} go={go} />}
             {route === "global" && <Global params={params} setParams={setParams} />}
-            {route === "outlook" && <OutlookScreen manifest={manifest} params={params} setParams={setParams} />}
+            {manifest && route === "outlook" && <OutlookScreen manifest={manifest} params={params} setParams={setParams} />}
             {route === "borders" && <Borders />}
-            {route === "panjika" && <Panjika manifest={manifest} params={params} setParams={setParams} />}
-            {route === "sensors" && <Sensors manifest={manifest} params={params} setParams={setParams} />}
-            {route === "map" && (
-              <Suspense fallback={<p className="text-muted">{t("map.loadingMap")}</p>}>
+            {manifest && route === "panjika" && <Panjika manifest={manifest} params={params} setParams={setParams} />}
+            {manifest && route === "sensors" && <Sensors manifest={manifest} params={params} setParams={setParams} />}
+            {manifest && route === "map" && (
+              <Suspense fallback={<RequestStatus loading variant="page"/>}>
                 <MapScreen manifest={manifest} params={params} setParams={setParams} />
               </Suspense>
             )}
-            {route === "method" && <Method manifest={manifest} />}
+            {manifest && route === "method" && <Method manifest={manifest} />}
             </Suspense>
             <footer className="no-print mt-10 border-t border-grid pt-4 text-xs text-muted">
               <p className="italic">{t("app.tagline")}</p>
               <p className="mt-1">
-                NASA FIRMS MODIS C6.1 · VIIRS 375 m (S-NPP, NOAA-20, NOAA-21) · NASA POWER · ESA Fire_cci · {t("app.dataThrough", { date: Object.values(manifest.data_through.by_sensor).sort().pop() ?? "" })} · KUETaguns, NASA Space Apps 2026
+                NASA FIRMS MODIS C6.1 · VIIRS 375 m (S-NPP, NOAA-20, NOAA-21) · NASA POWER · ESA Fire_cci · {t("app.dataThrough", { date: Object.values(manifest?.data_through.by_sensor ?? {}).sort().pop() ?? "" })} · KUETaguns, NASA Space Apps 2026
               </p>
             </footer>
           </ErrorBoundary>
