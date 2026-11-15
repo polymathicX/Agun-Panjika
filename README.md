@@ -183,7 +183,7 @@ The switch slider changes what the visitor sees; it uses precomputed chronologic
 | Submission copy and presentation sources | [Project-page draft](docs/submission/PROJECT_PAGE_DRAFT.md) · [slides/video build](docs/submission/README.md) · [A4 report build](docs/latex/README.md) |
 | Every document, including historical plans | [Complete documentation index](docs/README.md) |
 
-The final MP4 is the team's supplied `Final.mp4`: **24.94 seconds**, with baked-in English captions and audio. The deck has seven slides including title and team credits. The team must review the official project page and perform **Submit for Judging**; GitHub publishing does not submit it.
+The web demo is prepared from the team's `Final.mp4` in **1080p**, with frequent keyframes for seeking: **24.94 seconds**, baked-in English captions and the original audio. The deck has seven slides including title and team credits. The team must review the official project page and perform **Submit for Judging**; GitHub publishing does not submit it.
 
 ## Run it locally
 
