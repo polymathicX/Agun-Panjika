@@ -1,27 +1,27 @@
 # Graph Report - Harmonic-Fire  (2026-11-15)
 
 ## Corpus Check
-- 1062 files · ~224,517 words
+- 1064 files · ~225,393 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 37 file(s) not represented in the graph (top: .css 9, .tex 6, .csv 5)
 
 ## Summary
-- 1612 nodes · 3558 edges · 134 communities (121 shown, 13 thin omitted)
+- 1617 nodes · 3565 edges · 133 communities (114 shown, 19 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 57 edges (avg confidence: 0.89)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4959666c`
+- Built from commit: `86345e91`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- kilns.py
+- json
 - export.py
 - Ingestion and Neighbour Data
 - playwright
 - daily.yml
-- Scientific Charts and Comparisons
+- useFmt
 - global_cases.py
 - forecast.py
 - Application Navigation and Language
@@ -31,7 +31,7 @@
 - useFmt
 - Outlook Data Contracts
 - matplotlib_pyplot
-- build_pptx.py
+- index.ts
 - steps
 - GlobePanel.tsx
 - Region Document Structure
@@ -88,34 +88,34 @@
 - feat/ui-design-system
 - Agun Panjika: video and story ideas
 - climatology.py
-- NegBinModel
+- DataFrame
 - Harmonic-Fire / Agun Panjika
 - exports.mjs
 - Scientific review: implementation, evidence and open questions
-- docs/README.md
-- test_world_snapshot.py
+- SERIAL_MERGE_REVIEW.md
+- pandas
 - Final regression matrix: original versus preview
 - Verification and reproduction
-- Agun Panjika upgrade baseline
+- Product and presentation review
 - Project-page copy for team review
 - Verification and reproduction
 - Agun Panjika: user test protocol (PRD success metric)
 - model
-- Home.tsx
+- Borders.tsx
 - pandas
-- local.py
+- Actual app screenshot gallery
 - capture.mjs
-- Serial merge review — 11 October 2026 (Asia/Dhaka)
+- Interface update — 15 November 2026
 - geo/README.md
-- json
+- media.mjs
 - coverage
 - deploy
-- config.py
+- PONYTAIL_REVIEW_STORY_AND_HELP.md
 - regions.py
 - partner.py
 - Official 2026 global-submission checks
 - with
-- review_figures.py
+- postcss
 - earth/README.md
 - weather.py
 - build-pwa.mjs
@@ -128,23 +128,22 @@
 - third-party-notices.mjs
 - Development and reproduction
 - Reading guide for our mentor
-- aggregate.py
+- @types/d3-format
 - gallery/capture.mjs
-- PortableReconstruction
+- @types/d3-geo
 - test_contrast.py
-- ndarray
+- @types/three
 - Portable reconstruction optimization research
 - Scientific evidence for the mentor briefing
 - Using Agun Panjika
-- hero.py
+- typescript
 - Agun Panjika documentation
 - Data directory and interpretation guide
 - Free hosting and data refresh
 - Agun Panjika: video teammate brief
 - upgrade-regression.mjs
-- vite
-- html-to-image
-- tailwindcss
+- v1/README.md
+- playback.js
 - @types/react-dom
 
 ## God Nodes (most connected - your core abstractions)
@@ -153,100 +152,100 @@
 3. `useAsync()` - 26 edges
 4. `RequestStatus()` - 24 edges
 5. `main()` - 22 edges
-6. `App()` - 22 edges
-7. `playwright` - 21 edges
+6. `playwright` - 22 edges
+7. `App()` - 22 edges
 8. `useWidth()` - 21 edges
 9. `DataReading()` - 19 edges
 10. `SeasonView()` - 19 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Frontend spec` --references--> `series()`  [INFERRED]
-  docs/Agun Panjika — Product Requirements Document.md → pipeline/neighbours.py
-- `Source diagnosis` --references--> `evaluate_case()`  [INFERRED]
-  docs/MODEL_OPTIMIZATION_RESEARCH.md → pipeline/global_cases.py
-- `Third intervention: the direct-tree extrapolation cap` --references--> `GBMModel`  [INFERRED]
-  docs/MODEL_OPTIMIZATION_RESEARCH.md → pipeline/harmonise.py
 - `Second declared experiment: later training and recent development` --references--> `ConformalBands`  [INFERRED]
   docs/MODEL_OPTIMIZATION_RESEARCH.md → pipeline/harmonise.py
-- `Important limitations and improvement opportunities` --references--> `interval_coverage()`  [INFERRED]
-  docs/MENTOR_SCIENCE_RESEARCH.md → pipeline/harmonise.py
+- `Frontend spec` --references--> `series()`  [INFERRED]
+  docs/Agun Panjika — Product Requirements Document.md → pipeline/neighbours.py
+- `Important limitations and improvement opportunities` --references--> `unit_json()`  [INFERRED]
+  docs/MENTOR_SCIENCE_RESEARCH.md → pipeline/export.py
+- `Important limitations and improvement opportunities` --references--> `unit_json()`  [INFERRED]
+  docs/SCIENTIFIC_REVIEW.md → pipeline/export.py
+- `Important limitations and improvement opportunities` --references--> `write_points()`  [INFERRED]
+  docs/MENTOR_SCIENCE_RESEARCH.md → pipeline/export.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (134 total, 13 thin omitted)
+## Communities (133 total, 19 thin omitted)
 
-### Community 0 - "kilns.py"
-Cohesion: 0.20
-Nodes (9): apply_filters(), _cells(), flag_static_cells(), main(), write_spotcheck(), _det(), test_daytime_repeat_burning_is_not_a_kiln(), test_firms_type_2_dropped() (+1 more)
+### Community 0 - "json"
+Cohesion: 0.12
+Nodes (20): apply_filters(), _cells(), flag_static_cells(), main(), write_spotcheck(), test_public_features_are_complete_and_checksum_verified(), test_published_case_reproduces_its_test_metrics(), _det() (+12 more)
 
 ### Community 1 - "export.py"
-Cohesion: 0.16
-Nodes (16): Important limitations and improvement opportunities, Important limitations and improvement opportunities, annual_block(), _dump(), main(), _num(), rain_block(), unit_json() (+8 more)
+Cohesion: 0.17
+Nodes (15): annual_block(), _dump(), main(), _num(), rain_block(), unit_json(), write_csv(), write_districts() (+7 more)
 
 ### Community 2 - "Ingestion and Neighbour Data"
-Cohesion: 0.11
+Cohesion: 0.12
 Nodes (15): append_api(), append_api_range(), data_availability(), dedupe(), fetch_api(), fetch_api_range(), fetch_country_year(), _get() (+7 more)
 
 ### Community 3 - "playwright"
 Cohesion: 0.15
-Nodes (10): playwright, playwright@1.64.0, grid, canvas, errors, layer, harm, [base, output = 'test-results/upgrade'] (+2 more)
+Nodes (10): playwright, grid, [base='http://127.0.0.1:4173',out='test-results/experience'], canvas, errors, layer, harm, [base, output = 'test-results/upgrade'] (+2 more)
 
 ### Community 4 - "daily.yml"
 Cohesion: 0.20
 Nodes (9): concurrency, cancel-in-progress, group, jobs, name, permissions, contents, id-token (+1 more)
 
-### Community 5 - "Scientific Charts and Comparisons"
-Cohesion: 0.15
-Nodes (30): d3-scale, d3-shape, react, AnnualChart(), SERIES_STYLE, EarthCanvas(), DangerChart(), PartnerCheck() (+22 more)
+### Community 5 - "useFmt"
+Cohesion: 0.14
+Nodes (33): d3-scale, d3-shape, react-i18next, AnnualChart(), DataReading(), EarthCanvas(), LevelBadge(), LevelIcon() (+25 more)
 
 ### Community 6 - "global_cases.py"
-Cohesion: 0.18
-Nodes (18): Adopted integration contract, evaluate_case(), score(), load_features(), main(), mark_reference_quality(), metrics(), national() (+10 more)
+Cohesion: 0.15
+Nodes (19): Adopted integration contract, evaluate_case(), score(), load_features(), main(), mark_reference_quality(), metrics(), national() (+11 more)
 
 ### Community 7 - "forecast.py"
 Cohesion: 0.12
 Nodes (21): add_climatology(), _auc(), _bn(), build_table(), _clf(), conformal_bounds(), feed_items(), hindcast() (+13 more)
 
 ### Community 8 - "Application Navigation and Language"
-Cohesion: 0.08
-Nodes (34): App(), Borders, Global, Home, MapScreen, Method, OutlookScreen, Panjika (+26 more)
+Cohesion: 0.10
+Nodes (31): App(), Borders, Global, Home, MapScreen, Method, OutlookScreen, Panjika (+23 more)
 
 ### Community 9 - "Home.tsx"
-Cohesion: 0.16
-Nodes (27): Props, CalendarHeatmap(), CalendarLegend(), CalendarTable(), Props, WeekTip(), loadLocal(), annual() (+19 more)
+Cohesion: 0.13
+Nodes (33): Props, CalendarHeatmap(), CalendarLegend(), CalendarTable(), Props, Mode, Sonify(), WeekTip() (+25 more)
 
 ### Community 10 - "data.ts"
-Cohesion: 0.16
-Nodes (23): cache, dataUrl(), fetchJson(), GLOBAL_AREAS, loadBridge(), loadDistrictYear(), loadGeo(), loadPartner() (+15 more)
+Cohesion: 0.14
+Nodes (23): cache, fetchJson(), GLOBAL_AREAS, loadDistrictYear(), loadGeo(), loadManifest(), loadPoints(), loadStaticCells() (+15 more)
 
 ### Community 11 - "test_warning.py"
 Cohesion: 0.17
-Nodes (17): bui_of(), danger_class(), dc_step(), dmc_step(), ffmc_step(), forecast_inputs(), fwi_of(), isi_of() (+9 more)
+Nodes (16): bui_of(), danger_class(), dc_step(), dmc_step(), ffmc_step(), forecast_inputs(), fwi_of(), isi_of() (+8 more)
 
 ### Community 12 - "useFmt"
-Cohesion: 0.10
-Nodes (36): doc, InstallApp(), InstallPrompt, ShareButton(), invalidData(), loadGlobalCase(), loadGlobalCatalog(), loadWorldGeo() (+28 more)
+Cohesion: 0.15
+Nodes (25): doc, dataUrl(), loadGlobalCase(), loadGlobalCatalog(), loadLand(), calendarWeeks(), evidenceCSV(), experimentRows() (+17 more)
 
 ### Community 13 - "Outlook Data Contracts"
-Cohesion: 0.08
-Nodes (26): DANGER_COLOR, OUTLOOK_COLOR, outlookMeaningful(), Alert, BridgeDoc, CaseScore, DangerClass, DistrictMeta (+18 more)
+Cohesion: 0.12
+Nodes (16): Alert, CaseScore, DangerClass, DistrictMeta, FireWeatherDoc, ForecastDoc, ForecastSkill, GlobalCatalog (+8 more)
 
 ### Community 14 - "matplotlib_pyplot"
-Cohesion: 0.21
-Nodes (14): annual_national(), fig_calendar(), fig_feature_importance(), fig_fire_weather(), fig_harmonised(), fig_hills(), fig_monthly_ratio(), fig_outlook_skill() (+6 more)
+Cohesion: 0.05
+Nodes (34): main(), main(), compile_slides(), figures(), main(), movie(), footer(), heading() (+26 more)
 
-### Community 15 - "build_pptx.py"
-Cohesion: 0.21
-Nodes (6): footer(), heading(), main(), picture(), rectangle(), text()
+### Community 15 - "index.ts"
+Cohesion: 0.14
+Nodes (7): react, SERIES_STYLE, Ctx, Tip, TooltipProvider(), MONTHS_BN, MONTHS_EN
 
 ### Community 16 - "steps"
 Cohesion: 0.20
 Nodes (10): runs-on, steps, timeout-minutes, FIRMS_MAP_KEY, build, env, if, name (+2 more)
 
 ### Community 17 - "GlobePanel.tsx"
-Cohesion: 0.18
-Nodes (18): Earth3D(), earthPosition(), Props, SceneHandle, Props, Earth3D, EarthCanvas, GlobePanel() (+10 more)
+Cohesion: 0.10
+Nodes (32): d3-geo, d3-geo@^3.1.1, Earth3D(), earthPosition(), Props, SceneHandle, Props, Earth3D (+24 more)
 
 ### Community 18 - "Region Document Structure"
 Cohesion: 0.12
@@ -258,15 +257,15 @@ Nodes (17): items, minimum, type, additionalProperties, properties, required, ty
 
 ### Community 20 - "Frontend Runtime Dependencies"
 Cohesion: 0.11
-Nodes (19): d3-array, d3-format, d3-geo, i18next, maplibre-gl, react-dom, three, dependencies (+11 more)
+Nodes (19): d3-array, d3-format, html-to-image, i18next, maplibre-gl, react-dom, three, dependencies (+11 more)
 
 ### Community 21 - "TypeScript Compiler Settings"
 Cohesion: 0.12
 Nodes (16): compilerOptions, isolatedModules, jsx, lib, module, moduleResolution, noEmit, noFallthroughCasesInSwitch (+8 more)
 
 ### Community 22 - "devDependencies"
-Cohesion: 0.12
-Nodes (17): autoprefixer, postcss, @types/d3-array, @types/d3-format, @types/d3-geo, @types/d3-scale, @types/d3-shape, @types/react (+9 more)
+Cohesion: 0.14
+Nodes (14): tailwindcss, @types/d3-array, @types/d3-scale, @types/react, vite, @vitejs/plugin-react, devDependencies, playwright@1.64.0 (+6 more)
 
 ### Community 23 - "Agun Panjika: 240-second video script"
 Cohesion: 0.07
@@ -281,12 +280,12 @@ Cohesion: 0.11
 Nodes (19): 10. Claim-to-evidence and academic self-review, 1. Problem and intended use, 2. Contribution and research positioning, 3. Data, geography and current snapshot, 4.1 Cleaning and aggregation, 4.2 Harmonization, 4.3 Uncertainty and continuity, 4.4 Normals, outlooks and cross-checks (+11 more)
 
 ### Community 26 - "ref_node_fs"
-Cohesion: 0.17
-Nodes (9): @axe-core/playwright, @axe-core/playwright@4.13.0, [base='http://127.0.0.1:4173',out='test-results/tutorial'], [base, output = 'test-results/upgrade'], [base='http://127.0.0.1:4173',out='test-results/experience'], [base='http://127.0.0.1:4173',out='test-results/global-release'], [base='http://127.0.0.1:4173',out='test-results/page-help'], [base = 'http://127.0.0.1:4182', out = '../docs/screenshots/soft-earth'] (+1 more)
+Cohesion: 0.19
+Nodes (8): @axe-core/playwright, @axe-core/playwright@4.13.0, [base='http://127.0.0.1:4173',out='test-results/tutorial'], [base, output = 'test-results/upgrade'], [base='http://127.0.0.1:4173',out='test-results/global-release'], [base='http://127.0.0.1:4173',out='test-results/page-help'], [base = 'http://127.0.0.1:4182', out = '../docs/screenshots/soft-earth'], [base='http://127.0.0.1:4173',out='test-results/world-release']
 
 ### Community 27 - "package.json"
 Cohesion: 0.18
-Nodes (10): @types/three, typescript, @types/three@^0.186.0, typescript@^5.6.3, engines, node, name, private (+2 more)
+Nodes (10): autoprefixer, @types/d3-shape, autoprefixer@^10.4.20, @types/d3-shape@^3.1.6, engines, node, name, private (+2 more)
 
 ### Community 28 - "Export Manifest Metadata"
 Cohesion: 0.15
@@ -321,8 +320,8 @@ Cohesion: 0.40
 Nodes (5): abs_total_pct_err, mae_vs_naive_pct, mae_week, mae_week_offseason, gbm
 
 ### Community 36 - "submission/README.md"
-Cohesion: 0.12
-Nodes (14): Actual app screenshot gallery, Attribution, Recreate the images, Typeset mentor reports, Files to share, A seasonal comparison, App views, Product and presentation review (+6 more)
+Cohesion: 0.22
+Nodes (6): Typeset mentor reports, Short message to send, Files to share, A 29-second introduction, Presentation and submission sources, Geographic rendering decision
 
 ### Community 37 - "Country Metadata"
 Cohesion: 0.40
@@ -389,8 +388,8 @@ Cohesion: 0.12
 Nodes (17): Agun Panjika — Product Requirements Document, Backend and pipeline spec, Data sources, Delivery plan, Executive summary, Frontend spec, Goals, non-goals and success metrics, Impact (+9 more)
 
 ### Community 53 - "harmonise.py"
-Cohesion: 0.10
-Nodes (18): add_weather(), AnnualBands, build_features(), disaggregate_to_districts(), interval_coverage(), _irls_nb2(), loyo_predictions(), loyo_validate() (+10 more)
+Cohesion: 0.08
+Nodes (25): Important limitations and improvement opportunities, Important limitations and improvement opportunities, wide(), add_weather(), AnnualBands, build_features(), ConformalBands, _cq() (+17 more)
 
 ### Community 54 - "External checks for the mentor reply"
 Cohesion: 0.15
@@ -399,6 +398,10 @@ Nodes (12): Challenge and competition context, Conflicts and limits that affect 
 ### Community 61 - "Agun Panjika — Hot Spots Implementation Plan"
 Cohesion: 0.18
 Nodes (11): Agun Panjika — Hot Spots Implementation Plan, Architecture and stack, Data sources, Method, Product, Risks and honest limits, Sources, Summary (+3 more)
+
+### Community 62 - "docs/README.md"
+Cohesion: 0.29
+Nodes (3): Data, derived outputs and development assistance, Ponytail review — 15 November 2026, Editable presentation
 
 ### Community 63 - "Agun Panjika · আগুন পঞ্জিকা"
 Cohesion: 0.13
@@ -445,16 +448,16 @@ Cohesion: 0.18
 Nodes (10): Completed Work, Current Status, feat/ui-design-system, Files Changed, Git History, Known Issues, Next Steps, Regression Checks (+2 more)
 
 ### Community 74 - "Agun Panjika: video and story ideas"
-Cohesion: 0.25
+Cohesion: 0.29
 Nodes (7): Agun Panjika: video and story ideas, Numbers worth saying on camera, Shooting notes, Video 1: 240-second prescreen (story-first), Video 2: local demo (product-first, after 2 Nov), Video 3: 30 seconds (global), What makes us different (pick 3 per video)
 
 ### Community 75 - "climatology.py"
-Cohesion: 0.15
-Nodes (14): bridge_document(), evaluate(), factors_for(), main(), national_weeks(), reference_series(), successor_counts(), _bridge_bands() (+6 more)
+Cohesion: 0.10
+Nodes (22): bridge_document(), evaluate(), factors_for(), main(), national_weeks(), reference_series(), successor_counts(), _bridge_bands() (+14 more)
 
-### Community 76 - "NegBinModel"
-Cohesion: 0.23
-Nodes (5): NegBinModel, fit_at(), test_negbin_interval_draws_shape(), test_seasonal_models_beat_naive_on_seasonal_ratio(), _toy_region_weeks()
+### Community 76 - "DataFrame"
+Cohesion: 0.09
+Nodes (13): Third intervention: the direct-tree extrapolation cap, _bin(), GBMModel, MonthlyFactors, NaiveFactor, NegBinModel, fit_at(), PRDFactor (+5 more)
 
 ### Community 77 - "Harmonic-Fire / Agun Panjika"
 Cohesion: 0.29
@@ -468,13 +471,13 @@ Nodes (7): [base, output = 'test-results/upgrade'], out, publicData, port, root,
 Cohesion: 0.29
 Nodes (7): Manual static-source evidence, Pipeline coverage and implementation, Results that can be quoted, with their scope, Scientific review: implementation, evidence and open questions, Suggested scientific asks for the mentor, Tests and read-only checks, What the project actually does
 
-### Community 80 - "docs/README.md"
-Cohesion: 0.14
-Nodes (8): Short message to send, Ponytail review — 15 November 2026, Product story and help review, Editable presentation, Repeat browser verification, Reviewing the original and upgraded application, Running previews in this workspace, Development experiment archive
+### Community 80 - "SERIAL_MERGE_REVIEW.md"
+Cohesion: 0.11
+Nodes (15): Conflict resolutions, Known limits, Manual order, Serial merge review — 11 October 2026 (Asia/Dhaka), Soft Earth, Verification, Agun Panjika upgrade baseline, Architecture and preserved inventory (+7 more)
 
-### Community 81 - "test_world_snapshot.py"
-Cohesion: 0.30
-Nodes (6): country_stats(), download(), main(), point_document(), test_global_sampling_preserves_full_counts_and_dates(), test_world_country_totals_reconcile_with_unassigned()
+### Community 81 - "pandas"
+Cohesion: 0.14
+Nodes (13): Source diagnosis, iso_weeks_between(), main(), to_district_week(), portable_features(), to_unit_week(), main(), country_stats() (+5 more)
 
 ### Community 82 - "Final regression matrix: original versus preview"
 Cohesion: 0.29
@@ -484,9 +487,9 @@ Nodes (7): Final regression matrix: original versus preview, Git/review, Limitat
 Cohesion: 0.29
 Nodes (7): Browser coverage, Documentation and gallery review, Executed checks, Presentation and publication, Repeat software checks, Reproduce scientific evidence, Verification and reproduction
 
-### Community 84 - "Agun Panjika upgrade baseline"
-Cohesion: 0.33
-Nodes (6): Agun Panjika upgrade baseline, Architecture and preserved inventory, Baseline checks, Branch policy, Final audit clarification, Known defects and limitations
+### Community 84 - "Product and presentation review"
+Cohesion: 0.50
+Nodes (4): A seasonal comparison, App views, Product and presentation review, What was checked
 
 ### Community 85 - "Project-page copy for team review"
 Cohesion: 0.22
@@ -504,29 +507,25 @@ Nodes (4): Agun Panjika: user test protocol (PRD success metric), Bangla wording
 Cohesion: 0.40
 Nodes (5): model, gbm_weight, negbin_weight, task, train_years
 
-### Community 89 - "Home.tsx"
-Cohesion: 0.24
-Nodes (19): react-i18next, DataReading(), LevelBadge(), LevelIcon(), AlertList(), OutlookCard(), RegionPicker(), RequestStatus() (+11 more)
+### Community 89 - "Borders.tsx"
+Cohesion: 0.22
+Nodes (15): RequestStatus(), loadBridge(), loadNeighbours(), loadPartner(), useAsync(), NeighboursDoc, annualOf(), Borders() (+7 more)
 
 ### Community 90 - "pandas"
-Cohesion: 0.20
-Nodes (11): iso_weeks_between(), adm1(), archive(), _crop_file(), main(), recent(), series(), tag_units() (+3 more)
+Cohesion: 0.27
+Nodes (8): adm1(), archive(), _crop_file(), main(), recent(), tag_units(), unit_polygons(), write_json()
 
-### Community 91 - "local.py"
-Cohesion: 0.17
-Nodes (9): _boundaries(), main(), tag(), unit_series(), units(), upazila_bn(), test_local_successors_include_real_zeros_and_apply_factors(), test_points_switch_within_year_and_keep_week_sensor() (+1 more)
+### Community 91 - "Actual app screenshot gallery"
+Cohesion: 0.67
+Nodes (3): Actual app screenshot gallery, Attribution, Recreate the images
 
 ### Community 92 - "capture.mjs"
 Cohesion: 0.25
 Nodes (6): build, {chromium}, require, root, shots, source
 
-### Community 93 - "Serial merge review — 11 October 2026 (Asia/Dhaka)"
-Cohesion: 0.33
-Nodes (6): Conflict resolutions, Known limits, Manual order, Serial merge review — 11 October 2026 (Asia/Dhaka), Soft Earth, Verification
-
-### Community 95 - "json"
-Cohesion: 0.25
-Nodes (12): level_for(), test_alert_levels(), test_district_documents_sum_to_regions(), test_exported_intervals_contain_estimate(), test_irls_recovers_known_coefficients(), test_modis_total_matches_farukh_2023(), test_normalise_modis_and_viirs(), test_record_starts_2001_and_has_unfiltered_totals() (+4 more)
+### Community 93 - "Interface update — 15 November 2026"
+Cohesion: 0.67
+Nodes (3): Help at your own pace, Interface update — 15 November 2026, Review and verification
 
 ### Community 96 - "coverage"
 Cohesion: 0.50
@@ -536,17 +535,13 @@ Nodes (4): coverage, basis, daily_completeness_verified, note
 Cohesion: 0.22
 Nodes (9): environment, needs, runs-on, steps, name, url, deploy, id (+1 more)
 
-### Community 98 - "config.py"
-Cohesion: 0.20
-Nodes (5): main(), compile_slides(), figures(), main(), movie()
-
 ### Community 99 - "regions.py"
-Cohesion: 0.29
-Nodes (9): district_table(), district_to_region(), download_boundaries(), load_districts(), load_upazilas(), main(), slug(), _tag() (+1 more)
+Cohesion: 0.19
+Nodes (11): _boundaries(), units(), district_table(), district_to_region(), download_boundaries(), load_districts(), load_upazilas(), main() (+3 more)
 
 ### Community 100 - "partner.py"
 Cohesion: 0.20
-Nodes (5): _cell_weights(), cross_check(), download_all(), _fetch_month(), main()
+Nodes (4): _cell_weights(), cross_check(), download_all(), _fetch_month()
 
 ### Community 101 - "Official 2026 global-submission checks"
 Cohesion: 0.29
@@ -555,10 +550,6 @@ Nodes (7): Artifact checks for a defensible presentation, NASA data, SI and reso
 ### Community 102 - "with"
 Cohesion: 0.25
 Nodes (8): with, cache, cache-dependency-path, key, node-version, path, python-version, restore-keys
-
-### Community 103 - "review_figures.py"
-Cohesion: 0.25
-Nodes (5): main(), continuity_comparison(), main(), model_comparison(), save()
 
 ### Community 105 - "weather.py"
 Cohesion: 0.36
@@ -600,29 +591,17 @@ Nodes (3): collect(), packages, web
 Cohesion: 0.22
 Nodes (9): Before publishing a change, Development and reproduction, Rebuild raw scientific products, Refit the four published historical cases, Refresh recent global observations, Run browser checks, Set up the scientific pipeline, Start the frontend (+1 more)
 
-### Community 116 - "aggregate.py"
-Cohesion: 0.31
-Nodes (5): Source diagnosis, main(), to_district_week(), wide(), portable_features()
-
 ### Community 117 - "gallery/capture.mjs"
 Cohesion: 0.22
 Nodes (8): base, captures, {chromium}, directory, errors, pages, require, root
-
-### Community 118 - "PortableReconstruction"
-Cohesion: 0.23
-Nodes (4): PortableReconstruction, EnsembleModel, NaiveFactor, test_tree_extrapolation_guard_preserves_nb_and_uses_strict_pooled_support()
 
 ### Community 119 - "test_contrast.py"
 Cohesion: 0.31
 Nodes (5): _blocks(), _lum(), ratio(), test_text_contrast(), test_white_on_primary_button()
 
-### Community 120 - "ndarray"
-Cohesion: 0.17
-Nodes (7): Second declared experiment: later training and recent development, _bin(), ConformalBands, _cq(), PRDFactor, test_conformal_bands_cover_simulated_errors(), test_conformal_quantile_is_conservative_for_small_n()
-
 ### Community 121 - "Portable reconstruction optimization research"
-Cohesion: 0.13
-Nodes (14): Actual reference-data defect: NASA acquisition outages, Candidate families, Exact minimal repair and integration contract, Final bounded protocol: annual past-only retraining, First experiment: retain as a rejected result, Full raw comparison and matched quality subset, Globally frozen quality rule, Outcome (+6 more)
+Cohesion: 0.15
+Nodes (13): Actual reference-data defect: NASA acquisition outages, Candidate families, Exact minimal repair and integration contract, Final bounded protocol: annual past-only retraining, First experiment: retain as a rejected result, Full raw comparison and matched quality subset, Globally frozen quality rule, Outcome (+5 more)
 
 ### Community 122 - "Scientific evidence for the mentor briefing"
 Cohesion: 0.25
@@ -631,10 +610,6 @@ Nodes (7): Manual static-source evidence, Pipeline coverage and implementation, 
 ### Community 123 - "Using Agun Panjika"
 Cohesion: 0.25
 Nodes (8): Explore a historical comparison, Explore recent observations worldwide, If a page does not load, Language, motion and phone access, Reading and sharing responsibly, The Bangladesh almanac and research views, Using Agun Panjika, Your first visit
-
-### Community 124 - "hero.py"
-Cohesion: 0.48
-Nodes (4): font(), main(), rounded(), shadow()
 
 ### Community 125 - "Agun Panjika documentation"
 Cohesion: 0.33
@@ -656,29 +631,25 @@ Nodes (5): Agun Panjika: video teammate brief, Recording links and files, Style 
 Cohesion: 0.40
 Nodes (3): cases, out, results
 
-### Community 130 - "vite"
-Cohesion: 0.40
-Nodes (4): vite, @vitejs/plugin-react, vite@^7.3.8, @vitejs/plugin-react@^5.2.0
-
 ## Knowledge Gaps
 - **1 isolated node(s):** `agun-panjika`
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 747 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 751 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **19 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Important limitations and improvement opportunities` connect `export.py` to `pandas`, `local.py`, `harmonise.py`, `Scientific review: implementation, evidence and open questions`?**
-  _High betweenness centrality (0.092) - this node is a cross-community bridge._
+- **Why does `Scientific review: implementation, evidence and open questions` connect `Scientific review: implementation, evidence and open questions` to `harmonise.py`, `docs/README.md`?**
+  _High betweenness centrality (0.096) - this node is a cross-community bridge._
 - **What connects `agun-panjika` to the rest of the system?**
   _1 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `json` be split into smaller, more focused modules?**
+  _Cohesion score 0.12121212121212122 - nodes in this community are weakly interconnected._
+- **Why does `Important limitations and improvement opportunities` connect `harmonise.py` to `export.py`, `climatology.py`, `Scientific review: implementation, evidence and open questions`?**
+  _High betweenness centrality (0.095) - this node is a cross-community bridge._
 - **Should `Ingestion and Neighbour Data` be split into smaller, more focused modules?**
-  _Cohesion score 0.10931174089068826 - nodes in this community are weakly interconnected._
-- **Why does `Scientific review: implementation, evidence and open questions` connect `Scientific review: implementation, evidence and open questions` to `export.py`, `docs/README.md`?**
-  _High betweenness centrality (0.091) - this node is a cross-community bridge._
-- **Should `Scientific Charts and Comparisons` be split into smaller, more focused modules?**
-  _Cohesion score 0.1475609756097561 - nodes in this community are weakly interconnected._
-- **Why does `Portable reconstruction optimization research` connect `Portable reconstruction optimization research` to `ndarray`, `aggregate.py`, `docs/README.md`, `global_cases.py`?**
-  _High betweenness centrality (0.076) - this node is a cross-community bridge._
-- **Should `forecast.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.11746031746031746 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12063492063492064 - nodes in this community are weakly interconnected._
+- **Why does `Portable reconstruction optimization research` connect `Portable reconstruction optimization research` to `pandas`, `DataFrame`, `docs/README.md`, `global_cases.py`?**
+  _High betweenness centrality (0.078) - this node is a cross-community bridge._
+- **Should `playwright` be split into smaller, more focused modules?**
+  _Cohesion score 0.14619883040935672 - nodes in this community are weakly interconnected._

@@ -14,6 +14,8 @@ self.addEventListener("fetch", (e) => {
   if (req.method !== "GET") return;
   const url = new URL(req.url);
   if (url.origin !== location.origin) return; // map tiles and fonts go straight to the network
+  // Native seeking/replay needs real byte ranges, not a full response from Cache Storage.
+  if (req.headers.has('range') || req.destination === 'video' || req.destination === 'audio') return;
 
   if (req.mode === "navigate" || url.pathname.endsWith('.json') || url.pathname.endsWith('.geojson')) {
     e.respondWith(

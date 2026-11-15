@@ -6,6 +6,7 @@
   "visuals": "Actual app captures and data plots; real interaction footage",
   "assistance": "AI-assisted coding, plotting, editorial work and assembly; no synthetic fire observations",
   "format": "1920x1080, H.264, 30 fps",
+  "delivery": "Fast-start MP4; video and audio streams copied without re-encoding",
   "sources": [
     "NASA FIRMS / LANCE / ESDIS",
     "Natural Earth",

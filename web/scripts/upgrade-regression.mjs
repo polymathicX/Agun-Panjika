@@ -7,7 +7,7 @@ const base = process.argv[2] ?? 'http://127.0.0.1:5270';
 const out = path.resolve(process.argv[3] ?? 'test-results/upgrade');
 await fs.mkdir(out, { recursive: true });
 const cases = ['smoke', 'navigation', 'globe', 'earth3d', 'charts', 'map', 'reliability', 'demo', 'help', 'exports', 'scientific', 'global', 'world', 'experience'];
-if (process.env.UPGRADE_OFFLINE === '1') cases.push('offline');
+if (process.env.UPGRADE_OFFLINE === '1') cases.push('offline', 'media');
 const results = [];
 for (const name of cases) {
   const args = [path.join(import.meta.dirname, 'upgrade', `${name}.mjs`), base];
