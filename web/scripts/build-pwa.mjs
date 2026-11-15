@@ -11,6 +11,9 @@ for(const file of files) {const content=await fs.readFile(path.join(root,file));
 if(total>20*1024*1024)throw new Error('Offline shell exceeds the 20 MiB budget');
 const source=await fs.readFile(path.join(root,'sw.js'),'utf8');
 hash.update(source);
+// Invalidate an older cached movie without adding its download to the offline precache.
+hash.update(await fs.readFile(path.join(root,'demo/agun-panjika-29s.mp4')));
+hash.update(await fs.readFile(path.join(root,'demo/playback.js')));
 const version=hash.digest('hex').slice(0,12);
 await fs.writeFile(path.join(root,'sw.js'),source.replace('const PRECACHE = [];',`const PRECACHE = ${JSON.stringify(['./',...files.filter(f=>f!=='index.html')])};`).replace('agun-panjika-global-v3',`agun-panjika-${version}`));
 console.log(`PWA: ${files.length} resources, ${(total/1048576).toFixed(2)} MiB, version ${version}`);

@@ -155,7 +155,7 @@ def movie(env: dict) -> None:
                 region="scale=470:840:force_original_aspect_ratio=decrease"
                 overlay="overlay=(1350+(470-overlay_w)/2):(140+(840-overlay_h)/2)"
             args += ["-filter_complex",f"[1:v]{region}[motion];[0:v][motion]{overlay}[v]","-map","[v]"]
-        args += ["-t",str(duration),"-r","30","-c:v","libx264","-preset","fast","-crf","19",
+        args += ["-t",str(duration),"-r","30","-c:v","libx264","-preset","fast","-crf","19","-g","30",
                  "-pix_fmt","yuv420p","-an",str(destination)]
         subprocess.run(args,check=True,env=env)
         segments.append(destination)

@@ -9,13 +9,53 @@ self.addEventListener("activate", (e) => {
   );
 });
 
+async function mediaRange(request) {
+  const cached = await caches.open(CACHE).then(cache => cache.match(request, { ignoreVary: true })).catch(() => undefined);
+  const range = /^bytes=(\d*)-(\d*)$/i.exec(request.headers.get('range').trim());
+  const condition = request.headers.get('if-range');
+  if (!cached || cached.status !== 200 || cached.headers.has('content-encoding') ||
+      !range || (!range[1] && !range[2]) ||
+      (condition && (condition.startsWith('W/') ||
+        (condition !== cached.headers.get('etag') && condition !== cached.headers.get('last-modified'))))) return fetch(request, { cache: 'no-cache' });
+
+  let body;
+  try { body = await cached.blob(); } catch { return fetch(request, { cache: 'no-cache' }); }
+  const start = range[1] ? Number(range[1]) : Math.max(0, body.size - Number(range[2]));
+  const end = range[1] && range[2] ? Math.min(Number(range[2]), body.size - 1) : body.size - 1;
+  if (!Number.isSafeInteger(start) || start >= body.size || start > end) {
+    return new Response(null, { status: 416, headers: { 'Content-Range': `bytes */${body.size}` } });
+  }
+  const headers = new Headers(cached.headers);
+  headers.set('Content-Range', `bytes ${start}-${end}/${body.size}`);
+  headers.set('Content-Length', String(end - start + 1));
+  headers.set('Accept-Ranges', 'bytes');
+  return new Response(body.slice(start, end + 1), { status: 206, statusText: 'Partial Content', headers });
+}
+
 self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET") return;
   const url = new URL(req.url);
   if (url.origin !== location.origin) return; // map tiles and fonts go straight to the network
-  // Native seeking/replay needs real byte ranges, not a full response from Cache Storage.
-  if (req.headers.has('range') || req.destination === 'video' || req.destination === 'audio') return;
+  // Slice an already cached movie correctly; never cache partial streaming responses.
+  if (req.headers.has('range')) {
+    if (req.destination === 'video' || req.destination === 'audio' || url.pathname.endsWith('.mp4')) e.respondWith(mediaRange(req));
+    return;
+  }
+  if (req.destination === 'video' || req.destination === 'audio') {
+    e.respondWith(fetch(req, { cache: 'no-cache' }));
+    return;
+  }
+  if (url.pathname.endsWith('.mp4')) {
+    e.respondWith(fetch(req, { cache: 'no-cache' }).then(response => {
+      if (response.status === 200) {
+        const copy = response.clone();
+        e.waitUntil(caches.open(CACHE).then(cache => cache.put(req, copy)).catch(() => {}));
+      }
+      return response;
+    }).catch(() => caches.match(req, { ignoreVary: true }).then(hit => hit || Response.error())));
+    return;
+  }
 
   if (req.mode === "navigate" || url.pathname.endsWith('.json') || url.pathname.endsWith('.geojson')) {
     e.respondWith(
