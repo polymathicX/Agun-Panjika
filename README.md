@@ -106,27 +106,38 @@ The recent-data path answers **“What did this satellite observe?”** The hist
 
 ```mermaid
 flowchart TB
-  subgraph recent["Recent observations worldwide"]
-    A["NASA FIRMS rolling seven-day feeds"] --> B["Confidence rules and country assignment"]
-    B --> C["Separate MODIS, NOAA-20 and NOAA-21 summaries"]
+  subgraph recent["Worldwide observations"]
+    A["NASA FIRMS recent feeds"] --> B["Filter and locate detections"]
+    B --> C["Country and day summaries"]
   end
-  subgraph history["Historical reconstruction in four evaluated areas"]
-    D["Archived MODIS and VIIRS observations"] --> E["Weekly detector features and source-quality flags"]
-    E --> F["Fit reconstruction, baselines and uncertainty"]
-    F --> G["Published histories and reference comparisons"]
+  subgraph history["Four historical areas"]
+    D["MODIS + VIIRS archives"] --> E["Weekly features and quality"]
+    E --> F["Estimates and uncertainty"]
   end
-  C --> H["Static app: Earth, calendars and plain readings"]
-  G --> H
-  H --> I["Dated PNG, JSON and CSV briefs"]
+  C --> H["Explore, read and share"]
+  F --> H
+  H --> I["Dated PNG / JSON / CSV"]
+  classDef source fill:#edf5f7,stroke:#97b7c4,color:#213547
+  classDef step fill:#fffaf2,stroke:#c7b99e,color:#213547
+  classDef public fill:#fbeee6,stroke:#c76a43,color:#82391f
+  class A,D source
+  class B,C,E,F step
+  class H,I public
+  style recent fill:#f4f8fa,stroke:#cddde3,color:#213547
+  style history fill:#faf6ef,stroke:#dfd0ba,color:#213547
 ```
 
 The portable historical model combines negative-binomial regression with five-seed LightGBM. A support guard uses a fitted factor where the tree would exceed its pooled training range. For each target year, fitting and interval calibration use earlier years:
 
 ```mermaid
 flowchart LR
-  A["Fit on 2013 through Y minus 2"] --> B["Calibrate uncertainty on Y minus 1"]
-  B --> C["Evaluate target year Y"]
-  C --> D["Compare every method on the same reference weeks"]
+  A["Fit: 2013 to Y-2"] --> B["Calibrate: Y-1"]
+  B --> C["Test: year Y"]
+  C --> D["Compare on same weeks"]
+  classDef past fill:#edf5f7,stroke:#97b7c4,color:#213547
+  classDef test fill:#fbeee6,stroke:#c76a43,color:#82391f
+  class A,B past
+  class C,D test
 ```
 
 The switch slider changes what the visitor sees; it uses precomputed chronological predictions. The reveal shows how those estimates compare with actual VIIRS. Following-week detector features support retrospective reconstruction. The evaluation years were known during development; independent locked evaluation remains a research gate.
