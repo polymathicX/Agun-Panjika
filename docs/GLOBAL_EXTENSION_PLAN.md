@@ -4,6 +4,8 @@
 
 [Typeset PDF](pdf/GLOBAL_EXTENSION_PLAN.pdf) · [Project brief](PROJECT_BRIEF.md) · [Item-by-item delivery status](IMPLEMENTATION_STATUS.md) · [Original 29 October proposal](archive/GLOBAL_EXTENSION_PLAN-2026-10-29.md)
 
+[Live capabilities and screenshots](../README.md) · [User guide](USER_GUIDE.md) · [Data packages](DATA_GUIDE.md) · [All documents](README.md)
+
 The original proposal asked us to make sensor comparability inspectable and evaluate it beyond Bangladesh. That work now has a public implementation: worldwide recent observations, four historical cases, a sensor-switch experiment, source-rich exports and a phone-friendly PWA. This document records what those additions establish and what still needs research.
 
 ## Delivered in this build

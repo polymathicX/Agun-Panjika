@@ -4,6 +4,8 @@
 
 [Live app](https://polymathicx.github.io/Agun-Panjika/) · [Typeset PDF](pdf/PROJECT_BRIEF.pdf) · [29-second demo](https://polymathicx.github.io/Agun-Panjika/demo/) · [Seven slides](pdf/GLOBAL_DEMO_SLIDES.pdf) · [Source](https://github.com/polymathicX/Agun-Panjika)
 
+[Editable PowerPoint](pptx/GLOBAL_DEMO_SLIDES.pptx) · [User guide](USER_GUIDE.md) · [Full screenshot gallery](gallery/README.md) · [Data guide](DATA_GUIDE.md) · [All documents](README.md)
+
 ## The problem and contribution
 
 Satellite hotspot counts are useful, but instruments observe differently. MODIS has roughly 1 km active-fire pixels and VIIRS 375 m pixels. A raw instrument join can introduce a misleading discontinuity. Counts are observations, not unique fires, burned area or a direct measure of human exposure.
@@ -34,7 +36,7 @@ Country summaries export as PNG, source-rich JSON and daily CSV. Historical brie
 | NASA POWER | Bangladesh historical weather, FWI and aerosol context | Regional sampled/reanalysis context, not local station measurements |
 | ESA Fire_cci / CEDA | Burned-area plausibility cross-check | Different observable; MRBA through 2018 and Sentinel-3 from 2019 introduce a product change |
 | geoBoundaries | Country/district/upazila assignment | Boundary versions and small-area allocation affect interpretation |
-| Natural Earth 50 m | Worldwide country geometry and point assignment | Generalized boundaries, not jurisdictional precision |
+| Natural Earth, 1:50 million scale | Worldwide country geometry and point assignment | Generalized boundaries, not jurisdictional precision |
 | Open-Meteo; NOAA ONI | Experimental forecast weather / ENSO covariates | No prospective operational skill is established |
 
 The main pipeline ingests observations, normalizes confidence, assigns geography, applies filtering, aggregates ISO weeks, fits models, harmonizes sensors, constructs calendars/seasonal normals and exports static data. Shared successor rules apply monthly correction and source availability consistently in national, local and neighbour series. Actual zero remains distinct from a missing source; point provenance follows the selected week. S-NPP availability is clamped at the announced retirement date.
@@ -81,6 +83,8 @@ What this tells you turns the selected data into a short reading: the country’
 ## Architecture and maintenance
 
 The frontend is static React/TypeScript with Three.js, D3 and MapLibre. There is no application database or backend. Python prepares versioned JSON, GeoJSON and feature fixtures. GitHub Pages serves the build; a six-hour workflow refreshes public global feeds separately from heavy scientific regeneration. The global refresh/deploy has succeeded in hosted CI. The full heavier Bangladesh science path is not claimed as reverified in hosted CI.
+
+The [development guide](DEVELOPMENT.md) covers local setup and reproduction. The [deployment guide](DEPLOYMENT.md) explains Pages, manual refresh and why a scheduled deployment can contain newer recent observations than the committed Git snapshot.
 
 The browser has no FIRMS key. A local watchlist remains on the device. Runtime dependency notices are generated at build time. Original code has an Apache 2.0 license; credited imagery, geography and libraries retain their own terms. [Verification](VERIFICATION.md) documents executed tests and their limits.
 

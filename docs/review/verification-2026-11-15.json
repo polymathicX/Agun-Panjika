@@ -125,7 +125,14 @@
     "story": "team, challenge, project, idea, intended benefit",
     "development_comparisons_in_pitch": false,
     "visual_review": "Every slide/report page and representative encoded video frames",
-    "teammate_handoff": "docs/submission/VIDEO_TEAMMATE_HANDOFF.md"
+    "teammate_handoff": "docs/submission/VIDEO_TEAMMATE_HANDOFF.md",
+    "powerpoint": {
+      "slides": 7,
+      "editable_text_and_shapes": true,
+      "source_wording_and_bounds_checked": true,
+      "rendered_in": "Microsoft PowerPoint",
+      "public_copy_byte_matched": true
+    }
   },
   "interpretation": {
     "method": "Fixed calculations from displayed published data",

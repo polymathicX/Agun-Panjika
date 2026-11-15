@@ -141,7 +141,7 @@ The current seven routes are Overview, Calendar, Sensors, Map, Outlook, Borders 
 
 ## 7. Reproducibility and verification
 
-Start with [the README's local commands](../../README.md#getting-started). Existing exports are sufficient for interface review. For scientific regeneration, install the Python package, obtain any needed FIRMS API key, and use `python -m pipeline.run_all --help` before running downloads/model fitting. The key belongs only in the gitignored pipeline environment.
+Start with [the README's local commands](../../README.md#run-it-locally). Existing exports are sufficient for interface review. For scientific regeneration, install the Python package, obtain any needed FIRMS API key, and use `python -m pipeline.run_all --help` before running downloads/model fitting. The key belongs only in the gitignored pipeline environment.
 
 The 29 October check passed all 59 Python tests, TypeScript checking, the production build, and eleven production browser test groups. The 42-view matrix recorded zero page errors, console errors, overflow or axe findings in those runs. This establishes behavior under the tested setup, not a physical-device accessibility certification, a new model-training result or field effectiveness. [Verification report](../VERIFICATION.md) · [machine-readable evidence](../review/verification-2026-10-29.json)
 

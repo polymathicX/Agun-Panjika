@@ -1,6 +1,6 @@
 # Presentation and submission sources
 
-The release contains a **seven-slide English PDF** and a **29.00-second captioned MP4**, alternative demo formats. The team must choose one for the official demo field, review its project page and perform the submission. The older local video is too long for the global short demo.
+The presentation package contains a **seven-slide English PDF**, its **editable PowerPoint companion** and a **29.00-second captioned MP4**. The PDF and MP4 are alternative demo formats. The team must choose one for the official demo field, review its project page and perform the submission. The older local video is too long for the global short demo.
 
 The deck tells the finished product story: why different satellite records need connecting, how people explore a country and season, and how readable explanations and phone access make the data useful. The video follows the 0:00 team, 0:02 challenge, 0:05 project, 0:10 idea and 0:20 future sequence. The linked model card contains the complete scientific comparisons.
 
@@ -8,6 +8,7 @@ The deck tells the finished product story: why different satellite records need 
 - [Slide PDF](../pdf/GLOBAL_DEMO_SLIDES.pdf) · [Editable PowerPoint](../pptx/GLOBAL_DEMO_SLIDES.pptx).
 - [Project-page draft](PROJECT_PAGE_DRAFT.md) and [optional narration script](30_SECOND_PITCH.md).
 - [Video teammate handoff](VIDEO_TEAMMATE_HANDOFF.md): product highlights, timing, recording links, assets and credits.
+- [Visual README](../../README.md), [all-page gallery](../gallery/README.md) and [user guide](../USER_GUIDE.md): product context and compact sharing assets.
 - `slides.tex`: seven-slide XeLaTeX source. `video.html`: six-scene caption layout.
 - `capture.mjs`: actual production browser screenshots and recorded interactions.
 - `build.py`: figures, slides, storyboard and H.264 video assembly.

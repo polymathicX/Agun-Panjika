@@ -1,0 +1,105 @@
+{
+  "captured_utc": "2026-11-15T00:50:27.592Z",
+  "source_snapshot_utc": "2026-11-14T20:51:09+00:00",
+  "note": "Actual app captures. Source windows are shown in the interface; screenshot counts are a dated example.",
+  "captures": [
+    {
+      "file": "earth.jpg",
+      "route": "#/world",
+      "width": 1440,
+      "height": 1000,
+      "language": "en",
+      "theme": "light"
+    },
+    {
+      "file": "world.jpg",
+      "route": "#/world?country=bra",
+      "width": 1440,
+      "height": 1000,
+      "language": "en",
+      "theme": "light"
+    },
+    {
+      "file": "histories.jpg",
+      "route": "#/global?area=nepal&testYear=2024&switchWeek=26&reveal=1",
+      "width": 1440,
+      "height": 1000,
+      "language": "en",
+      "theme": "light"
+    },
+    {
+      "file": "season-report.jpg",
+      "route": "#/home?r=bgd&y=2024&w=14",
+      "width": 1440,
+      "height": 1000,
+      "language": "en",
+      "theme": "light"
+    },
+    {
+      "file": "calendar.jpg",
+      "route": "#/panjika?r=bgd&y=2024&w=14",
+      "width": 1440,
+      "height": 1000,
+      "language": "en",
+      "theme": "light"
+    },
+    {
+      "file": "sensors.jpg",
+      "route": "#/sensors?r=bgd&s=modis%2Cviirs%2Charm&from=2003&to=2025",
+      "width": 1440,
+      "height": 1000,
+      "language": "en",
+      "theme": "light"
+    },
+    {
+      "file": "bangladesh-map.jpg",
+      "route": "#/map?r=bgd&y=2024&w=14",
+      "width": 1440,
+      "height": 1000,
+      "language": "en",
+      "theme": "light"
+    },
+    {
+      "file": "outlook.jpg",
+      "route": "#/outlook?r=bgd",
+      "width": 1440,
+      "height": 1000,
+      "language": "en",
+      "theme": "light"
+    },
+    {
+      "file": "borders.jpg",
+      "route": "#/borders",
+      "width": 1440,
+      "height": 1000,
+      "language": "en",
+      "theme": "light"
+    },
+    {
+      "file": "method.jpg",
+      "route": "#/method",
+      "width": 1440,
+      "height": 1000,
+      "language": "en",
+      "theme": "light"
+    },
+    {
+      "file": "phone.jpg",
+      "route": "#/world?country=bra",
+      "width": 390,
+      "height": 844,
+      "language": "en",
+      "theme": "light"
+    },
+    {
+      "file": "help-bangla.jpg",
+      "route": "#/world?country=bgd",
+      "width": 390,
+      "height": 844,
+      "language": "bn",
+      "theme": "dark",
+      "helpTopic": 6
+    }
+  ],
+  "errors": []
+}

@@ -4,12 +4,14 @@
 
 The shortest route is the [live application](https://polymathicx.github.io/Agun-Panjika/) and [seven-slide overview](pdf/GLOBAL_DEMO_SLIDES.pdf). The [project-brief PDF](pdf/PROJECT_BRIEF.pdf) explains the whole project; the [global-roadmap PDF](pdf/GLOBAL_EXTENSION_PLAN.pdf) separates delivered extensions from research still requiring evidence.
 
+The [visual README](../README.md) brings together all nine views, a globe recording and the processing diagrams. An [editable PowerPoint](pptx/GLOBAL_DEMO_SLIDES.pptx), [user guide](USER_GUIDE.md) and [data directory guide](DATA_GUIDE.md) support a closer look. [Complete reading index](README.md).
+
 For technical review, read the [model card](GLOBAL_EVALUATION.md) and inspect a [public area package](../web/public/data/global/). `python -m pipeline.global_cases --from-packages` refits the four experiments without a NASA key. It reproduces model fitting and evaluation from public aggregated features, not an independent raw-data audit.
 
 ## Feedback we would value most
 
 1. **Evaluation design:** What new locked temporal/geographic test would support a defensible reconstruction claim, given that the current test years were known during development?
-2. **Failure analysis:** How should we test the tree-support guard, annual updating, Chin's stronger monthly baseline and seasonal and regional interpretation on a new locked period?
+2. **Regional and seasonal performance:** How should a new locked test assess the support guard, annual updating and the stronger monthly baseline in Chin?
 3. **Uncertainty and filtering:** How should we validate interval calibration, observation completeness and industrial-source filtering independently?
 4. **Practical use:** Could a remote-sensing practitioner or land manager help us run a small comprehension/workflow pilot? We have a task protocol but no completed field study.
 

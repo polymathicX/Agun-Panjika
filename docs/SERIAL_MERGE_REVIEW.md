@@ -1,5 +1,7 @@
 # Serial merge review — 11 October 2026 (Asia/Dhaka)
 
+> **Historical integration review.** Commit IDs and measurements below describe that October merge. For current behavior, dependencies and checks, use the [product overview](../README.md), [development guide](DEVELOPMENT.md) and [verification](VERIFICATION.md).
+
 Verified main: `735e1a420bd7ddb50dcc40f11fbcc370b98cb315`. README #1 and design system #2 were already manually merged. PR preparation did not merge or enable auto-merge on any PR.
 
 ## Manual order

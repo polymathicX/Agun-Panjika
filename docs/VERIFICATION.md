@@ -16,6 +16,7 @@
 | Public-feature refit | All four published evaluation objects reproduced exactly in this environment | Annual past-only fitting/calibration, support guard and raw/comparable scoring from checksum-verified features |
 | Worldwide refresh | Three public source feeds fetched and country packages generated | Recent source retrieval and geographic assignment, not full cloud/overpass completeness |
 | Presentation | Brief 6 pages; roadmap 5; deck **7**; video **29.00 s** | No TeX overfull boxes/missing glyphs; all report/deck pages and representative video frames visually reviewed |
+| Editable presentation | **7 PPTX slides**, rendered in Microsoft PowerPoint | Native editable text/shapes, actual screenshot/chart images, source wording and object bounds checked; public copy byte-matched |
 | Prior hosted refresh | [Successful 14 November run](https://github.com/polymathicX/Agun-Panjika/actions/runs/43594804856) | Actual hosted world fetch, scientific checks, build and public deployment; full-science input was disabled. This record describes local checks for the 15 November update; its publication is verified separately. |
 
 The passing suite follows corrections for camera state after browser Back, transient incorrect day counts, malformed-data retries, and oversized/saturated globe markers. After the full run, targeted tutorial, Earth and offline checks passed again for the final keyboard-focus, pointer-leave and return-to-step fixes. Earlier failures are not represented as passes. Public static-asset caching retains the previously verified `Vary: Origin` fix.
@@ -90,6 +91,14 @@ The portable workflow uses past-only fitting and separate interval calibration f
 ## Presentation and publication
 
 `python docs/submission/build.py` captures the app and rebuilds native data figures, seven slides and the 29-second captioned video. `python docs/latex/build.py` rebuilds the A4 reports. Both reject TeX overflow/missing glyphs; the demo builder checks page count and duration. [Instructions](submission/README.md).
+
+`python docs/submission/build_pptx.py` exports the seven-slide editable companion. It checks source-PDF wording, editable-object bounds and slide count, reopens the saved deck and writes an identical public copy. Microsoft PowerPoint rendered the deck for text/layout review. [Editable-file notes](pptx/README.md).
+
+## Documentation and gallery review
+
+The visual README and [documentation index](README.md) link the user, data, development and deployment guides. The [gallery capture](gallery/capture.mjs) produced 12 actual images: all nine pages, an additional selected-country view and two phone layouts. It checked desktop horizontal overflow, page errors, data loading and map availability; [capture metadata](gallery/captures.json) records routes and source dates. The optional five-second GIF is actual interaction footage and has frame/duration/size assertions. The compact gallery is separate from the full-resolution presentation assets.
+
+This documentation update changes no runtime interface or scientific outputs. The 80 Python tests and 54 responsive views above describe the existing product verification; they are not presented as rerun by the docs refresh. Local Markdown paths/anchors, media consistency and GitHub rendering are reviewed for the docs change. [Data guide](DATA_GUIDE.md) · [Development](DEVELOPMENT.md) · [Deployment/refresh semantics](DEPLOYMENT.md).
 
 GitHub Pages hosts the static app. Pushes publish committed exports; scheduled/manual global refresh can serve newer recent observations than the repository snapshot. The hosted global refresh has succeeded; the full heavy science option is not claimed as reverified in that CI run. The team still needs to review the official form and click Submit for Judging.
 

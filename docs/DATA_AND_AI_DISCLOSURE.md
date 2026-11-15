@@ -10,6 +10,8 @@ Raw observations come from the cited NASA FIRMS feeds and archives. No synthetic
 
 New product images are captures of the actual application. Earth/cloud texture attribution remains with Solar System Scope, CC BY 4.0; these textures are static geographic context. Native data figures and diagrams are generated from the cited artifacts. The short demo uses actual app captures and captions, with an assistance notice. It has no synthetic narrator or impersonated person. No official NASA logo was generated or modified for this release.
 
+The [README gallery](gallery/README.md) records each screenshot's route, time, dimensions and language/theme in [capture metadata](gallery/captures.json). Its optional globe animation is an extract from actual presentation footage. The [editable PowerPoint](pptx/GLOBAL_DEMO_SLIDES.pptx) uses native text/shapes with actual screenshots and a plotted seasonal figure. Plain-language readings in the app use fixed calculations from displayed inputs; no external AI service generates scientific decisions.
+
 The official submission guide calls these tools **Super Intelligence (SI)**. Disclose both the solution's ML and the development assistance in its SI field. That answer is hidden from judges, so this visible document and the artifact acknowledgments are part of the public package. Refer to the [official research note](GLOBAL_JUDGING_RESEARCH.md) for the exact marking and resource-credit requirements.
 
 No assistant is named as a Git coauthor. Assistance acknowledgment describes how the work was produced; team membership and authorship remain the team's.

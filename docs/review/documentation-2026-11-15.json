@@ -1,0 +1,20 @@
+{
+  "reviewed": "2026-11-15",
+  "scope": "Documentation and media checks; no scientific or runtime regeneration",
+  "markdown_files": 55,
+  "local_paths_checked": 561,
+  "heading_anchors_checked": 8,
+  "issues": [],
+  "gallery_captures": 12,
+  "page_errors": [],
+  "github_markdown_render": "passed",
+  "mermaid_blocks": 2,
+  "presentation_pages": {
+    "brief": 6,
+    "roadmap": 5,
+    "slides": 7,
+    "powerpoint": 7
+  },
+  "slide_public_copies_byte_matched": true,
+  "readme_sha256": "51bd707c1dabc16ce843f9ffefe1e98706723c88277e5ea9768d44c75a56150b"
+}
