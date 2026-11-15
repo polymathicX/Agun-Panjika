@@ -5,7 +5,7 @@ The release contains a **seven-slide English PDF** and a **29.00-second captione
 The deck tells the finished product story: why different satellite records need connecting, how people explore a country and season, and how readable explanations and phone access make the data useful. The video follows the 0:00 team, 0:02 challenge, 0:05 project, 0:10 idea and 0:20 future sequence. The linked model card contains the complete scientific comparisons.
 
 - [Public demo page](https://polymathicx.github.io/Agun-Panjika/demo/), including transcript and downloads.
-- [Slide PDF](../pdf/GLOBAL_DEMO_SLIDES.pdf).
+- [Slide PDF](../pdf/GLOBAL_DEMO_SLIDES.pdf) · [Editable PowerPoint](../pptx/GLOBAL_DEMO_SLIDES.pptx).
 - [Project-page draft](PROJECT_PAGE_DRAFT.md) and [optional narration script](30_SECOND_PITCH.md).
 - [Video teammate handoff](VIDEO_TEAMMATE_HANDOFF.md): product highlights, timing, recording links, assets and credits.
 - `slides.tex`: seven-slide XeLaTeX source. `video.html`: six-scene caption layout.
@@ -15,11 +15,13 @@ The deck tells the finished product story: why different satellite records need 
 With a production preview running at `http://127.0.0.1:4173`, run:
 
 ```powershell
-python -m pip install matplotlib pymupdf imageio-ffmpeg
+python -m pip install matplotlib pymupdf imageio-ffmpeg python-pptx
 python docs/submission/build.py
 ```
 
 The environment also needs Node, installed `web/` dependencies, Playwright Chromium, XeLaTeX and Calibri. Use `--base URL` for another preview address. `--no-capture` reuses existing captures/recordings. Temporary video clips, rendered review pages and TeX logs stay in ignored `docs/latex/build/submission/`.
+
+The build also exports the editable PowerPoint. To regenerate only that file, run `python docs/submission/build_pptx.py`. Text and pixel-size diagrams are native PowerPoint objects; screenshots and the seasonal chart are images. Rebuilding replaces the generated deck, so keep teammate edits in a separate copy. The seven slides were opened and rendered in Microsoft PowerPoint for layout and text checks.
 
 The build asserts seven PDF pages and 29.00-second video duration and rejects TeX overflow/missing glyphs. Inspect every page and representative video frames before publishing; those checks do not prove readability or scientific validity. The demo has large baked-in English captions and no audio. Narration remains a team choice; adding it must preserve the 30-second ceiling.
 

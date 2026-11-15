@@ -7,7 +7,7 @@
 Team **KUETaguns** · NASA Space Apps Challenge 2026<br>
 *Harmonization of MODIS and VIIRS Hot Spots*
 
-[Open the app](https://polymathicx.github.io/Agun-Panjika/) · [29-second demo](https://polymathicx.github.io/Agun-Panjika/demo/) · [Seven slides](docs/pdf/GLOBAL_DEMO_SLIDES.pdf)
+[Open the app](https://polymathicx.github.io/Agun-Panjika/) · [29-second demo](https://polymathicx.github.io/Agun-Panjika/demo/) · [Seven slides](docs/pdf/GLOBAL_DEMO_SLIDES.pdf) · [Editable PowerPoint](docs/pptx/GLOBAL_DEMO_SLIDES.pptx)
 
 [Project brief PDF](docs/pdf/PROJECT_BRIEF.pdf) · [Global roadmap PDF](docs/pdf/GLOBAL_EXTENSION_PLAN.pdf) · [Model card](docs/GLOBAL_EVALUATION.md) · [Mentor reading guide](docs/MENTOR_BRIEFING.md)
 
