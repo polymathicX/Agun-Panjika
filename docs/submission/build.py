@@ -10,6 +10,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -127,6 +128,7 @@ def compile_slides(env: dict) -> None:
         page.get_pixmap(matrix=fitz.Matrix(1.4,1.4)).save(BUILD / f"slide-review-{i+1}.png")
     shutil.copyfile(BUILD / "slides.pdf", ROOT / "docs/pdf/GLOBAL_DEMO_SLIDES.pdf")
     shutil.copyfile(BUILD / "slides.pdf", PUBLIC / "agun-panjika-slides.pdf")
+    subprocess.run([sys.executable,str(SOURCE/'build_pptx.py')],check=True,env=env)
 
 
 def movie(env: dict) -> None:
