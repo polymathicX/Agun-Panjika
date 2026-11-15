@@ -9,7 +9,8 @@ const files=['index.html','manifest.webmanifest','icons/icon-192.png','icons/ico
 const hash=createHash('sha256');let total=0;
 for(const file of files) {const content=await fs.readFile(path.join(root,file));hash.update(content);total+=content.length;}
 if(total>20*1024*1024)throw new Error('Offline shell exceeds the 20 MiB budget');
-const version=hash.digest('hex').slice(0,12);
 const source=await fs.readFile(path.join(root,'sw.js'),'utf8');
+hash.update(source);
+const version=hash.digest('hex').slice(0,12);
 await fs.writeFile(path.join(root,'sw.js'),source.replace('const PRECACHE = [];',`const PRECACHE = ${JSON.stringify(['./',...files.filter(f=>f!=='index.html')])};`).replace('agun-panjika-global-v3',`agun-panjika-${version}`));
 console.log(`PWA: ${files.length} resources, ${(total/1048576).toFixed(2)} MiB, version ${version}`);
