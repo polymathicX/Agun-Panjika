@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "agun-panjika"
 version = "0.1.0"
-description = "Harmonised MODIS + VIIRS fire record for Bangladesh (NASA Space Apps 2026)"
+description = "Global fire observations and harmonised MODIS + VIIRS histories (NASA Space Apps 2026)"
 requires-python = ">=3.11"
 dependencies = [
   "pandas>=2.2",

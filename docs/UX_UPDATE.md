@@ -1,5 +1,7 @@
 # Interface update — 15 November 2026
 
+[User guide](USER_GUIDE.md) · [Actual nine-page gallery](gallery/README.md) · [Product overview](../README.md)
+
 The Soft Earth design remains the visual basis. This update concentrates on learning the controls, keeping the layout steady and removing misleading intermediate states.
 
 - A first visit offers an eight-step, optional tutorial. It teaches country selection, satellite views, dates, a local watchlist, the historical comparison, revealing reference data and keeping an evidence brief. Progress follows real actions. Back, skip, Escape and replay are available; finishing or leaving restores the original view and filters.

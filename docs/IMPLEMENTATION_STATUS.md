@@ -1,6 +1,8 @@
 # Global roadmap: delivery and evidence
 
-15 November 2026. This is the acceptance record for the [original global plan](GLOBAL_EXTENSION_PLAN.md). It separates software delivered in this hackathon build from evidence that needs people or future observations.
+15 November 2026. This is the acceptance record for the [original global plan](archive/GLOBAL_EXTENSION_PLAN-2026-10-29.md), paired with the [current roadmap](GLOBAL_EXTENSION_PLAN.md). It separates software delivered in this hackathon build from evidence that needs people or future observations.
+
+[Visual product guide](../README.md) · [User guide](USER_GUIDE.md) · [Data guide](DATA_GUIDE.md) · [Development](DEVELOPMENT.md) · [Deployment](DEPLOYMENT.md)
 
 | Original plan item | Current delivery | Evidence / remaining condition |
 | --- | --- | --- |
@@ -15,7 +17,7 @@
 | Stakeholder/comprehension pilot | Existing task protocol and acceptance questions retained, with uncertainty/source interpretation now directly testable in the product | **Not completed.** Real participants/practitioners must supply responses. No adoption, comprehension score, fires prevented or lives saved is invented. |
 | Industrial-filter validation | Current heuristic documented; portable replay avoids learned static-cell decisions | **Not independently validated.** New blind positive/negative/uncertain labels and retained-fire sensitivity are needed. |
 | Operational warning integration | Experimental outlooks identified and expired products withheld | **Not operationally established.** Need issue-time forecasts, prospective evaluation, domain partnership and delivery monitoring. |
-| Submission presentation | Seven English slides, a captioned video under 30 seconds, project-page draft, sources and visible assistance disclosure | Team must review and perform the official submission. Saving files or pushing Git does not click Submit for Judging. |
+| Submission presentation | Seven English slides in PDF and editable PowerPoint, a 29-second captioned video, project-page draft, sources and visible assistance disclosure | Team must review and perform the official submission. Saving files or pushing Git does not click Submit for Judging. |
 
 ## Why the scope stops here
 

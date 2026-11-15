@@ -1,5 +1,7 @@
 # Agun Panjika: user test protocol (PRD success metric)
 
+> **Proposed study, not collected results.** This original protocol supplies tasks and targets. The [current delivery record](IMPLEMENTATION_STATUS.md#pilot-to-run-with-real-people) adds worldwide country/source/date and historical-reference tasks. Use the [user guide](USER_GUIDE.md) for today's interface. Participant evidence remains to be collected.
+
 The PRD sets two targets for this test:
 
 - A first-time user answers "is this fire season normal?" in **under 10 seconds**.

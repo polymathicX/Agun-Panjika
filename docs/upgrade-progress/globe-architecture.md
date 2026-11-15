@@ -1,5 +1,7 @@
 # Geographic rendering decision
 
+> **Historical rendering decision from the October preview.** It describes the Canvas/D3 globe path. The current World page uses a textured Three.js Earth and MapLibre is now 6.18; the existing Canvas/flat-map alternatives remain. Use the [current product guide](../../README.md), [development guide](../DEVELOPMENT.md) and [verification](../VERIFICATION.md) for today's dependencies and behavior. The measurements below belong to that earlier feature audit.
+
 MapLibre 4.7 remains unchanged for the existing map. Native globe projection is available in newer MapLibre releases (https://maplibre.org/maplibre-gl-js/docs/examples/globe-custom-simple/), so introducing it here would also change the scientific map's rendering dependency.
 
 Three.js / React Three Fiber and Cesium add a separate WebGL runtime and resources for features this interface does not need. The selected approach is a geographic orthographic sphere rendered with Canvas 2D and the small d3-geo module (https://d3js.org/d3-geo/azimuthal). It is a 3D-inspired geographic experience, not a terrain/altitude model. It requires no WebGL, hence continues working when WebGL contexts fail. A Mercator view provides an explicit 2D alternative.

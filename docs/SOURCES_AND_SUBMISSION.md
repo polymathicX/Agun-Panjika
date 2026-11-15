@@ -26,7 +26,7 @@ Source URLs, retrieval/observation windows and hashes are exported in the [world
 | --- | --- |
 | [ESA Climate Change Initiative Fire](https://climate.esa.int/en/projects/fire/), [CEDA archive](https://data.ceda.ac.uk/neodc/esacci/fire/data/burned_area) | Separate burned-area plausibility check: MRBA v6.0, 2003–2018; Sentinel-3 SYN v1.1, 2019–2024. Area differs from detection counts; retain the product change. |
 | [geoBoundaries](https://www.geoboundaries.org/) | gbOpen administrative polygons, CC BY 4.0. Preserve downloaded boundary metadata/source attribution. |
-| [Natural Earth](https://www.naturalearthdata.com/about/terms-of-use/) | Public-domain 50 m countries/territories for the globe and point assignment. Generalized boundaries are not jurisdictional precision. |
+| [Natural Earth](https://www.naturalearthdata.com/about/terms-of-use/) · [country dataset](https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/) | Public-domain countries/territories at **1:50 million scale** for the globe and point assignment. The dataset shorthand `50m` denotes map scale; generalized boundaries are not jurisdictional precision. |
 | [Open-Meteo](https://open-meteo.com/) | Experimental forecast weather inputs; retain its attribution/service terms. |
 | [NOAA CPC ONI](https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ensoyears.shtml) | Experimental ENSO covariate, not evidence of improved forecast skill. |
 | [Farukh, Islam and Hayasaka (2023), Atmosphere 14(1):97](https://www.mdpi.com/2073-4433/14/1/97) | Bangladesh fire-season background; external findings are not this project's validation. |
@@ -60,5 +60,7 @@ The user-supplied [Bangladesh participant guide](https://docs.google.com/documen
 The code includes an existing local prototype plus new global work. The team should represent that history honestly, review all claims and perform the official submission. An award, final eligibility or global nomination is not implied by this repository.
 
 ## Reference-quality update
+
+For file-level provenance and reuse, see the [data directory guide](DATA_GUIDE.md). Actual frontend screenshots and the globe recording have [capture metadata](gallery/README.md); the [documentation index](README.md) links all current reading and presentation files.
 
 [NASA MODAPS acquisition outages](https://modaps.modaps.eosdis.nasa.gov/services/production/outages_suomi_npp.html) and [FIRMS outage notices](https://firms2.modaps.eosdis.nasa.gov/content/notifications/firms/outages.html) support the versioned long-outage flags. Actual acquisition loss is distinguished from production latency/backfill. The [model card](GLOBAL_EVALUATION.md) and [research record](MODEL_OPTIMIZATION_RESEARCH.md) preserve full raw and matched comparisons.
