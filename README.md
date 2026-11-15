@@ -9,7 +9,7 @@ Spin Earth. Explore NASA observations. Understand the seasons.
 **Team KUETaguns** · NASA Space Apps Challenge 2026<br>
 *Harmonization of MODIS and VIIRS Hot Spots*
 
-**[Explore the app](https://polymathicx.github.io/Agun-Panjika/)** · **[Watch the 29-second demo](https://polymathicx.github.io/Agun-Panjika/demo/)**<br>
+**[Explore the app](https://polymathicx.github.io/Agun-Panjika/)** · **[Watch the 25-second demo](https://polymathicx.github.io/Agun-Panjika/demo/)** · **[Final video (MP4)](https://polymathicx.github.io/Agun-Panjika/demo/agun-panjika-29s.mp4)**<br>
 [Seven-slide PDF](docs/pdf/GLOBAL_DEMO_SLIDES.pdf) · [Editable PowerPoint](docs/pptx/GLOBAL_DEMO_SLIDES.pptx) · [Project brief PDF](docs/pdf/PROJECT_BRIEF.pdf) · [Global roadmap PDF](docs/pdf/GLOBAL_EXTENSION_PLAN.pdf)
 
 [![Publishing status](https://github.com/polymathicX/Agun-Panjika/actions/workflows/daily.yml/badge.svg)](https://github.com/polymathicX/Agun-Panjika/actions/workflows/daily.yml)
@@ -173,7 +173,7 @@ The switch slider changes what the visitor sees; it uses precomputed chronologic
 
 | You need… | Open or send |
 | --- | --- |
-| A quick introduction | [29-second captioned demo](https://polymathicx.github.io/Agun-Panjika/demo/) · [seven-slide PDF](docs/pdf/GLOBAL_DEMO_SLIDES.pdf) · [editable PPTX](docs/pptx/GLOBAL_DEMO_SLIDES.pptx) |
+| A quick introduction | [25-second demo with captions and audio](https://polymathicx.github.io/Agun-Panjika/demo/) · [final MP4](https://polymathicx.github.io/Agun-Panjika/demo/agun-panjika-29s.mp4) · [seven-slide PDF](docs/pdf/GLOBAL_DEMO_SLIDES.pdf) · [editable PPTX](docs/pptx/GLOBAL_DEMO_SLIDES.pptx) |
 | The complete project | [Project brief](docs/PROJECT_BRIEF.md) · [six-page PDF](docs/pdf/PROJECT_BRIEF.pdf) |
 | Delivered global features and the research ahead | [Global roadmap](docs/GLOBAL_EXTENSION_PLAN.md) · [five-page PDF](docs/pdf/GLOBAL_EXTENSION_PLAN.pdf) · [delivery checklist](docs/IMPLEMENTATION_STATUS.md) |
 | Materials for our mentor | [Reading guide and academic questions](docs/MENTOR_BRIEFING.md) · [short message draft](docs/MENTOR_REPLY.md) |
@@ -183,7 +183,7 @@ The switch slider changes what the visitor sees; it uses precomputed chronologic
 | Submission copy and presentation sources | [Project-page draft](docs/submission/PROJECT_PAGE_DRAFT.md) · [slides/video build](docs/submission/README.md) · [A4 report build](docs/latex/README.md) |
 | Every document, including historical plans | [Complete documentation index](docs/README.md) |
 
-The ready MP4 has baked-in English captions and **no audio**; teammates may record narration while keeping the final video within 30 seconds. The deck has seven slides including title and team credits. The team must review the official project page and perform **Submit for Judging**; GitHub publishing does not submit it.
+The final MP4 is the team's supplied `Final.mp4`: **24.94 seconds**, with baked-in English captions and audio. The deck has seven slides including title and team credits. The team must review the official project page and perform **Submit for Judging**; GitHub publishing does not submit it.
 
 ## Run it locally
 
